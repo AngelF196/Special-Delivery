@@ -7,6 +7,8 @@ public class NewBehaviourScript : MonoBehaviour
     //Changeable variables
     [SerializeField] private int _jump;
     [SerializeField] private int _horizontalSpeed;
+    [SerializeField] private int _dashPower;
+    [SerializeField] private float _maxdashes;
 
     //References
     private Rigidbody2D _rb;
@@ -16,10 +18,15 @@ public class NewBehaviourScript : MonoBehaviour
     private Vector2 movement;
     private bool _facingLeft;
     private bool _isGrounded;
+    private bool _isDashing;
+    private float _originalGravity;
+    private float _dashesLeft;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _dashesLeft = _maxdashes;
+        _originalGravity = _rb.gravityScale;
     }
 
     // Update is called once per frame
@@ -44,29 +51,37 @@ public class NewBehaviourScript : MonoBehaviour
             _rb.velocity = new Vector2(Input.GetAxis("Horizontal") * _horizontalSpeed, _rb.velocity.y);
         }
 
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && _isGrounded == true)
         {
-            if (_isGrounded == true) 
-            {
-                _rb.velocity = new Vector2(_rb.velocity.x, _jump); 
-            }
+            _rb.velocity = new Vector2(_rb.velocity.x, _jump); 
+        }
+
+        if (Input.GetKeyUp("space") && _rb.velocity.y > 0f) 
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
+
         }
 
         if (Input.GetKeyDown("left shift"))
         {
-            Dash(direction);
+            Dash();
         }
 
     }
-    void Dash(Vector2 direction) 
-    { 
-    
+    void Dash() 
+    {
+        if (_dashesLeft > 0) 
+        {
+            _rb.velocity = new Vector2( _dashPower, _dashPower);
+            _dashesLeft--;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             _isGrounded = true;
+            _dashesLeft = _maxdashes;
             //_animator.SetBool("grounded", true);
             //_animator.SetBool("isJumping", false);
         }

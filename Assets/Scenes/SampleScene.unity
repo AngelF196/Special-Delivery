@@ -1526,6 +1526,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jump: 8
   _horizontalSpeed: 10
+  _dashPower: 10
+  _maxdashes: 2
   Data: {fileID: 0}
 --- !u!61 &2032407042
 BoxCollider2D:
