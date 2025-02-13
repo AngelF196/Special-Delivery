@@ -9,6 +9,7 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private int _horizontalSpeed;
     [SerializeField] private int _dashPower;
     [SerializeField] private float _maxdashes;
+    [SerializeField] private float _maxFallSpeed;
 
     //References
     private Rigidbody2D _rb;
@@ -32,16 +33,18 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Gets player input (needs to change)
         movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         PlayerMovement(movement);
 
+        //More gravity when falling
         if (_rb.velocity.y < 0)
         {
             _rb.gravityScale = 3;
         }
-        if (_rb.velocity.y > 0)
+        if (_rb.velocity.y >= 0)
         {
-            _rb.gravityScale = 1;
+            _rb.gravityScale = _originalGravity;
         }
     }
     void PlayerMovement(Vector2 direction)
@@ -51,18 +54,33 @@ public class NewBehaviourScript : MonoBehaviour
             _rb.velocity = new Vector2(Input.GetAxis("Horizontal") * _horizontalSpeed, _rb.velocity.y);
         }
 
+        //Jump
         if (Input.GetKeyDown("space") && _isGrounded == true)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _jump); 
         }
 
+        //Half jumps
         if (Input.GetKeyUp("space") && _rb.velocity.y > 0f) 
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
 
         }
 
-        if (Input.GetKeyDown("left shift"))
+        ///Fast fall
+        // if (Input.GetKeyDown("s") &&  _isGrounded == false)
+        //{
+        //    _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y - 50f);
+        //}
+
+        //Cap fall speed
+        if (_rb.velocity.y < -50f)
+        {
+            _rb.velocity = new Vector2 (_rb.velocity.x, _maxFallSpeed);
+        }
+
+
+            if (Input.GetKeyDown("left shift"))
         {
             Dash();
         }
@@ -82,8 +100,8 @@ public class NewBehaviourScript : MonoBehaviour
         {
             _isGrounded = true;
             _dashesLeft = _maxdashes;
-            //_animator.SetBool("grounded", true);
-            //_animator.SetBool("isJumping", false);
+            ///_animator.SetBool("grounded", true);
+            ///_animator.SetBool("isJumping", false);
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -91,8 +109,8 @@ public class NewBehaviourScript : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             _isGrounded = false;
-            //_animator.SetBool("grounded", false);
-            //_animator.SetBool("isJumping", true);
+            ///_animator.SetBool("grounded", false);
+            ///_animator.SetBool("isJumping", true);
         }
 
     }
