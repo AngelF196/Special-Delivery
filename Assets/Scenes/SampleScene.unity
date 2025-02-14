@@ -1696,7 +1696,8 @@ MonoBehaviour:
   _jump: 8
   _horizontalSpeed: 10
   _dashPower: 10
-  _maxdashes: 2
+  _maxDashes: 1
+  _dashTime: 0
   _maxFallSpeed: -50
   Data: {fileID: 0}
 --- !u!61 &2032407042
