@@ -5,10 +5,11 @@ using UnityEngine;
 public class NewBehaviourScript : MonoBehaviour
 {
     //Changeable variables
-    [SerializeField] private int _jump;
-    [SerializeField] private int _horizontalSpeed;
-    [SerializeField] private int _dashPower;
-    [SerializeField] private float _maxdashes;
+    [SerializeField] private float _jump;
+    [SerializeField] private float _horizontalSpeed;
+    [SerializeField] private float _dashPower;
+    [SerializeField] private float _maxDashes;
+    [SerializeField] private float _dashTime;
     [SerializeField] private float _maxFallSpeed;
 
     //References
@@ -26,7 +27,7 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _dashesLeft = _maxdashes;
+        _dashesLeft = _maxDashes;
         _originalGravity = _rb.gravityScale;
     }
 
@@ -38,11 +39,11 @@ public class NewBehaviourScript : MonoBehaviour
         PlayerMovement(movement);
 
         //More gravity when falling
-        if (_rb.velocity.y < 0)
+        if (_rb.velocity.y < 0f)
         {
-            _rb.gravityScale = 3;
+            _rb.gravityScale = 3f;
         }
-        if (_rb.velocity.y >= 0)
+        if (_rb.velocity.y >= 0f)
         {
             _rb.gravityScale = _originalGravity;
         }
@@ -68,10 +69,10 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         ///Fast fall
-        // if (Input.GetKeyDown("s") &&  _isGrounded == false)
-        //{
-        //    _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y - 50f);
-        //}
+        /// if (Input.GetKeyDown("s") &&  _isGrounded == false)
+        ///{
+        ///    _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y - 50f);
+        ///}
 
         //Cap fall speed
         if (_rb.velocity.y < -50f)
@@ -80,26 +81,35 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
 
-            if (Input.GetKeyDown("left shift"))
+        if (Input.GetKeyDown("left shift") && _dashesLeft > 0f)
         {
+            Debug.Log("shift pressed");
             Dash();
         }
 
     }
     void Dash() 
     {
-        if (_dashesLeft > 0) 
-        {
-            _rb.velocity = new Vector2( _dashPower, _dashPower);
-            _dashesLeft--;
-        }
+        Debug.Log("tried to dash");
+
+        //Performing dash
+        _isDashing = true;
+        _dashesLeft--;
+        _rb.gravityScale = 0f;
+        _rb.velocity = movement.normalized * _dashPower;
+
+        //Stopping dash
+        DashEnder();
+        _rb.gravityScale = _originalGravity;
+        _isDashing = false;
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             _isGrounded = true;
-            _dashesLeft = _maxdashes;
+            _dashesLeft = _maxDashes;
             ///_animator.SetBool("grounded", true);
             ///_animator.SetBool("isJumping", false);
         }
@@ -113,5 +123,10 @@ public class NewBehaviourScript : MonoBehaviour
             ///_animator.SetBool("isJumping", true);
         }
 
+    }
+
+    IEnumerator DashEnder()
+    {
+        yield return new WaitForSeconds(_dashTime);
     }
 }
