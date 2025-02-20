@@ -8,6 +8,7 @@ public class BasicMovement : MonoBehaviour
     [SerializeField] private float _jump;
     [SerializeField] private float _horizontalSpeed;
     [SerializeField] private float _maxFallSpeed;
+    [SerializeField] private DashandDive DnD;
 
     //References
     private Rigidbody2D _rb;
@@ -15,6 +16,7 @@ public class BasicMovement : MonoBehaviour
 
     //Other
     public Vector2 movement;
+    public Vector2 rawMovement;
     private bool _facingLeft;
     private bool _isGrounded;
     private float _originalGravity;
@@ -30,7 +32,7 @@ public class BasicMovement : MonoBehaviour
     {
         //Gets player input (needs to change)
         movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        
+        rawMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         PlayerMovement(movement); 
 
         //More gravity when falling
@@ -45,8 +47,15 @@ public class BasicMovement : MonoBehaviour
     }
     void PlayerMovement(Vector2 direction)
     {
-        //walking
-        _rb.velocity = new Vector2(direction.x * _horizontalSpeed, _rb.velocity.y);
+        if (DnD._isDashing == false)
+        {
+            _rb.velocity = new Vector2(direction.x * _horizontalSpeed, _rb.velocity.y);
+        }
+
+        ///if (DnD._isDashing == false && _isGrounded == false)
+        ///{
+        ///    _rb.velocity = new Vector2(_rb.velocity.y + _horizontalSpeed * 0.06f, _rb.velocity.y);
+        ///}
 
         //Jump
         if (Input.GetKeyDown("space") && _isGrounded == true)
