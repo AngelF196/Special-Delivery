@@ -16,13 +16,13 @@ public class DashandDive : MonoBehaviour
     public PlayerData Data;
 
     //Other
-    private Vector2 movement;
     private bool _facingLeft;
     private bool _isGrounded;
     private float _originalGravity;
     public bool _isDashing;
     public float _dashesLeft;
     private bool _canDash;
+    public bool _isDiving;
 
 
     // Start is called before the first frame update
@@ -30,17 +30,24 @@ public class DashandDive : MonoBehaviour
     {
         _dashesLeft = _maxDashes;
         _canDash = true;
+        _isDiving = false;
         _rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("left shift") && _dashesLeft > 0f && _canDash)
+        if (Input.GetKeyDown("x") && _dashesLeft > 0f && _canDash)
         {
-            Debug.Log("shift pressed");
+            Debug.Log("dash pressed");
             Dash();
         }
+
+        if (Input.GetKeyDown("c") && _PlayerMove._isGrounded == false)
+        {
+            Dive();
+        }
+
 
         if (_isDashing)
         {
@@ -52,6 +59,24 @@ public class DashandDive : MonoBehaviour
             _rb.drag = 0f;
         }
 
+        if (_PlayerMove._isGrounded)
+        {
+            _dashesLeft = _maxDashes;
+        }
+
+        if (_isDiving)
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x + Input.GetAxis("Horizontal") * 0.01f, _rb.velocity.y);
+
+        }
+
+    }
+
+    void Dive()
+    {
+        _isDiving = true;
+        _rb.velocity *= 1.3f;
+
     }
     void Dash()
     {
@@ -59,7 +84,7 @@ public class DashandDive : MonoBehaviour
 
         //Performing dash
         _isDashing = true;
-        _dashesLeft--;
+        _isDiving = false;
         _rb.velocity = Vector2.zero;
         _rb.velocity = _PlayerMove.rawMovement.normalized * _dashPower;
 
@@ -67,23 +92,13 @@ public class DashandDive : MonoBehaviour
         StartCoroutine(DashEnder());
 
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            _dashesLeft = _maxDashes;
-            ///_animator.SetBool("grounded", true);
-            ///_animator.SetBool("isJumping", false);
-        }
-    }
-
     IEnumerator DashEnder()
     {;
         Debug.Log("dash tried to end");
         yield return new WaitForSeconds(0.3f);
         _rb.gravityScale = 3;
         _rb.velocity = new Vector2 (_rb.velocity.x * 0.2f, _rb.velocity.y * 0.3f);
+        _dashesLeft--;
         _isDashing = false;
         _canDash = true;
         Debug.Log("dash ended");

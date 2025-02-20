@@ -18,7 +18,7 @@ public class BasicMovement : MonoBehaviour
     public Vector2 movement;
     public Vector2 rawMovement;
     private bool _facingLeft;
-    private bool _isGrounded;
+    public bool _isGrounded;
     private float _originalGravity;
 
     void Start()
@@ -47,7 +47,7 @@ public class BasicMovement : MonoBehaviour
     }
     void PlayerMovement(Vector2 direction)
     {
-        if (DnD._isDashing == false)
+        if (DnD._isDashing == false && DnD._isDiving == false)
         {
             _rb.velocity = new Vector2(direction.x * _horizontalSpeed, _rb.velocity.y);
         }
@@ -58,14 +58,14 @@ public class BasicMovement : MonoBehaviour
         ///}
 
         //Jump
-        if (Input.GetKeyDown("space") && _isGrounded == true)
+        if (Input.GetKeyDown("z") && _isGrounded == true)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, 0);
             _rb.velocity += Vector2.up * _jump;
         }
 
         //Half jumps
-        if (Input.GetKeyUp("space") && _rb.velocity.y > 0f) 
+        if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false) 
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
         }
@@ -94,6 +94,13 @@ public class BasicMovement : MonoBehaviour
             ///_animator.SetBool("grounded", true);
             ///_animator.SetBool("isJumping", false);
         }
+
+        if (collision.gameObject.tag == "Ground" && DnD._isDiving == true)
+        {
+            _isGrounded = true;
+            DnD._isDiving = false;
+        }
+
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
