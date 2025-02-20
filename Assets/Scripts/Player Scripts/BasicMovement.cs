@@ -30,7 +30,6 @@ public class BasicMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Gets player input (needs to change)
         movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         rawMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         PlayerMovement(movement); 
