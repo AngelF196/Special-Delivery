@@ -5,7 +5,7 @@ using UnityEngine;
 public class BasicMovement : MonoBehaviour
 {
     //Changeable variables
-    [SerializeField] private float _jump;
+    [SerializeField] public float _jump;
     [SerializeField] private float _horizontalSpeed;
     [SerializeField] private float _maxFallSpeed;
     [SerializeField] private DashandDive DnD;
@@ -57,7 +57,7 @@ public class BasicMovement : MonoBehaviour
         ///}
 
         //Jump
-        if (Input.GetKeyDown("z") && _isGrounded == true)
+        if (Input.GetKeyDown("z") && _isGrounded == true && DnD._isDashing == false)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, 0);
             _rb.velocity += Vector2.up * _jump;

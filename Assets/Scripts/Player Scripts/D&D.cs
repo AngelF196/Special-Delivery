@@ -23,6 +23,7 @@ public class DashandDive : MonoBehaviour
     public float _dashesLeft;
     private bool _canDash;
     public bool _isDiving;
+    private Vector2 _dashDirection;
 
 
     // Start is called before the first frame update
@@ -70,8 +71,24 @@ public class DashandDive : MonoBehaviour
 
         }
 
+        if (_isDiving && _PlayerMove._isGrounded && Input.GetKeyDown("z"))
+        {
+            Debug.Log("Tried to wavedash");
+            Wavedash();
+        }
+
     }
 
+    void Wavedash()
+    {
+        Debug.Log("Wavedash");
+        _dashDirection = _rb.velocity.normalized;
+        _rb.velocity = Vector2.zero;
+        _isDashing = false;
+        _canDash = true;
+        _rb.velocity += Vector2.up * _PlayerMove._jump;
+        _rb.AddForce(_dashDirection * _dashPower);
+    }
     void Dive()
     {
         _isDiving = true;
