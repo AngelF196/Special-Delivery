@@ -3,9 +3,10 @@ using UnityEngine.UI;
 
 public class NPCInteraction : MonoBehaviour
 {
-    public GameObject dialoguePanel;
-    public Text dialogueText;
+    public GameObject dialoguePanel; 
+    public Text dialogueText;       
     private bool hasInteracted = false;
+    private bool dialogueActive = false;
 
     void Start()
     {
@@ -13,27 +14,43 @@ public class NPCInteraction : MonoBehaviour
             dialoguePanel.SetActive(false);
     }
 
+    // Press E for INteraction, opens closes
     public void Interact()
     {
-        if (!hasInteracted)
+        if (!dialogueActive)
         {
-            hasInteracted = true;
-            StartMission();
-            ShowDialogue();
+            OpenDialogue();
+        }
+        else
+        {
+            CloseDialogue();
         }
     }
 
-    void StartMission()
+    void OpenDialogue()
     {
-        Debug.Log("Mission Started");
-    }
-
-    void ShowDialogue()
-    {
+        dialogueActive = true;
+        hasInteracted = true; 
         if (dialoguePanel != null)
         {
             dialoguePanel.SetActive(true);
-            dialogueText.text = "Here's your package. Your mission has begun!";
+            if (dialogueText != null)
+                dialogueText.text = "Here's your package. Your mission has begun!";
+            else
+                Debug.LogWarning("Dialogue Text is not assigned.");
+        }
+        else
+        {
+            Debug.LogWarning("Dialogue Panel is not assigned.");
+        }
+    }
+
+    void CloseDialogue()
+    {
+        dialogueActive = false;
+        if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(false);
         }
     }
 }
