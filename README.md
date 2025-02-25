@@ -9,33 +9,33 @@ At this point, I have written the code for the player s movement, and although i
 These are the C# scripts and GameObjects that I've contributed to the project so far;
 - ParentNPC: This is the parent NPC class for the two types of NPCs present. This will be used for our giving and receiving package NPCs. At the moment, the parent class is being used for the giving and receiving alike for stand-in. I'm currently working on the mission acceptance code to then differentiate the two.
  - Methods in this class are:
-  - Enum NPCstate {}
-  - IdleState()
-  - WavingState()
-  - InteractState()
-  - UpdateState() 
-- An NPC GameObject is used to be attached by the ParentNPC cting as a base NPC in the game. Once we continue further the NPC types will be split into previously mentioned.
+   - Enum NPCstate {}
+   - IdleState()
+   - WavingState()
+   - InteractState()
+   - UpdateState() 
+   - An NPC GameObject is used to be attached by the ParentNPC cting as a base NPC in the game. Once we continue further the NPC types will be split into previously mentioned.
 
 - NPCInteraction: This is used to open the dialogue box assigned to an NPC once the player interacts with it. 
  - Methods in this class are:
-  - Interact()
-  - OpenDialogue()
-  - CloseDialogue()
+   - Interact()
+   - OpenDialogue()
+   - CloseDialogue()
  - Important Variables:
-  - public GameObject dialoguePanel;
-  - private bool hasInteracted = false;
-  - private bool dialogueActive = false;
+   - public GameObject dialoguePanel;
+   - private bool hasInteracted = false;
+   - private bool dialogueActive = false;
 - This is attached to the NPC GameObject to allow it to use a textbox and the dialogue can appear once it's attached.
 
 - PlayerInteraction: This allows the player to press E which checks whether or not the player is close enough to an NPC to then interact with it.
  - Methods used:
-  - OnTriggerEnter2D() 
-  - OnTriggerExit2D()
-  - Update() 
+   - OnTriggerEnter2D() 
+   - OnTriggerExit2D()
+   - Update() 
  - Important variables:
-  - public KeyCode interactKey = KeyCode.E;
-  - private NPCInteraction currentNPC;
-- This is attached to the Player Object as it gives ability to press interaction button to interact with NPCs.
+   - public KeyCode interactKey = KeyCode.E;
+   - private NPCInteraction currentNPC;
+ - This is attached to the Player Object as it gives ability to press interaction button to interact with NPCs.
 - Game Objects created:
   - NPC Loofy
   - NPC Ace
