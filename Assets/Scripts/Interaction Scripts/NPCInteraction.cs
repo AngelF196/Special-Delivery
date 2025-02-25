@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
+
 
 public class NPCInteraction : MonoBehaviour
 {
-    public GameObject dialoguePanel; 
-    public Text dialogueText;       
+    public GameObject dialoguePanel;
+    public TextMeshProUGUI dialogueText;
     private bool hasInteracted = false;
     private bool dialogueActive = false;
+
 
     void Start()
     {
@@ -34,10 +38,6 @@ public class NPCInteraction : MonoBehaviour
         if (dialoguePanel != null)
         {
             dialoguePanel.SetActive(true);
-            if (dialogueText != null)
-                dialogueText.text = "Here's your package. Your mission has begun!";
-            else
-                Debug.LogWarning("Dialogue Text is not assigned.");
         }
         else
         {

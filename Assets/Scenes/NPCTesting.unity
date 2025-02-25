@@ -309,15 +309,15 @@ RectTransform:
   m_GameObject: {fileID: 902954867}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.049999997, y: 0.049999997, z: 0.049999997}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1184915431}
   m_Father: {fileID: 1381993071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -157, y: -8}
+  m_AnchoredPosition: {x: -252.84, y: 28.83}
   m_SizeDelta: {x: -427.0286, y: -267.7496}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &902954869
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 1057540346}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,8 +601,8 @@ RectTransform:
   m_GameObject: {fileID: 1184915430}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8000001, y: 0.8000001, z: 0.8000001}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 902954868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Hello, am loofy from one peace
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -658,8 +658,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 23.19
+  m_fontSizeBase: 23.19
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -858,7 +858,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1381993070
 Canvas:
   m_ObjectHideFlags: 0
@@ -868,7 +868,7 @@ Canvas:
   m_GameObject: {fileID: 1381993067}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -891,7 +891,7 @@ RectTransform:
   m_GameObject: {fileID: 1381993067}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 902954868}
@@ -899,9 +899,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 248.3, y: -28.3}
+  m_SizeDelta: {x: 586, y: 330}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1610050901 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7917202862594511608, guid: c84d0df4323826b4586ec11e165e5106, type: 3}
@@ -965,7 +965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 902954867}
-  dialogueText: {fileID: 0}
+  dialogueText: {fileID: 1184915432}
 --- !u!1 &2136314209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,6 +1256,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3050066582976212180, guid: 9cb6b36385e937d40ba2cefd9bb83c8f, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3050066582976212180, guid: 9cb6b36385e937d40ba2cefd9bb83c8f, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
