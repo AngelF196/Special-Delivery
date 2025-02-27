@@ -10,7 +10,24 @@ public class Spring : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounce, ForceMode2D.Impulse);
+            if (transform.localEulerAngles.z == 0f)
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounce, ForceMode2D.Impulse);
+            }
+            if (transform.localEulerAngles.z == 90f)
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.left * bounce, ForceMode2D.Impulse);
+            }
+            if (transform.localEulerAngles.z == 180f)
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.down * bounce, ForceMode2D.Impulse);
+            }
+            if (transform.localEulerAngles.z == 270f)
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right * bounce, ForceMode2D.Impulse);
+            }
+
+
         }
     }
 }

@@ -7,31 +7,65 @@ public class Belt : MonoBehaviour
 {
     [SerializeField] private float _force = 2f;
     [SerializeField] private bool movingRightwards = true;
+    [SerializeField] private GameObject Arrow;
 
     private Vector2 movement;
 
-    //private void Start()
-    //{
-    //    SpriteRenderer Arrow = GetComponentInChildren<SpriteRenderer>();
-    //    if (!movingRightwards) 
-    //    {
-    //        Arrow.flipY = false;
-    //    }
-    //}
+    private void Start()
+    {
+        Debug.Log(transform.localEulerAngles.z);
+    }
+
+    private void Update ()
+    {
+        if (!movingRightwards) 
+        {
+            Arrow.gameObject.GetComponent<SpriteRenderer>().flipY = false;
+        }
+        else
+        {
+            Arrow.gameObject.GetComponent<SpriteRenderer>().flipY = true;
+        }
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (movingRightwards)
+        if (transform.localEulerAngles.z == 0f)
         {
-            movement = Vector2.right * _force * Time.deltaTime;
-            Debug.Log("trying to push right");
+            if (movingRightwards)
+            {
+                movement = Vector2.right * _force * Time.deltaTime;
+            }
+            if (!movingRightwards)
+            {
+                movement = Vector2.left * _force * Time.deltaTime;
+            }
         }
-        if (!movingRightwards)
+
+        if (transform.localEulerAngles.z == 90f)
         {
-            movement = Vector2.left * _force * Time.deltaTime;
-            Debug.Log("trying to push left");
+            if (movingRightwards)
+            {
+                movement = Vector2.up * _force * Time.deltaTime;
+            }
+            if (!movingRightwards)
+            {
+                movement = Vector2.down * _force * Time.deltaTime;
+            }
         }
+
+        if (transform.localEulerAngles.z == 270f)
+        {
+            if (movingRightwards)
+            {
+                movement = Vector2.down * _force * Time.deltaTime;
+            }
+            if (!movingRightwards)
+            {
+                movement = Vector2.up * _force * Time.deltaTime;
+            }
+        }
+
         collision.transform.Translate(movement);
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(movement);
-        Debug.Log("trying to push player");
     }
 }
