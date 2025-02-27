@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 44499551}
   - component: {fileID: 44499550}
   - component: {fileID: 44499554}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: conveyor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 500032900}
   - component: {fileID: 500032899}
   - component: {fileID: 500032898}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 589195261}
   - component: {fileID: 589195260}
   - component: {fileID: 589195259}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (5)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -749,7 +749,7 @@ GameObject:
   - component: {fileID: 786434939}
   - component: {fileID: 786434938}
   - component: {fileID: 786434941}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 961923598}
   - component: {fileID: 961923597}
   - component: {fileID: 961923596}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: conveyor (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 1106883834}
   - component: {fileID: 1106883833}
   - component: {fileID: 1106883832}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (7)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1280,7 +1280,7 @@ GameObject:
   - component: {fileID: 1304191096}
   - component: {fileID: 1304191095}
   - component: {fileID: 1304191094}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1449,7 +1449,7 @@ GameObject:
   - component: {fileID: 1304702766}
   - component: {fileID: 1304702765}
   - component: {fileID: 1304702764}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: spring
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1679,7 +1679,7 @@ GameObject:
   - component: {fileID: 1507829639}
   - component: {fileID: 1507829638}
   - component: {fileID: 1507829637}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: conveyor (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 1610455167}
   - component: {fileID: 1610455166}
   - component: {fileID: 1610455165}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (4)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2124,7 +2124,7 @@ GameObject:
   - component: {fileID: 1849286033}
   - component: {fileID: 1849286032}
   - component: {fileID: 1849286031}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2291,7 +2291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2014112414}
   - component: {fileID: 2014112413}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2381,13 +2381,33 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: leftOffset.x
+      value: -0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: rightOffset.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: bottomOffset.y
+      value: -0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: collisionRadius
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: -0.585
       objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.36
+      value: -1.397
       objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalPosition.z

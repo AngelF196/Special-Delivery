@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BasicMovement : MonoBehaviour
@@ -8,11 +9,12 @@ public class BasicMovement : MonoBehaviour
     [SerializeField] public float _jump;
     [SerializeField] private float _horizontalSpeed;
     [SerializeField] private float _maxFallSpeed;
-    [SerializeField] private DashandDive DnD;
 
     //References
     private Rigidbody2D _rb;
     public PlayerData Data;
+    [SerializeField] private DashandDive DnD;
+
 
     //Other
     public Vector2 movement;
@@ -20,6 +22,18 @@ public class BasicMovement : MonoBehaviour
     private bool _facingLeft;
     public bool _isGrounded;
     private float _originalGravity;
+    public bool canMove;
+
+    //For Collision
+    public LayerMask groundLayer;
+    public bool onGround;
+    public bool onWall;
+    public bool onRightWall;
+    public bool onLeftWall;
+    public int wallSide;
+    public float collisionRadius = 0.25f;
+    public Vector2 bottomOffset, rightOffset, leftOffset;
+    private Color debugCollisionColor = Color.red;
 
     void Start()
     {
@@ -30,6 +44,7 @@ public class BasicMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Get Input + Movement Function
         movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         rawMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         PlayerMovement(movement); 
@@ -43,6 +58,22 @@ public class BasicMovement : MonoBehaviour
         {
             _rb.gravityScale = _originalGravity;
         }
+
+        //Cap fall speed
+        if (_rb.velocity.y < -50f)
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x, _maxFallSpeed);
+        }
+
+        //Collision
+        onGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, collisionRadius, groundLayer);
+        onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer)
+            || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+
+        onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
+        onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+
+        wallSide = onRightWall ? -1 : 1;
     }
     void PlayerMovement(Vector2 direction)
     {
@@ -51,40 +82,53 @@ public class BasicMovement : MonoBehaviour
             _rb.velocity = new Vector2(direction.x * _horizontalSpeed, _rb.velocity.y);
         }
 
+        Jumps();
+
+        //Wall Sliding
+
+        ///rb.velocity = new Vector2(push, -slideSpeed);
+
+
+        //Custom Air speed
         ///if (DnD._isDashing == false && _isGrounded == false)
         ///{
         ///    _rb.velocity = new Vector2(_rb.velocity.y + _horizontalSpeed * 0.06f, _rb.velocity.y);
         ///}
 
-        //Jump
-        if (Input.GetKeyDown("z") && _isGrounded == true && DnD._isDashing == false)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, 0);
-            _rb.velocity += Vector2.up * _jump;
-        }
 
-        //Half jumps
-        if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false) 
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
-        }
-
-        ///Fast fall
+        //Fast fall
         /// if (Input.GetKeyDown("s") &&  _isGrounded == false)
         ///{
         ///    _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y - 50f);
         ///}
+    }
 
-        //Cap fall speed
-        if (_rb.velocity.y < -50f)
+    void Jumps()
+    {
+        //Jump
+        if (Input.GetKeyDown("z") && DnD._isDashing == false)
         {
-            _rb.velocity = new Vector2 (_rb.velocity.x, _maxFallSpeed);
+            if (_isGrounded == true || onGround == true)
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, 0);
+                _rb.velocity += Vector2.up * _jump;
+            }
         }
 
+        //Half jumps
+        if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false)
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
+        }
 
-        
+        //Wall jumps
+        if (Input.GetKeyDown("z") && onWall && !onGround)
+        {
+            Vector2 wallDir = onRightWall ? Vector2.left : Vector2.right;
+            _rb.velocity += (Vector2.up + wallDir) * _jump;
+        }
     }
-    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -99,8 +143,8 @@ public class BasicMovement : MonoBehaviour
             _isGrounded = true;
             DnD._isDiving = false;
         }
-
     }
+    
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -109,8 +153,23 @@ public class BasicMovement : MonoBehaviour
             ///_animator.SetBool("grounded", false);
             ///_animator.SetBool("isJumping", true);
         }
-
     }
 
-   
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        var positions = new Vector2[] { bottomOffset, rightOffset, leftOffset };
+
+        Gizmos.DrawWireSphere((Vector2)transform.position + bottomOffset, collisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
+    }
+
+    IEnumerator DisableMovement(float time)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(time);
+        canMove = true;
+    }
 }

@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Ground
   - NPC
+  - Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player Collision
   - Water
   - UI
   - 
