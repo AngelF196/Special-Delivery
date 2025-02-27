@@ -39,7 +39,7 @@ public class BasicMovement : MonoBehaviour
         {
             _rb.gravityScale = 3f;
         }
-        if (_rb.velocity.y >= 0f)
+        if (_rb.velocity.y > 0f)
         {
             _rb.gravityScale = _originalGravity;
         }

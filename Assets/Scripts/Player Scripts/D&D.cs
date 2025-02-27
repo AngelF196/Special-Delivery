@@ -92,7 +92,7 @@ public class DashandDive : MonoBehaviour
     void Dive()
     {
         _isDiving = true;
-        _rb.velocity *= 1.3f;
+        _rb.velocity *= 1.15f;
 
     }
     void Dash()
@@ -114,7 +114,7 @@ public class DashandDive : MonoBehaviour
         Debug.Log("dash tried to end");
         yield return new WaitForSeconds(0.3f);
         _rb.gravityScale = 3;
-        _rb.velocity = new Vector2 (_rb.velocity.x * 0.2f, _rb.velocity.y * 0.3f);
+        _rb.velocity = new Vector2 (_rb.velocity.x * 0.2f, _rb.velocity.y * 0.25f);
         _dashesLeft--;
         _isDashing = false;
         _canDash = true;
