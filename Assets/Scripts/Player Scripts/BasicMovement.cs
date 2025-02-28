@@ -70,7 +70,7 @@ public class BasicMovement : MonoBehaviour
         {
             _rb.gravityScale = 3f;
         }
-        if (_rb.velocity.y > 0f)
+        if (_rb.velocity.y > 0f && DnD._isDiving == false)
         {
             _rb.gravityScale = _originalGravity;
         }
@@ -113,7 +113,7 @@ public class BasicMovement : MonoBehaviour
         // Jump
         if (Input.GetKeyDown("z") && DnD._isDashing == false)
         {
-            if (_isGrounded == true || onGround == true)
+            if (onGround == true)
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
                 _rb.velocity += Vector2.up * _jump;
@@ -148,23 +148,10 @@ public class BasicMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            _isGrounded = true;
-        }
-
         if (collision.gameObject.tag == "Ground" && DnD._isDiving == true)
         {
             _isGrounded = true;
             DnD._isDiving = false;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            _isGrounded = false;
         }
     }
 

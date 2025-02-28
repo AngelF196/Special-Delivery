@@ -9,6 +9,10 @@ public class DashandDive : MonoBehaviour
     [SerializeField] private float _maxDashes;
     [SerializeField] private float _dashTime;
     [SerializeField] private float _dashDrag;
+    [SerializeField] private float _diveDrag;
+    [SerializeField] private float _diveGravity;
+    [SerializeField] private float _diveMult;
+    [SerializeField] private float _divePower;
     [SerializeField] private BasicMovement _PlayerMove;
 
     //References
@@ -17,7 +21,6 @@ public class DashandDive : MonoBehaviour
 
     //Other
     private bool _facingLeft;
-    private bool _isGrounded;
     private float _originalGravity;
     public bool _isDashing;
     public float _dashesLeft;
@@ -43,40 +46,36 @@ public class DashandDive : MonoBehaviour
             Debug.Log("dash pressed");
             Dash();
         }
-
-        if (Input.GetKeyDown("c") && _PlayerMove._isGrounded == false)
+        if (Input.GetKeyDown("c") && _PlayerMove.onGround == false && _isDiving == false)
         {
             Dive();
         }
+        if (_isDiving && _PlayerMove.onGround && Input.GetKeyDown("z"))
+        {
+            Debug.Log("Tried to wavedash");
+            Wavedash();
+        }
 
+        if (_isDiving)
+        {
+            _rb.gravityScale = _diveGravity;
+            _rb.velocity = new Vector2(_rb.velocity.x + Input.GetAxis("Horizontal") * 0.01f, _rb.velocity.y);
+        }
 
         if (_isDashing)
         {
             _rb.drag = _dashDrag;
             _rb.gravityScale = 0f;
         }
-        if (_isDashing == false)
+        if (_isDashing == false && _isDiving == false)
         {
             _rb.drag = 0f;
         }
 
-        if (_PlayerMove._isGrounded)
+        if (_PlayerMove.onGround)
         {
             _dashesLeft = _maxDashes;
         }
-
-        if (_isDiving)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x + Input.GetAxis("Horizontal") * 0.01f, _rb.velocity.y);
-
-        }
-
-        if (_isDiving && _PlayerMove._isGrounded && Input.GetKeyDown("z"))
-        {
-            Debug.Log("Tried to wavedash");
-            Wavedash();
-        }
-
     }
 
     void Wavedash()
@@ -92,8 +91,15 @@ public class DashandDive : MonoBehaviour
     void Dive()
     {
         _isDiving = true;
-        _rb.velocity *= 1.15f;
-
+        _rb.velocity *= _diveMult;
+        if (_rb.velocity.x > 0)
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x + _divePower, _rb.velocity.y + _divePower);
+        }
+        if (_rb.velocity.x < 0)
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x - _divePower, _rb.velocity.y + _divePower);
+        }
     }
     void Dash()
     {

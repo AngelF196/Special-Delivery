@@ -27,7 +27,12 @@ public class Spring : MonoBehaviour
                 collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right * bounce, ForceMode2D.Impulse);
             }
 
-
+            // 1. create a rotation matrix using Quaternion.Euler from the spring's z-axis rotation
+            // Use gizmos to draw the vector
+            // https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Quaternion.Euler.html
+            // multiply this rotation matrix * Vector3(0,1,0) to get your rotated vector
+            // make a gizmo to check if this vector is correct
+            // apply vector to player velocity
         }
     }
 }
