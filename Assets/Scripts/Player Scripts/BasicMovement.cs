@@ -24,6 +24,7 @@ public class BasicMovement : MonoBehaviour
     public bool _isGrounded;
     private float _originalGravity;
     public bool canMove;
+    public float slideSpeed;
 
     // For Collision
     public LayerMask groundLayer;
@@ -89,6 +90,12 @@ public class BasicMovement : MonoBehaviour
         onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
 
         wallSide = onRightWall ? -1 : 1;
+
+        //Wall slide
+        if (_rb.velocity.x != 0f && onWall && !onGround) 
+        {
+            WallSlide();
+        }
     }
 
     void PlayerMovement(Vector2 direction)
@@ -127,6 +134,18 @@ public class BasicMovement : MonoBehaviour
         }
     }
 
+    void WallSlide()
+    {
+        if (onRightWall == true && rawMovement.x > 0f)
+        {
+            _rb.velocity = new Vector2(0, -slideSpeed);
+        }
+        if (onLeftWall == true && rawMovement.x < 0f)
+        {
+            _rb.velocity = new Vector2(0, -slideSpeed);
+        }
+
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")

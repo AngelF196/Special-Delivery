@@ -2408,6 +2408,14 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: onLeftWall
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: slideSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: leftOffset.x
       value: -0.48
       objectReference: {fileID: 0}
