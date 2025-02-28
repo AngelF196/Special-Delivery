@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class BasicMovement : MonoBehaviour
 {
-    //Changeable variables
+    // Changeable variables
     [SerializeField] public float _jump;
     [SerializeField] private float _horizontalSpeed;
     [SerializeField] private float _maxFallSpeed;
 
-    //References
+    // References
     private Rigidbody2D _rb;
+    private Animator _animator;  // Added Animator reference
+    private SpriteRenderer _spriteRenderer;  // Added SpriteRenderer reference
     public PlayerData Data;
     [SerializeField] private DashandDive DnD;
 
-
-    //Other
+    // Other
     public Vector2 movement;
     public Vector2 rawMovement;
     private bool _facingLeft;
@@ -24,7 +25,7 @@ public class BasicMovement : MonoBehaviour
     private float _originalGravity;
     public bool canMove;
 
-    //For Collision
+    // For Collision
     public LayerMask groundLayer;
     public bool onGround;
     public bool onWall;
@@ -38,18 +39,32 @@ public class BasicMovement : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>(); 
+        _spriteRenderer = GetComponent<SpriteRenderer>();  
         _originalGravity = _rb.gravityScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Get Input + Movement Function
+        // Get Input + Movement Function
         movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         rawMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        PlayerMovement(movement); 
+        PlayerMovement(movement);
 
-        //More gravity when falling
+        // Update Animator isRunning based on movement
+        _animator.SetBool("isRunning", Mathf.Abs(movement.x) > 0);
+
+        // Flip the sprite based on direction
+        if (movement.x > 0 && _spriteRenderer.flipX)  // Moving right
+        {
+            _spriteRenderer.flipX = false;
+        }
+        else if (movement.x < 0 && !_spriteRenderer.flipX)  // Moving left
+        {
+            _spriteRenderer.flipX = true;
+        }
+
+        // More gravity when falling
         if (_rb.velocity.y < 0f)
         {
             _rb.gravityScale = 3f;
@@ -59,13 +74,13 @@ public class BasicMovement : MonoBehaviour
             _rb.gravityScale = _originalGravity;
         }
 
-        //Cap fall speed
+        // Cap fall speed
         if (_rb.velocity.y < -50f)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _maxFallSpeed);
         }
 
-        //Collision
+        // Collision
         onGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, collisionRadius, groundLayer);
         onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer)
             || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
@@ -75,6 +90,7 @@ public class BasicMovement : MonoBehaviour
 
         wallSide = onRightWall ? -1 : 1;
     }
+
     void PlayerMovement(Vector2 direction)
     {
         if (DnD._isDashing == false && DnD._isDiving == false)
@@ -83,29 +99,11 @@ public class BasicMovement : MonoBehaviour
         }
 
         Jumps();
-
-        //Wall Sliding
-
-        ///rb.velocity = new Vector2(push, -slideSpeed);
-
-
-        //Custom Air speed
-        ///if (DnD._isDashing == false && _isGrounded == false)
-        ///{
-        ///    _rb.velocity = new Vector2(_rb.velocity.y + _horizontalSpeed * 0.06f, _rb.velocity.y);
-        ///}
-
-
-        //Fast fall
-        /// if (Input.GetKeyDown("s") &&  _isGrounded == false)
-        ///{
-        ///    _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y - 50f);
-        ///}
     }
 
     void Jumps()
     {
-        //Jump
+        // Jump
         if (Input.GetKeyDown("z") && DnD._isDashing == false)
         {
             if (_isGrounded == true || onGround == true)
@@ -115,13 +113,13 @@ public class BasicMovement : MonoBehaviour
             }
         }
 
-        //Half jumps
+        // Half jumps
         if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
         }
 
-        //Wall jumps
+        // Wall jumps
         if (Input.GetKeyDown("z") && onWall && !onGround)
         {
             Vector2 wallDir = onRightWall ? Vector2.left : Vector2.right;
@@ -134,8 +132,6 @@ public class BasicMovement : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             _isGrounded = true;
-            ///_animator.SetBool("grounded", true);
-            ///_animator.SetBool("isJumping", false);
         }
 
         if (collision.gameObject.tag == "Ground" && DnD._isDiving == true)
@@ -144,14 +140,12 @@ public class BasicMovement : MonoBehaviour
             DnD._isDiving = false;
         }
     }
-    
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             _isGrounded = false;
-            ///_animator.SetBool("grounded", false);
-            ///_animator.SetBool("isJumping", true);
         }
     }
 
