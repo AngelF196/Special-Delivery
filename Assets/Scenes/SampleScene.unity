@@ -2409,15 +2409,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: leftOffset.x
-      value: -0.35
+      value: -0.48
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: rightOffset.x
-      value: 0.35
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: bottomOffset.y
-      value: -0.47
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: collisionRadius
@@ -2485,19 +2485,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5065808028950815541, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_Size.x
-      value: 1.9373578
+      value: 0.8792404
       objectReference: {fileID: 0}
     - target: {fileID: 5065808028950815541, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_Size.y
-      value: 2.1467915
+      value: 2.0530837
       objectReference: {fileID: 0}
     - target: {fileID: 5065808028950815541, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_Offset.x
-      value: -0.0383963
+      value: -0.16919672
       objectReference: {fileID: 0}
     - target: {fileID: 5065808028950815541, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_Offset.y
-      value: 0.04886794
+      value: 0.002014041
       objectReference: {fileID: 0}
     - target: {fileID: 5065808028950815541, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
