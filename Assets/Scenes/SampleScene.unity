@@ -6154,6 +6154,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1305109764580584383, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: _diveDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305109764580584383, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: _diveMult
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305109764580584383, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: _divePower
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305109764580584383, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: _diveGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1438612040732820871, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2

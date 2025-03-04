@@ -85,14 +85,18 @@ public class BasicMovement : MonoBehaviour
         }
 
         // Collision
-        onGround = Physics2D.OverlapBox((Vector2)transform.position + bottomOffset, bottomBoxes * 2, groundLayer);
-        onWall = Physics2D.OverlapBox((Vector2)transform.position + rightOffset, sideBoxes * 2, groundLayer)
-            || Physics2D.OverlapBox((Vector2)transform.position + leftOffset, sideBoxes * 2, groundLayer);
+        onGround = Physics2D.OverlapBox((Vector2)transform.position + bottomOffset, bottomBoxes, 0, groundLayer);
 
-        onRightWall = Physics2D.OverlapBox((Vector2)transform.position + rightOffset, sideBoxes * 2, groundLayer);
-        onLeftWall = Physics2D.OverlapBox((Vector2)transform.position + leftOffset, sideBoxes * 2, groundLayer);
+        Collider2D colliders = Physics2D.OverlapBox((Vector2)transform.position + bottomOffset, bottomBoxes, 0, groundLayer);
+
+        onWall = Physics2D.OverlapBox((Vector2)transform.position + rightOffset, sideBoxes, 0, groundLayer)
+            || Physics2D.OverlapBox((Vector2)transform.position + leftOffset, sideBoxes, 0, groundLayer);
+
+        onRightWall = Physics2D.OverlapBox((Vector2)transform.position + rightOffset, sideBoxes, 0, groundLayer);
+        onLeftWall = Physics2D.OverlapBox((Vector2)transform.position + leftOffset, sideBoxes, 0, groundLayer);
 
         wallSide = onRightWall ? -1 : 1;
+
 
         if (onGround)
         {
