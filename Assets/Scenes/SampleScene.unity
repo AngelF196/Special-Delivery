@@ -6160,23 +6160,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: onLeftWall
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: slideSpeed
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: sideBoxes.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: sideBoxes.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: sideboxes.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: sideboxes.y
+      value: 1.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: leftOffset.x
-      value: -0.48
+      value: -0.483
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: bottomBoxes.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: bottomBoxes.y
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: bottomboxes.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: bottomboxes.y
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: rightOffset.x
-      value: 0.21
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: bottomOffset.x
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: bottomOffset.y
-      value: -0.8
+      value: -0.81
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: collisionRadius
@@ -6192,7 +6228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.78000003
+      value: 0.78499204
       objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalScale.z
@@ -6200,11 +6236,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.585
+      value: -1.322
       objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.397
+      value: -0.874
       objectReference: {fileID: 0}
     - target: {fileID: 2376946045026736932, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: m_LocalPosition.z

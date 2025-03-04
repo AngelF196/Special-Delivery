@@ -18,6 +18,7 @@ public class DashandDive : MonoBehaviour
     //References
     private Rigidbody2D _rb;
     public PlayerData Data;
+    private SpriteRenderer _spriteRenderer;
 
     //Other
     private bool _facingLeft;
@@ -36,6 +37,7 @@ public class DashandDive : MonoBehaviour
         _canDash = true;
         _isDiving = false;
         _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -109,7 +111,26 @@ public class DashandDive : MonoBehaviour
         _isDashing = true;
         _isDiving = false;
         _rb.velocity = Vector2.zero;
-        _rb.velocity = _PlayerMove.rawMovement.normalized * _dashPower;
+        if (_PlayerMove.rawMovement.normalized != new Vector2 (0,0))
+        {
+            _rb.velocity = _PlayerMove.rawMovement.normalized * _dashPower;
+
+        }
+
+        //dash forward if no direction is being held
+        if (_PlayerMove.rawMovement.normalized == new Vector2(0, 0))
+        {
+            if (_spriteRenderer.flipX == false)
+            {
+                _rb.velocity = new Vector2(1, 0) * _dashPower;
+
+            }
+            if (_spriteRenderer.flipX == true) 
+            {
+                _rb.velocity = new Vector2 (-1,0) * _dashPower;
+
+            }
+        }
 
         //Stopping dash
         StartCoroutine(DashEnder());

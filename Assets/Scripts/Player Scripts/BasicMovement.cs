@@ -25,6 +25,7 @@ public class BasicMovement : MonoBehaviour
     private float _originalGravity;
     public bool canMove;
     public float slideSpeed;
+    public bool _isJumping;
 
     // For Collision
     public LayerMask groundLayer;
@@ -33,7 +34,9 @@ public class BasicMovement : MonoBehaviour
     public bool onRightWall;
     public bool onLeftWall;
     public int wallSide;
-    public float collisionRadius = 0.25f;
+    public Vector3 sideBoxes = new Vector3(1, 1, 1);
+    public Vector3 bottomBoxes = new Vector3(1, 1, 1);
+
     public Vector2 bottomOffset, rightOffset, leftOffset;
     private Color debugCollisionColor = Color.red;
 
@@ -82,17 +85,22 @@ public class BasicMovement : MonoBehaviour
         }
 
         // Collision
-        onGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, collisionRadius, groundLayer);
-        onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer)
-            || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+        onGround = Physics2D.OverlapBox((Vector2)transform.position + bottomOffset, bottomBoxes * 2, groundLayer);
+        onWall = Physics2D.OverlapBox((Vector2)transform.position + rightOffset, sideBoxes * 2, groundLayer)
+            || Physics2D.OverlapBox((Vector2)transform.position + leftOffset, sideBoxes * 2, groundLayer);
 
-        onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
-        onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+        onRightWall = Physics2D.OverlapBox((Vector2)transform.position + rightOffset, sideBoxes * 2, groundLayer);
+        onLeftWall = Physics2D.OverlapBox((Vector2)transform.position + leftOffset, sideBoxes * 2, groundLayer);
 
         wallSide = onRightWall ? -1 : 1;
 
+        if (onGround)
+        {
+            _isJumping = false;
+        }
+
         //Wall slide
-        if (_rb.velocity.x != 0f && onWall && !onGround) 
+        if (rawMovement.x != 0f && onWall && !onGround) 
         {
             WallSlide();
         }
@@ -117,11 +125,12 @@ public class BasicMovement : MonoBehaviour
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
                 _rb.velocity += Vector2.up * _jump;
+                _isJumping = true;
             }
         }
 
         // Half jumps
-        if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false)
+        if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false && _isJumping == false)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
         }
@@ -131,6 +140,7 @@ public class BasicMovement : MonoBehaviour
         {
             Vector2 wallDir = onRightWall ? Vector2.left : Vector2.right;
             _rb.velocity += (Vector2.up + wallDir) * _jump;
+            _isJumping = true;
         }
     }
 
@@ -161,9 +171,9 @@ public class BasicMovement : MonoBehaviour
 
         var positions = new Vector2[] { bottomOffset, rightOffset, leftOffset };
 
-        Gizmos.DrawWireSphere((Vector2)transform.position + bottomOffset, collisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
+        Gizmos.DrawWireCube((Vector2)transform.position + bottomOffset, bottomBoxes);
+        Gizmos.DrawWireCube((Vector2)transform.position + rightOffset, sideBoxes);
+        Gizmos.DrawWireCube((Vector2)transform.position + leftOffset, sideBoxes);
     }
 
     IEnumerator DisableMovement(float time)
