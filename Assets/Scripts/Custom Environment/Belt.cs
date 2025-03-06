@@ -13,7 +13,6 @@ public class Belt : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(transform.localEulerAngles.z);
     }
 
     private void Update ()
@@ -33,11 +32,11 @@ public class Belt : MonoBehaviour
         {
             if (movingRightwards)
             {
-                movement = Vector2.right * _force * Time.deltaTime;
+                movement = Vector2.right;
             }
             if (!movingRightwards)
             {
-                movement = Vector2.left * _force * Time.deltaTime;
+                movement = Vector2.left;
             }
         }
 
@@ -45,11 +44,11 @@ public class Belt : MonoBehaviour
         {
             if (movingRightwards)
             {
-                movement = Vector2.up * _force * Time.deltaTime;
+                movement = Vector2.up;
             }
             if (!movingRightwards)
             {
-                movement = Vector2.down * _force * Time.deltaTime;
+                movement = Vector2.down;
             }
         }
 
@@ -57,15 +56,18 @@ public class Belt : MonoBehaviour
         {
             if (movingRightwards)
             {
-                movement = Vector2.down * _force * Time.deltaTime;
+                movement = Vector2.down;
             }
             if (!movingRightwards)
             {
-                movement = Vector2.up * _force * Time.deltaTime;
+                movement = Vector2.up;
             }
         }
 
-        collision.transform.Translate(movement);
+        movement *= _force;// * Time.deltaTime;
+
+        //collision.transform.Translate(movement);
+        Debug.Log(movement);
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(movement);
     }
 }

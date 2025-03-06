@@ -26,6 +26,7 @@ public class BasicMovement : MonoBehaviour
     public bool canMove;
     public float slideSpeed;
     public bool _isJumping;
+    public bool _wallSliding;
 
     // For Collision
     public LayerMask groundLayer;
@@ -97,10 +98,20 @@ public class BasicMovement : MonoBehaviour
 
         wallSide = onRightWall ? -1 : 1;
 
+        if(!onGround && Input.GetKey("z") && _rb.velocity.y > 0f)
+        {
+            _isJumping = true;
+        }
 
         if (onGround)
         {
             _isJumping = false;
+            _wallSliding = false;
+        }
+
+        if (!onWall)
+        {
+            _wallSliding = false;
         }
 
         //Wall slide
@@ -134,7 +145,7 @@ public class BasicMovement : MonoBehaviour
         }
 
         // Half jumps
-        if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false && _isJumping == false)
+        if (Input.GetKeyUp("z") && _rb.velocity.y > 0f && DnD._isDiving == false && _isJumping == true)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.3f);
         }
@@ -142,20 +153,32 @@ public class BasicMovement : MonoBehaviour
         // Wall jumps
         if (Input.GetKeyDown("z") && onWall && !onGround)
         {
-            Vector2 wallDir = onRightWall ? Vector2.left : Vector2.right;
-            _rb.velocity += (Vector2.up + wallDir) * _jump;
+            Debug.Log("walljump");
+            if (onRightWall)
+            {
+                Debug.Log("right wall");
+                _rb.velocity = new Vector2 (-3, _jump);
+            }
+            if (onLeftWall)
+            {
+                Debug.Log("left wall");
+                _rb.velocity = new Vector2 (3, _jump);
+            }
             _isJumping = true;
         }
     }
 
     void WallSlide()
     {
+        _wallSliding = true;
         if (onRightWall == true && rawMovement.x > 0f)
         {
+            Debug.Log("wall slide right");
             _rb.velocity = new Vector2(0, -slideSpeed);
         }
         if (onLeftWall == true && rawMovement.x < 0f)
         {
+            Debug.Log("wall slide left");
             _rb.velocity = new Vector2(0, -slideSpeed);
         }
 
