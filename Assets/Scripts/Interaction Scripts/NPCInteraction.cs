@@ -34,7 +34,7 @@ public class NPCInteraction : MonoBehaviour
     void OpenDialogue()
     {
         dialogueActive = true;
-        hasInteracted = true; 
+        hasInteracted = true;
         if (dialoguePanel != null)
         {
             dialoguePanel.SetActive(true);

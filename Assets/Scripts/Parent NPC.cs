@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ParentNPC : MonoBehaviour
 {
-    public enum NPCState { Idle, Waving, Interact }
+    public enum NPCState { Idle, Waving, Interact, Active }
 
-    public NPCState closeState;
-
+    public NPCState currentState;
     public Sprite idleSprite;
     public Sprite wavingSprite;
     public Sprite interactSprite;
     public SpriteRenderer spriteRenderer;
-
     public Transform player;
 
     public float idleRange = 5f;
@@ -24,59 +20,48 @@ public class ParentNPC : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Update()
+    protected virtual void Update()
     {
         UpdateState();
-        RunActiveState();
+        HandleState();
     }
 
+    // Update state based on player distance
     void UpdateState()
     {
         float distance = Vector3.Distance(transform.position, player.position);
 
         if (distance <= provokedRange)
         {
-            closeState = NPCState.Interact;
+            currentState = NPCState.Interact; // Player is close enough for interaction
         }
         else if (distance <= curiousRange)
         {
-            closeState = NPCState.Waving;
+            currentState = NPCState.Waving;
         }
         else
         {
-            closeState = NPCState.Idle;
+            currentState = NPCState.Idle;
         }
     }
 
-    void RunActiveState()
+    // Handles state-specific actions
+    protected virtual void HandleState()
     {
-        switch (closeState)
+        switch (currentState)
         {
             case NPCState.Idle:
-                IdleState();
+                spriteRenderer.sprite = idleSprite;
                 break;
             case NPCState.Waving:
-                WavingState();
+                spriteRenderer.sprite = wavingSprite;
                 break;
             case NPCState.Interact:
-                InteractState();
+                spriteRenderer.sprite = interactSprite;
+                break;
+            case NPCState.Active:
+                // Active behavior can be implemented by child classes
                 break;
         }
     }
-
-    protected virtual void IdleState()
-    {
-        spriteRenderer.sprite = idleSprite;
-    }
-
-    protected virtual void WavingState()
-    {
-        spriteRenderer.sprite = wavingSprite;
-    }
-
-    protected virtual void InteractState()
-    {
-        spriteRenderer.sprite = interactSprite;
-    }
 }
-
