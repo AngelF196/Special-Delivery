@@ -6247,12 +6247,20 @@ PrefabInstance:
       value: 1.48
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: _wallSliding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: leftOffset.x
       value: -0.483
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: leftOffset.y
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
+      propertyPath: _walljumpPush
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2103099654367134404, guid: cfbb956efd76d2d459bb40adb1c29ac0, type: 3}
       propertyPath: bottomBoxes.x

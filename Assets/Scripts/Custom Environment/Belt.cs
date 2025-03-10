@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Belt : MonoBehaviour
 {
-    [SerializeField] private float _force = 2f;
+    [SerializeField] private float _force = 1f;
     [SerializeField] private bool movingRightwards = true;
     [SerializeField] private GameObject Arrow;
 
@@ -64,10 +64,10 @@ public class Belt : MonoBehaviour
             }
         }
 
-        movement *= _force;// * Time.deltaTime;
+        movement *= _force * Time.deltaTime;
 
-        //collision.transform.Translate(movement);
-        Debug.Log(movement);
-        collision.gameObject.GetComponent<Rigidbody2D>().AddForce(movement);
+        collision.transform.Translate(movement);
+        //Debug.Log(movement);
+        //collision.gameObject.GetComponent<Rigidbody2D>().AddForce(movement);
     }
 }

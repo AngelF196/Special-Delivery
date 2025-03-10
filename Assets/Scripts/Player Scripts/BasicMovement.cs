@@ -27,6 +27,7 @@ public class BasicMovement : MonoBehaviour
     public float slideSpeed;
     public bool _isJumping;
     public bool _wallSliding;
+    public float _walljumpPush;
 
     // For Collision
     public LayerMask groundLayer;
@@ -157,12 +158,12 @@ public class BasicMovement : MonoBehaviour
             if (onRightWall)
             {
                 Debug.Log("right wall");
-                _rb.velocity = new Vector2 (-3, _jump);
+                _rb.velocity = new Vector2 (0, _jump);            
             }
             if (onLeftWall)
             {
                 Debug.Log("left wall");
-                _rb.velocity = new Vector2 (3, _jump);
+                _rb.velocity = new Vector2 (0, _jump);
             }
             _isJumping = true;
         }
@@ -170,7 +171,6 @@ public class BasicMovement : MonoBehaviour
 
     void WallSlide()
     {
-        _wallSliding = true;
         if (onRightWall == true && rawMovement.x > 0f)
         {
             Debug.Log("wall slide right");
