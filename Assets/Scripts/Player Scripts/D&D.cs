@@ -19,6 +19,7 @@ public class DashandDive : MonoBehaviour
     private Rigidbody2D _rb;
     public PlayerData Data;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
     //Other
     private bool _facingLeft;
@@ -38,6 +39,8 @@ public class DashandDive : MonoBehaviour
         _isDiving = false;
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -107,6 +110,7 @@ public class DashandDive : MonoBehaviour
     {
         Debug.Log("tried to dash");
 
+        _animator.SetBool("isDashing", true);
         //Performing dash
         _isDashing = true;
         _isDiving = false;
@@ -146,6 +150,8 @@ public class DashandDive : MonoBehaviour
         _isDashing = false;
         _canDash = true;
         Debug.Log("dash ended");
+        _animator.SetBool("isDashing", false);
+
 
     }
 }

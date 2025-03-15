@@ -64,14 +64,20 @@ public class BasicMovement : MonoBehaviour
         if (!onGround && _rb.velocity.y < 0f)
         {
             _animator.SetBool("isFalling", true);
+            _animator.SetBool("isJumping", false);
         }
         else if (onGround)
         {
             _animator.SetBool("isFalling", false);
+            _animator.SetBool("isJumping", false);
+
         }
 
 
-
+        if (_rb.velocity.y > 1f) 
+        {
+            _animator.SetBool("isJumping", true);
+        }
 
         // Flip the sprite based on direction
         if (movement.x > 0 && _spriteRenderer.flipX)  // Moving right
