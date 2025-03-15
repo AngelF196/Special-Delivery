@@ -1,59 +1,19 @@
+using TMPro;
 using UnityEngine;
-using TMPro; 
 
-public class StarterNPC : ParentNPC
+public class StarterNPC : MonoBehaviour
 {
-    public float timer = 0f;
-    private bool isTimerRunning = false;
-    public TMP_Text timerText;
-    protected override void Start()
+    [SerializeField] private TMP_Text timerText;
+
+    private void Start()
     {
-        base.Start();
+        // Link to TimerManager's text display
+        TimerManager.Instance.timerText = timerText;
     }
 
-    protected override void Update()
+    public void StartRace()
     {
-        base.Update();
-        HandleTimer();
-        UpdateTimerUI(); // Update UI with timer value
-    }
-
-    void HandleTimer()
-    {
-        if (isTimerRunning)
-        {
-            timer += Time.deltaTime;
-        }
-    }
-
-    void UpdateTimerUI()
-    {
-        if (timerText != null)
-        {
-            timerText.text = "Time: " + Mathf.FloorToInt(timer).ToString() + "s";
-        }
-    }// displays as seconds 
-
-    protected override void HandleState()
-    {
-        switch (currentState)
-        {
-            case NPCState.Idle:
-                base.HandleState();
-                break;
-            case NPCState.Waving:
-                base.HandleState();
-                break;
-            case NPCState.Interact:
-                base.HandleState();
-                if (Input.GetKeyDown(KeyCode.E)) 
-                {
-                    isTimerRunning = true; // Start the timer when interaction happens
-                    Debug.Log("Timer started");
-                }
-                break;
-            case NPCState.Active:
-                break;
-        }
+        TimerManager.Instance.StartTimer();
+        timerText.gameObject.SetActive(true);
     }
 }

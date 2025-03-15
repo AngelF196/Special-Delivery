@@ -58,7 +58,20 @@ public class BasicMovement : MonoBehaviour
         PlayerMovement(movement);
 
         // Update Animator isRunning based on movement
-        _animator.SetBool("isRunning", Mathf.Abs(movement.x) > 0);
+        _animator.SetBool("isRunning", Mathf.Abs(movement.x) > 0 && onGround);
+
+        // Only handle falling animation in Update
+        if (!onGround && _rb.velocity.y < 0f)
+        {
+            _animator.SetBool("isFalling", true);
+        }
+        else if (onGround)
+        {
+            _animator.SetBool("isFalling", false);
+        }
+
+
+
 
         // Flip the sprite based on direction
         if (movement.x > 0 && _spriteRenderer.flipX)  // Moving right
@@ -142,6 +155,8 @@ public class BasicMovement : MonoBehaviour
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
                 _rb.velocity += Vector2.up * _jump;
                 _isJumping = true;
+
+                _animator.SetTrigger("Jump");
             }
         }
 

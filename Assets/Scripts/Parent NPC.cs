@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ParentNPC : MonoBehaviour
@@ -10,6 +11,10 @@ public class ParentNPC : MonoBehaviour
     public Sprite interactSprite;
     public SpriteRenderer spriteRenderer;
     public Transform player;
+
+    public float timer = 0f;
+    private bool isTimerRunning = false;
+    public TMP_Text timerText;
 
     public float idleRange = 5f;
     public float curiousRange = 3f;
@@ -24,6 +29,25 @@ public class ParentNPC : MonoBehaviour
     {
         UpdateState();
         HandleState();
+        HandleTimer();
+        UpdateTimerUI();
+    }
+
+    // Handles the timer logic
+    void HandleTimer()
+    {
+        if (isTimerRunning)
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
+    void UpdateTimerUI()
+    {
+        if (timerText != null)
+        {
+            timerText.text = "Time: " + Mathf.FloorToInt(timer).ToString() + "s";
+        }
     }
 
     // Update state based on player distance
@@ -33,7 +57,7 @@ public class ParentNPC : MonoBehaviour
 
         if (distance <= provokedRange)
         {
-            currentState = NPCState.Interact; // Player is close enough for interaction
+            currentState = NPCState.Interact;
         }
         else if (distance <= curiousRange)
         {
@@ -60,8 +84,20 @@ public class ParentNPC : MonoBehaviour
                 spriteRenderer.sprite = interactSprite;
                 break;
             case NPCState.Active:
-                // Active behavior can be implemented by child classes
                 break;
         }
+    }
+
+    // Start the timer for interaction
+    public void StartTimer()
+    {
+        isTimerRunning = true;
+    }
+
+    // Stop the timer for interaction
+    public void StopTimer()
+    {
+        isTimerRunning = false;
+        timer = 0f;
     }
 }

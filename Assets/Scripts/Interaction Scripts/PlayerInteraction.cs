@@ -3,33 +3,29 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     public KeyCode interactKey = KeyCode.E;
-    private NPCInteraction currentNPC;
+    private StarterNPC currentStarterNPC;
 
     void Update()
     {
-        if (currentNPC != null && Input.GetKeyDown(interactKey))
+        if (Input.GetKeyDown(interactKey) && currentStarterNPC != null)
         {
-            Debug.Log("Interact button pressed");
-            currentNPC.Interact();
+            currentStarterNPC.StartRace();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger Entered with: " + other.name);
-        if (other.CompareTag("NPC"))
+        if (other.CompareTag("StarterNPC"))
         {
-            Debug.Log("NPC detected: " + other.name);
-            currentNPC = other.GetComponent<NPCInteraction>();
+            currentStarterNPC = other.GetComponent<StarterNPC>();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("NPC"))
+        if (other.CompareTag("StarterNPC"))
         {
-            Debug.Log("Player exited NPC trigger zone");
-            currentNPC = null;
+            currentStarterNPC = null;
         }
     }
 }
