@@ -7,7 +7,7 @@ public class StarterNPC : MonoBehaviour
 
     private void Start()
     {
-        // Link to TimerManager's text display
+        
         TimerManager.Instance.timerText = timerText;
     }
 

@@ -464,7 +464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -361.1, y: 238}
+  m_AnchoredPosition: {x: -287, y: 192}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &757538853
@@ -1600,7 +1600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 902954867}
-  dialogueText: {fileID: 1184915432}
+  dialogueText: {fileID: 1863980606}
 --- !u!4 &1610050909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8785742604128682419, guid: c84d0df4323826b4586ec11e165e5106, type: 3}
@@ -2146,11 +2146,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 77492963}
-  - {fileID: 1863980608}
   - {fileID: 2136314213}
   - {fileID: 4922195728233856633}
   - {fileID: 1381993071}
   - {fileID: 42462925}
+  - {fileID: 1863980608}
   - {fileID: 4673277281891802131}
   - {fileID: 1706312374}
   - {fileID: 685650752}

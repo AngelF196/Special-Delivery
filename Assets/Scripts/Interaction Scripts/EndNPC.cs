@@ -7,7 +7,7 @@ public class EndNPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             TimerManager.Instance.StopTimer();
-            // Add any additional end-of-race logic here
+           
         }
     }
 }
