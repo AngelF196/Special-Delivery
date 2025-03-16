@@ -1,13 +1,14 @@
 using TMPro;
 using UnityEngine;
 
-public class StarterNPC : MonoBehaviour
+public class StarterNPC : ParentNPC  
 {
     [SerializeField] private TMP_Text timerText;
 
-    private void Start()
+    protected override void Start()
     {
-        
+        base.Start();  
+
         TimerManager.Instance.timerText = timerText;
     }
 
@@ -15,5 +16,11 @@ public class StarterNPC : MonoBehaviour
     {
         TimerManager.Instance.StartTimer();
         timerText.gameObject.SetActive(true);
+    }
+
+    protected override void HandleState()
+    {
+        base.HandleState(); 
+      
     }
 }

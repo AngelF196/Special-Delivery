@@ -12,54 +12,29 @@ public class ParentNPC : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Transform player;
 
-    public float timer = 0f;
-    private bool isTimerRunning = false;
-    public TMP_Text timerText;
+    public DialogueSO dialogue;
+    public TMP_Text dialogueText;
+    private bool isDialogueActive = false;
 
-    public float idleRange = 5f;
-    public float curiousRange = 3f;
-    public float provokedRange = 1f;
+    public float interactionRange = 2f;
 
     protected virtual void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (dialogueText != null)
+            dialogueText.gameObject.SetActive(false);
     }
 
     protected virtual void Update()
     {
-        UpdateState();
-        HandleState();
-        HandleTimer();
-        UpdateTimerUI();
-    }
+        // Check the distance between the player and NPC
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-    // Handles the timer logic
-    void HandleTimer()
-    {
-        if (isTimerRunning)
-        {
-            timer += Time.deltaTime;
-        }
-    }
-
-    void UpdateTimerUI()
-    {
-        if (timerText != null)
-        {
-            timerText.text = "Time: " + Mathf.FloorToInt(timer).ToString() + "s";
-        }
-    }
-
-    // Update state based on player distance
-    void UpdateState()
-    {
-        float distance = Vector3.Distance(transform.position, player.position);
-
-        if (distance <= provokedRange)
+        if (distanceToPlayer <= interactionRange && !isDialogueActive)
         {
             currentState = NPCState.Interact;
         }
-        else if (distance <= curiousRange)
+        else if (distanceToPlayer <= 10f)  // Distance for waving
         {
             currentState = NPCState.Waving;
         }
@@ -67,9 +42,18 @@ public class ParentNPC : MonoBehaviour
         {
             currentState = NPCState.Idle;
         }
+
+        // Update state and handle interaction input
+        HandleState();
+
+        // Interaction
+        if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E))
+        {
+            if (!isDialogueActive)
+                StartDialogue();
+        }
     }
 
-    // Handles state-specific actions
     protected virtual void HandleState()
     {
         switch (currentState)
@@ -88,16 +72,19 @@ public class ParentNPC : MonoBehaviour
         }
     }
 
-    // Start the timer for interaction
-    public void StartTimer()
+    void StartDialogue()
     {
-        isTimerRunning = true;
+        if (dialogue == null || string.IsNullOrEmpty(dialogue.dialogueText))
+            return;
+
+        isDialogueActive = true;
+        dialogueText.gameObject.SetActive(true);
+        dialogueText.text = dialogue.dialogueText; 
     }
 
-    // Stop the timer for interaction
-    public void StopTimer()
+    void EndDialogue()
     {
-        isTimerRunning = false;
-        timer = 0f;
+        isDialogueActive = false;
+        dialogueText.gameObject.SetActive(false);
     }
 }

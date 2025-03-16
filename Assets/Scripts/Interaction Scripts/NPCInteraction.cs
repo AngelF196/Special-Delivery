@@ -1,56 +1,36 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-
-
+using UnityEngine;
 
 public class NPCInteraction : MonoBehaviour
 {
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI dialogueText;
-    private bool hasInteracted = false;
-    private bool dialogueActive = false;
-
+    public TMP_Text dialogueText; 
+    public DialogueSO dialogue;   
 
     void Start()
     {
-        if (dialoguePanel != null)
-            dialoguePanel.SetActive(false);
+        if (dialogueText != null)
+            dialogueText.gameObject.SetActive(false);  
     }
 
-    // Press E for INteraction, opens closes
-    public void Interact()
+    void Update()
     {
-        if (!dialogueActive)
+        if (Input.GetKeyDown(KeyCode.E) && dialogue != null)
         {
-            OpenDialogue();
-        }
-        else
-        {
-            CloseDialogue();
+            ShowDialogue();
         }
     }
 
-    void OpenDialogue()
+    void ShowDialogue()
     {
-        dialogueActive = true;
-        hasInteracted = true;
-        if (dialoguePanel != null)
+        if (!string.IsNullOrEmpty(dialogue.dialogueText)) // Ensure there is dialogue text
         {
-            dialoguePanel.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("Dialogue Panel is not assigned.");
+            dialogueText.gameObject.SetActive(true);
+            dialogueText.text = dialogue.dialogueText;  
         }
     }
 
-    void CloseDialogue()
+    void EndDialogue()
     {
-        dialogueActive = false;
-        if (dialoguePanel != null)
-        {
-            dialoguePanel.SetActive(false);
-        }
+        dialogueText.gameObject.SetActive(false); 
     }
 }
