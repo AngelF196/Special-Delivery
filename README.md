@@ -50,14 +50,14 @@ I found the way that we broke down the project for this assignment to be way mor
 ### Group Devlog
 Our code utilizes three out of the five concepts available for us to use.
  - Finite State Machine
-  - 
+  - The finite state machine present in the parent NPC class greatly helped in getting the desired visual effect of NPCs. By changing their sprite depending on how close the player is and whether they are interacting with the NPC, we were able to make them seem a bit more alive. This was facilitated by the use of the finite state machine that both subclasses of the parent NPC class inherited and used in similar ways and would've been a hassle to implement without it.
  - Inheritance with Polymorphism
   - For our project we realized that there would need to be two different types of NPCs that functionally are extremely similar but would need to have key differences. For example, one of our NPCs would need to be able to start the timer and our other one would need to be able to end the timer. It would be much easier to have two different NPCs, one being the StarterNPC and the other being the EndNPC with the functionalities with the timer built into them. Everything about them would be the same though with our FSM and the need to change sprites is important for each so inheriting them into each subclass was important. So everything was inherited when handling states but the StarterNPC carries the StartRace() while the EndNPC carries the StopTimer() functionality.
  - Unity's ScriptableObjects
   - There is dialogue that appears once the player presses "e" which interacts with NPC. Although, a smaller project it would be foolish to carry all of our text simply with a typical TMP_Text. So we created a DialogueScriptableObject that would allow for us to easily create dialogue Scripts that can be altered within the inspector for easy use of changing and creating dialogue for each NPC that would need to go in our world.
 
-### Student Name 1
-Put your second Devlog here.
+### Angel Flores
+Since the check-in, I have made numerous miscellaneous refinements to the player’s movement code. I haven’t done much in terms of adding new functions to the code, I’ve been tuning what’s already there in the editor as well as adding certain lines of code to fix bugs. I have added new variables for the sake of easy tweaking in the editor, variables like _diveDrag,  _diveGravity,  _diveMult, and _divePower in the scripts make it easy to test changes without having to change any code. In the D&D (Dash and Dive) script, I added a new if statement in the Dash() function that sends you forward if you don’t hold a direction when dashing. Previously, doing so would suspend the player in midair for a time and it looked very unnatural. I’ve also implemented special terrain, specifically the springs and conveyor belts that players can interact with. Conveyor belts and springs are entirely functional and move the player via the Transform function and by adding impulse forces to the player’s rigidbody2D respectively. They are both functional, but I would have liked to refine them more if I had the time. Regardless, both of these pieces of the environment are prefabs, ready to use in any gameplay scene. I’ve also helped with the implementation of the player sprites that Akai illustrated, setting up and fine-tuning the animator transitions and conditions that ensure the player moves as intended. Along with polishing the animation tree in the editor, I would also go into the player movement code to make sure the animation conditions were being properly set. Overall, I’m proud of the progress we were able to make on this game and look forward to further developing it and learning more while doing so.
 
 ### Akai Strong
 Since the check-in this is what I've contributed to the project.
@@ -102,6 +102,14 @@ Score: 2
 
 Reason: Angel was a fantastic teammate for this project, he put his fair share into the assignment and was very communicative. At no point did our communication go away and he was very easy to work with. I think he deserves full points!
 
+
+
+Teammate: Akai Strong
+
+Score: 2
+
+Reason: Akai was a great teammate on this project, we never had any miscommunication and there was a constant trust in eachother that we would both do our fair share of the work. He did especially well integrating all 3 necessary design patterns into the NPCs and provided general help as well.
+
 ## Open-source assets
-- City any external assets used here.
- - Images used from One Piece owned by Toei Animation & Echiiro Oda
+- NPC sprites used from One Piece owned by Toei Animation & Echiiro Oda
+- Background Music "beach theme or smth (2024) [s-smp]" by John "Joy" Tay on YouTube
