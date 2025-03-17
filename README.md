@@ -113,3 +113,4 @@ Reason: Akai was a great teammate on this project, we never had any miscommunica
 ## Open-source assets
 - NPC sprites used from One Piece owned by Toei Animation & Echiiro Oda
 - Background Music "beach theme or smth (2024) [s-smp]" by John "Joy" Tay on YouTube
+- Title Fanfare "Grand Star Get" from Nintendo's Super Mario Galaxy
