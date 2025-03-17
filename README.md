@@ -47,12 +47,60 @@ I found the way that we broke down the project for this assignment to be way mor
 
  
 ## Final submission
+### Group Devlog
+Our code utilizes three out of the five concepts available for us to use.
+ - Finite State Machine
+  - 
+ - Inheritance with Polymorphism
+  - For our project we realized that there would need to be two different types of NPCs that functionally are extremely similar but would need to have key differences. For example, one of our NPCs would need to be able to start the timer and our other one would need to be able to end the timer. It would be much easier to have two different NPCs, one being the StarterNPC and the other being the EndNPC with the functionalities with the timer built into them. Everything about them would be the same though with our FSM and the need to change sprites is important for each so inheriting them into each subclass was important. So everything was inherited when handling states but the StarterNPC carries the StartRace() while the EndNPC carries the StopTimer() functionality.
+ - Unity's ScriptableObjects
+  - There is dialogue that appears once the player presses "e" which interacts with NPC. Although, a smaller project it would be foolish to carry all of our text simply with a typical TMP_Text. So we created a DialogueScriptableObject that would allow for us to easily create dialogue Scripts that can be altered within the inspector for easy use of changing and creating dialogue for each NPC that would need to go in our world.
+
 ### Student Name 1
 Put your second Devlog here.
 
-### Student Name 2
-Put your second Devlog here.
+### Akai Strong
+Since the check-in this is what I've contributed to the project.
+- TimerManager: This is where the code to manage the timer and how it works. It's the same timer that is displayed in the top left of the gameplay.
+ - Variables in this class are:
+   - float currentTime;
+   - TMP_Text timerText;
+   - bool isTimerActive;
+ - Methods in this class are:
+   - StartTimer()
+   - StopTimer()
+   - UpdateTimerDisplay()
 
+- StarterNPC: This is where the NPC that gives the package to the player will have their functionality. They start the timer and inherit everything else from the ParentNPC class.
+ - Variables in this class are:
+   - TMP_Text timerText
+ - Methods in this class are:
+   - StartRace()
+   - HandleState()
+
+- EndNPC: This is where the NPC that receives the package from the player will have their functionality. They end the timer and inherit everything else from the ParentNPC class.
+ - Methods in this class are:
+   - OnTriggerEnter2D(): This is where the timer stops
+
+- DialogueSO: This is where the dialogue scriptable object is located in order to create easy dialogue to give to the NPCs
+ - Variables in this class are:
+   - string dialogueText
+
+- I also worked on implementing the sprites into the animator
+ - PlayerDash
+ - PlayerFall
+ - PlayerIdle
+ - PlayerJump
+ - PlayerRun
+ - PlayerStopping
+
+
+
+Teammate: Angel Flores
+
+Score: 2
+
+Reason: Angel was a fantastic teammate for this project, he put his fair share into the assignment and was very communicative. At no point did our communication go away and he was very easy to work with. I think he deserves full points!
 
 ## Open-source assets
 - City any external assets used here.
