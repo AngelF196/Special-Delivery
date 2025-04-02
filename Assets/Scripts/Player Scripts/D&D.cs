@@ -17,7 +17,6 @@ public class DashandDive : MonoBehaviour
 
     //References
     private Rigidbody2D _rb;
-    public PlayerData Data;
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
 

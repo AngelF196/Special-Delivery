@@ -14,7 +14,6 @@ public class BasicMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _animator;  // Added Animator reference
     private SpriteRenderer _spriteRenderer;  // Added SpriteRenderer reference
-    public PlayerData Data;
     [SerializeField] private DashandDive DnD;
 
     // Other
