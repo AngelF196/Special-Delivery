@@ -61,21 +61,25 @@ public class PlayerMove : MonoBehaviour
         switch (playerState)
         {
             case state.grounded:
+                //movement and skidding
                 //jump and jump state switch
                 //dive and dive state switch
                 break;
             case state.jumping:
+                //light restricted movement
                 //dive and dive state switch
                 //jump cut and midair state switch
                 //midair state switch
                 //walled state switch
                 break;
             case state.midair:
+                //light restrited movement
                 //grounded state switch
                 //walled state switch
                 //dive and state switch
                 break;
             case state.diving:
+                //moderate restricted movement
                 //divelanding state switch
                 //wall bonk
                 break;
@@ -86,13 +90,16 @@ public class PlayerMove : MonoBehaviour
                 //family guy death pose
                 break;
             case state.sliding:
+                //heavy restricted movement
                 //grounded state switch
                 //roll and roll state switch
-                //getup and grounded state switch
+                //neutral getup and grounded state switch
+                //wall bonk
                 break;
             case state.rolling:
                 //grounded state switch
                 //jump and jump state switch
+                //wall bonk
                 break;
             case state.walled:
                 //wall run
