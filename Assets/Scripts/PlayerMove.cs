@@ -10,25 +10,32 @@ public class PlayerMove : MonoBehaviour
         grounded, jumping, midair, diving, divelanding, sliding, rolling, walled, boosting, arialboosting
     }
 
-    //Player Variables
-    [SerializeField] private float accelSpeed;
+    // Player Variables
+    [SerializeField] private float accelRate;
+    [SerializeField] private float decelRate;
+    private float acceleration;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float maxFallSpeed;
 
     // Player Input
     private Vector2 playerDirections;
+    private Vector2 rawPlayerDirections;
     [SerializeField] private state playerState;
-    private bool jumpRec;
+    [SerializeField] private bool jumpRec;
     private bool jumpCutRec;
     private bool diveActRec;
 
+    // References
+    private Rigidbody2D _rb;
+    private Collider2D _collider;
+
     void Start()
     {
-
+        _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CollisionDetect();
@@ -42,13 +49,15 @@ public class PlayerMove : MonoBehaviour
         //jump
         Action();
     }
+
     private void InputGather()
     {
         playerDirections = new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        rawPlayerDirections = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        jumpRec = Input.GetKeyDown("space");
-        jumpCutRec = Input.GetKeyUp("space") && playerState == state.grounded;
-        diveActRec = Input.GetKeyDown("shift");
+        jumpRec = Input.GetKey(KeyCode.Space);
+        jumpCutRec = Input.GetKey(KeyCode.Space) == false && playerState == state.jumping;
+        diveActRec = Input.GetKey(KeyCode.LeftShift);
         
     }
 
@@ -56,14 +65,28 @@ public class PlayerMove : MonoBehaviour
     {
 
     }
+
     private void Action()
     {
         switch (playerState)
         {
             case state.grounded:
-                //movement and skidding
+                //movement
+                float targetSpeed = rawPlayerDirections.x * maxSpeed; //reflects left/right input
+                float currentSpeed = _rb.velocity.x;
+                acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
+                float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.fixedDeltaTime);
+                _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
+                
                 //jump and jump state switch
+                if (jumpRec)
+                {
+                    Debug.Log("changed state");
+                    UpdateState(state.jumping);
+                }
+
                 //dive and dive state switch
+
                 break;
             case state.jumping:
                 //light restricted movement
@@ -115,5 +138,10 @@ public class PlayerMove : MonoBehaviour
 
                 break;
         }
+    }
+
+    private void UpdateState(state newstate)
+    {
+        playerState = newstate;
     }
 }
