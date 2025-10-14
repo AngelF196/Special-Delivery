@@ -21,6 +21,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float maxFallSpeed;
     [SerializeField] private float jumpcut;
     [SerializeField] private float airspeedmod;
+    [SerializeField] private float jumpBuffer;
+
 
     [Header("Flip/Dive Variables")]
     [SerializeField] private float flipJumpForce;
@@ -36,10 +38,7 @@ public class PlayerMove : MonoBehaviour
     private bool jumpCutRec;
     [SerializeField] private bool flipActRec; //hide
     [SerializeField] private bool diveActRec; //hide
-
-    // References
-    private Rigidbody2D _rb;
-    private Collider2D _collider;
+    [SerializeField] private bool facingLeft; //hide
 
     [Header("Collision")]
     [SerializeField] private LayerMask collisionlayer;
@@ -48,7 +47,12 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float rightCastDistance;
     [SerializeField] private float leftCastDistance;
 
+    // References
+    private Rigidbody2D _rb;
+    private Collider2D _collider;
 
+    //misc shit
+    private float jumpTimer;
 
     void Start()
     {
@@ -61,6 +65,12 @@ public class PlayerMove : MonoBehaviour
     {
         CollisionDetect();
         InputGather();
+        if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            DirectionFacing();
+        }
+
+        
     }
 
     private void FixedUpdate()
@@ -69,11 +79,22 @@ public class PlayerMove : MonoBehaviour
         //dive
         //jump
         Action();
+
+        if (jumpRec)
+        {
+            jumpTimer -= Time.deltaTime;
+
+            if (jumpTimer <= 0)
+            {
+                jumpRec = false;
+                jumpTimer = jumpBuffer;
+            }
+        }
     }
 
     private void InputGather()
     {
-        playerDirections = new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        playerDirections = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         rawPlayerDirections = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -81,7 +102,7 @@ public class PlayerMove : MonoBehaviour
             jumpRec = true;
         }
         jumpCutRec = Input.GetKey(KeyCode.Space) == false && playerState == state.jumping;
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             if (!hasFlipped)
             {
@@ -92,8 +113,8 @@ public class PlayerMove : MonoBehaviour
                 diveActRec = true;
             }
         }
-            
-        
+
+
     }
 
     private bool CollisionDetect()
@@ -122,19 +143,33 @@ public class PlayerMove : MonoBehaviour
                 acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
                 float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.fixedDeltaTime);
                 _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
-                
+
                 //jump and jump state switch
                 if (jumpRec)
                 {
                     UpdateState(state.jumping);
                     jumpRec = false;
+                    Debug.Log(CollisionDetect());
                 }
-
+                //Covers if going straight from ground to airborne
+                if (CollisionDetect() == false)
+                {
+                    if (_rb.velocity.y > 0)
+                    {
+                        UpdateState(state.jumping);
+                        jumpRec = false;
+                    }
+                    else
+                    {
+                        UpdateState(state.midair);
+                    }
+                }
                 //dive and dive state switch
-                if (diveActRec)
+                if (diveActRec || flipActRec)
                 {
                     UpdateState(state.diving);
                     diveActRec = false;
+                    flipActRec = false;
                 }
                 break;
 
@@ -147,7 +182,7 @@ public class PlayerMove : MonoBehaviour
 
                 if (jumpCutRec)
                 {
-                    _rb.velocity = new Vector2(_rb.velocity.x,jumpcut * _rb.velocity.y);
+                    _rb.velocity = new Vector2(_rb.velocity.x, jumpcut * _rb.velocity.y);
                 }
                 if (flipActRec)
                 {
@@ -164,6 +199,7 @@ public class PlayerMove : MonoBehaviour
                 if (CollisionDetect())
                 {
                     UpdateState(state.grounded);
+                    Debug.Log(CollisionDetect());
                 }
 
                 //light restricted movement
@@ -185,7 +221,7 @@ public class PlayerMove : MonoBehaviour
                     _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 }
 
-                if(CollisionDetect())
+                if (CollisionDetect())
                 {
                     UpdateState(state.grounded);
                 }
@@ -204,6 +240,13 @@ public class PlayerMove : MonoBehaviour
                 //dive and state switch
                 break;
             case state.diving:
+                
+                //temp
+                if (CollisionDetect())
+                {
+                    UpdateState(state.grounded);
+                }
+
                 //moderate restricted movement
                 //divelanding state switch
                 //wall bonk
@@ -241,33 +284,36 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
     }
-
-    private void airflip() 
+    private void airflip()
     {
         _rb.velocity = new Vector2(_rb.velocity.x, 0f);
         _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
-        
-        Debug.Log("tried to flip");
+
         hasFlipped = true;
         flipActRec = false;
     }
-
     private void airdive()
     {
-        float direction = Mathf.Sign(transform.localScale.x);
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
+        if (facingLeft)
+        {
+            float direction = -1;
+            _rb.AddForce(new Vector2((direction * (forwardSpeed + diveBoost)), 0f), ForceMode2D.Impulse);
+        }
+        else
+        {
+            float direction = 1;
+            _rb.AddForce(new Vector2((forwardSpeed + (direction * diveBoost)), 0f), ForceMode2D.Impulse);
+        }
 
-        _rb.AddForce(new Vector2(direction * (forwardSpeed + diveBoost), 0f), ForceMode2D.Impulse);
         diveActRec = false;
     }
-
     private void UpdateState(state newstate)
     {
         Debug.Log(newstate.ToString() + " state");
         playerState = newstate;
         StateAction(newstate);
     }
-
     private void StateAction(state newstate)
     {
         switch (newstate)
@@ -285,4 +331,15 @@ public class PlayerMove : MonoBehaviour
 
         }
     }
+    private void DirectionFacing()
+        {
+        if (rawPlayerDirections.x == -1)
+        {
+            facingLeft = true;
+        }
+        else
+        {
+            facingLeft = false;
+        }
+        }
 }

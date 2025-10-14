@@ -1229,6 +1229,7 @@ MonoBehaviour:
   maxFallSpeed: 50
   jumpcut: 0.7
   airspeedmod: 0.35
+  jumpBuffer: 0.27
   flipJumpForce: 2
   diveBoost: 5
   hasFlipped: 0
@@ -1237,6 +1238,7 @@ MonoBehaviour:
   jumpRec: 0
   flipActRec: 0
   diveActRec: 0
+  facingLeft: 0
   collisionlayer:
     serializedVersion: 2
     m_Bits: 8
