@@ -18,10 +18,11 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Air Variables")]
     [SerializeField] private float jumpForce;
+    [SerializeField] private float handspringMult;
     [SerializeField] private float maxFallSpeed;
     [SerializeField] private float jumpcut;
     [SerializeField] private float airspeedmod;
-    [SerializeField] private float jumpBuffer;
+    [SerializeField] private float jumpBuffer; 
 
 
     [Header("Flip/Dive Variables")]
@@ -29,6 +30,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float diveBoost;
     [SerializeField] private bool hasFlipped; //hide
     [SerializeField] private bool isFlipping; //hide and unused
+    [SerializeField] private float diveLandMaxTime;
 
     [Header("Player Input")]
     private Vector2 playerDirections;
@@ -53,6 +55,8 @@ public class PlayerMove : MonoBehaviour
 
     //misc shit
     private float jumpTimer;
+    private float diveLandTimer;
+    private state prevState;
 
     void Start()
     {
@@ -63,21 +67,16 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        CollisionDetect();
+        FloorDetect();
         InputGather();
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             DirectionFacing();
         }
-
-        
     }
 
     private void FixedUpdate()
     {
-        //direction and acceleration
-        //dive
-        //jump
         Action();
 
         if (jumpRec)
@@ -88,6 +87,16 @@ public class PlayerMove : MonoBehaviour
             {
                 jumpRec = false;
                 jumpTimer = jumpBuffer;
+            }
+        }
+        if (playerState == state.divelanding)
+        {
+            diveLandTimer -= Time.deltaTime;
+
+            if (diveLandTimer <= 0)
+            {
+                UpdateState(state.grounded);
+                diveLandTimer = diveLandMaxTime;
             }
         }
     }
@@ -117,7 +126,7 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    private bool CollisionDetect()
+    private bool FloorDetect()
     {
         if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, collisionlayer))
         {
@@ -149,10 +158,9 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.jumping);
                     jumpRec = false;
-                    Debug.Log(CollisionDetect());
                 }
                 //Covers if going straight from ground to airborne
-                if (CollisionDetect() == false)
+                if (FloorDetect() == false)
                 {
                     if (_rb.velocity.y > 0)
                     {
@@ -177,7 +185,7 @@ public class PlayerMove : MonoBehaviour
                 targetSpeed = rawPlayerDirections.x * maxSpeed;
                 currentSpeed = _rb.velocity.x;
                 acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
-                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime);
+                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime); //light restricted movement
                 _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
 
                 if (jumpCutRec)
@@ -186,7 +194,7 @@ public class PlayerMove : MonoBehaviour
                 }
                 if (flipActRec)
                 {
-                    airflip();
+                    AirFlip();
                 }
                 if (diveActRec)
                 {
@@ -196,24 +204,18 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.midair);
                 }
-                if (CollisionDetect())
+                if (FloorDetect())
                 {
                     UpdateState(state.grounded);
-                    Debug.Log(CollisionDetect());
                 }
-
-                //light restricted movement
-                //dive and dive state switch
-                //jump cut and midair state switch
-                //midair state switch
+                
                 //walled state switch
                 break;
             case state.midair:
-                //midair movement
                 targetSpeed = rawPlayerDirections.x * maxSpeed; //reflects left/right input
                 currentSpeed = _rb.velocity.x;
                 acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
-                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * 0.5f * Time.fixedDeltaTime);
+                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime); //light restricted movement
                 _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
 
                 if (_rb.velocity.y <= -maxFallSpeed)
@@ -221,38 +223,42 @@ public class PlayerMove : MonoBehaviour
                     _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 }
 
-                if (CollisionDetect())
+                if (FloorDetect())
                 {
                     UpdateState(state.grounded);
                 }
                 if (flipActRec)
                 {
-                    airflip();
+                    AirFlip();
                 }
                 if (diveActRec)
                 {
                     UpdateState(state.diving);
                 }
 
-                //light restrited movement
-                //grounded state switch
                 //walled state switch
-                //dive and state switch
                 break;
             case state.diving:
-                
-                //temp
-                if (CollisionDetect())
+                //moderate restricted movement
+
+
+                if (FloorDetect())
                 {
-                    UpdateState(state.grounded);
+                    UpdateState(state.divelanding);
                 }
 
-                //moderate restricted movement
-                //divelanding state switch
                 //wall bonk
                 break;
             case state.divelanding:
-                //hand spring and jump state switch
+                if (flipActRec)
+                {
+
+                }
+                if (jumpRec)
+                {
+                    UpdateState(state.jumping);
+                }
+
                 //dive boost and midair state switch
                 //slide state switch
                 //family guy death pose
@@ -275,7 +281,6 @@ public class PlayerMove : MonoBehaviour
                 //wall jump and jump state switch
                 //midair state switch
                 break;
-
             case state.boosting:
 
                 break;
@@ -284,7 +289,7 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
     }
-    private void airflip()
+    private void AirFlip()
     {
         _rb.velocity = new Vector2(_rb.velocity.x, 0f);
         _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
@@ -292,7 +297,7 @@ public class PlayerMove : MonoBehaviour
         hasFlipped = true;
         flipActRec = false;
     }
-    private void airdive()
+    private void AirDive()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
         if (facingLeft)
@@ -311,6 +316,7 @@ public class PlayerMove : MonoBehaviour
     private void UpdateState(state newstate)
     {
         Debug.Log(newstate.ToString() + " state");
+        prevState = playerState;
         playerState = newstate;
         StateAction(newstate);
     }
@@ -319,14 +325,25 @@ public class PlayerMove : MonoBehaviour
         switch (newstate)
         {
             case state.jumping:
-                //jump
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime);
+                if(prevState == state.divelanding)
+                {
+                    //hand spring
+                    _rb.velocity = new Vector2(_rb.velocity.x, handspringMult * jumpForce * Time.fixedDeltaTime);
+                }
+                else
+                {
+                    //jump
+                    _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime);
+                }
                 break;
             case state.grounded:
                 hasFlipped = false;
                 break;
+            case state.divelanding:
+                hasFlipped = false;
+                break;
             case state.diving:
-                airdive();
+                AirDive();
                 break;
 
         }
