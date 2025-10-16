@@ -1226,7 +1226,7 @@ MonoBehaviour:
   decelRate: 20
   maxSpeed: 10
   jumpForce: 543.1
-  handspringMult: 1.2
+  handspringMult: 1.33
   maxFallSpeed: 50
   jumpcut: 0.7
   airspeedmod: 0.35
@@ -1235,7 +1235,10 @@ MonoBehaviour:
   diveBoost: 5
   hasFlipped: 0
   isFlipping: 0
-  diveLandMaxTime: 1
+  diveLandMaxTime: 0.5
+  diveSpringHeight: 7.25
+  diveSpringLength: 7.36
+  divespeedmod: 0.1
   playerState: 0
   jumpRec: 0
   flipActRec: 0
@@ -1248,6 +1251,7 @@ MonoBehaviour:
   castDistance: 0.32
   rightCastDistance: 0
   leftCastDistance: 0
+  boostStage: 0
 --- !u!212 &2014159930
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
@@ -31,6 +32,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private bool hasFlipped; //hide
     [SerializeField] private bool isFlipping; //hide and unused
     [SerializeField] private float diveLandMaxTime;
+    [SerializeField] private float diveSpringHeight;
+    [SerializeField] private float diveSpringLength;
+    [SerializeField] private float divespeedmod;
 
     [Header("Player Input")]
     private Vector2 playerDirections;
@@ -57,12 +61,17 @@ public class PlayerMove : MonoBehaviour
     private float jumpTimer;
     private float diveLandTimer;
     private state prevState;
+    private float storedSpeed;
+    [Header("Boost")]
+    [SerializeField] private int boostStage;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
         hasFlipped = false;
+        jumpTimer = jumpBuffer;
+        diveLandTimer = diveLandMaxTime;
     }
 
     void Update()
@@ -99,6 +108,7 @@ public class PlayerMove : MonoBehaviour
                 diveLandTimer = diveLandMaxTime;
             }
         }
+
     }
 
     private void InputGather()
@@ -126,53 +136,28 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    private bool FloorDetect()
-    {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, collisionlayer))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
-    }
-
     private void Action()
     {
         switch (playerState)
         {
             case state.grounded:
-                float targetSpeed = rawPlayerDirections.x * maxSpeed; //reflects left/right input
-                float currentSpeed = _rb.velocity.x;
-                acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
-                float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.fixedDeltaTime);
-                _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
+                MovementCalc();
 
-                //jump and jump state switch
                 if (jumpRec)
                 {
                     UpdateState(state.jumping);
-                    jumpRec = false;
                 }
-                //Covers if going straight from ground to airborne
-                if (FloorDetect() == false)
+                if (FloorDetect() == false) //Covers if going straight from ground to airborne
                 {
                     if (_rb.velocity.y > 0)
                     {
                         UpdateState(state.jumping);
-                        jumpRec = false;
                     }
                     else
                     {
                         UpdateState(state.midair);
                     }
                 }
-                //dive and dive state switch
                 if (diveActRec || flipActRec)
                 {
                     UpdateState(state.diving);
@@ -180,13 +165,8 @@ public class PlayerMove : MonoBehaviour
                     flipActRec = false;
                 }
                 break;
-
             case state.jumping:
-                targetSpeed = rawPlayerDirections.x * maxSpeed;
-                currentSpeed = _rb.velocity.x;
-                acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
-                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime); //light restricted movement
-                _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
+                MovementCalc();
 
                 if (jumpCutRec)
                 {
@@ -212,17 +192,12 @@ public class PlayerMove : MonoBehaviour
                 //walled state switch
                 break;
             case state.midair:
-                targetSpeed = rawPlayerDirections.x * maxSpeed; //reflects left/right input
-                currentSpeed = _rb.velocity.x;
-                acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
-                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime); //light restricted movement
-                _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
+                MovementCalc();
 
                 if (_rb.velocity.y <= -maxFallSpeed)
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 }
-
                 if (FloorDetect())
                 {
                     UpdateState(state.grounded);
@@ -239,8 +214,7 @@ public class PlayerMove : MonoBehaviour
                 //walled state switch
                 break;
             case state.diving:
-                //moderate restricted movement
-
+                MovementCalc();
 
                 if (FloorDetect())
                 {
@@ -250,30 +224,28 @@ public class PlayerMove : MonoBehaviour
                 //wall bonk
                 break;
             case state.divelanding:
-                if (flipActRec)
+                if (flipActRec || diveActRec)
                 {
-
+                    UpdateState(state.boosting);
                 }
                 if (jumpRec)
                 {
                     UpdateState(state.jumping);
                 }
 
-                //dive boost and midair state switch
-                //slide state switch
                 //family guy death pose
                 break;
-            case state.sliding:
-                //heavy restricted movement
-                //grounded state switch
-                //roll and roll state switch
-                //neutral getup and grounded state switch
-                //wall bonk
-                break;
-            case state.rolling:
-                //grounded state switch
-                //jump and jump state switch
-                //wall bonk
+            case state.boosting:
+                MovementCalc();
+
+                if (FloorDetect())
+                {
+                    UpdateState(state.grounded);
+                }
+                if (flipActRec)
+                {
+                    AirFlip();
+                }
                 break;
             case state.walled:
                 //wall run
@@ -281,38 +253,9 @@ public class PlayerMove : MonoBehaviour
                 //wall jump and jump state switch
                 //midair state switch
                 break;
-            case state.boosting:
-
-                break;
-            case state.arialboosting:
-
-                break;
         }
     }
-    private void AirFlip()
-    {
-        _rb.velocity = new Vector2(_rb.velocity.x, 0f);
-        _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
-
-        hasFlipped = true;
-        flipActRec = false;
-    }
-    private void AirDive()
-    {
-        float forwardSpeed = Mathf.Abs(_rb.velocity.x);
-        if (facingLeft)
-        {
-            float direction = -1;
-            _rb.AddForce(new Vector2((direction * (forwardSpeed + diveBoost)), 0f), ForceMode2D.Impulse);
-        }
-        else
-        {
-            float direction = 1;
-            _rb.AddForce(new Vector2((forwardSpeed + (direction * diveBoost)), 0f), ForceMode2D.Impulse);
-        }
-
-        diveActRec = false;
-    }
+    
     private void UpdateState(state newstate)
     {
         Debug.Log(newstate.ToString() + " state");
@@ -327,23 +270,28 @@ public class PlayerMove : MonoBehaviour
             case state.jumping:
                 if(prevState == state.divelanding)
                 {
-                    //hand spring
-                    _rb.velocity = new Vector2(_rb.velocity.x, handspringMult * jumpForce * Time.fixedDeltaTime);
+                    _rb.velocity = new Vector2(storedSpeed, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
                 }
                 else
                 {
-                    //jump
-                    _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime);
+                    _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime); //jump
                 }
+                jumpRec = false;
                 break;
             case state.grounded:
                 hasFlipped = false;
                 break;
             case state.divelanding:
                 hasFlipped = false;
+                storedSpeed = _rb.velocity.x;
+                _rb.velocity = new Vector2(0f, _rb.velocity.y);
                 break;
             case state.diving:
-                AirDive();
+                Dive();
+                break;
+            case state.boosting:
+                boostStage += 1;
+                DiveSpringBoost();
                 break;
 
         }
@@ -359,4 +307,94 @@ public class PlayerMove : MonoBehaviour
             facingLeft = false;
         }
         }
+
+    private void MovementCalc()
+    {
+        float targetSpeed = rawPlayerDirections.x * maxSpeed; //reflects left/right input
+        float currentSpeed = _rb.velocity.x;
+        acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
+        float newSpeed = 0;
+        if (playerState == state.grounded)
+        {
+            newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.fixedDeltaTime); //unrestricted movement
+        }
+        else if (playerState == state.jumping || playerState == state.midair)
+        {
+            newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime); //light restricted movement
+        }
+        else if (playerState == state.diving || playerState == state.boosting)
+        {
+            newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * divespeedmod * Time.fixedDeltaTime); //heavy restricted movement
+        }
+        _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
+    }
+    private void AirFlip()
+    {
+        _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+        _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
+
+        hasFlipped = true;
+        flipActRec = false;
+    }
+    private void Dive()
+    {
+        float forwardSpeed = Mathf.Abs(_rb.velocity.x);
+        if (playerState != state.grounded) 
+        {
+            if (facingLeft)
+            {
+                int direction = -1;
+                _rb.AddForce(new Vector2((direction * (forwardSpeed + diveBoost)), 0f), ForceMode2D.Impulse);
+            }
+            else
+            {
+                _rb.AddForce(new Vector2((forwardSpeed + diveBoost), 0f), ForceMode2D.Impulse);
+            }
+        }
+        else
+        {
+            if (facingLeft)
+            {
+                int direction = -1;
+                _rb.AddForce(new Vector2((direction * (forwardSpeed + diveBoost)), 0f), ForceMode2D.Impulse);
+            }
+            else
+            {
+                _rb.AddForce(new Vector2((forwardSpeed + diveBoost), 0f), ForceMode2D.Impulse);
+            }
+        }
+        diveActRec = false;
+    }
+
+    private void DiveSpringBoost()
+    {
+        float forwardSpeed = Mathf.Abs(_rb.velocity.x);
+        if (facingLeft)
+        {
+            int direction = -1;
+            _rb.velocity = new Vector2(direction * diveSpringLength, diveSpringHeight);
+        }
+        else
+        {
+            _rb.velocity = new Vector2(diveSpringLength, diveSpringHeight);
+        }
+        flipActRec = false;
+        diveActRec = false;
+    }
+
+    private bool FloorDetect()
+    {
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, collisionlayer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+    }
 }
