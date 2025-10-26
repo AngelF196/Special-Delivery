@@ -35,6 +35,15 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Wall Variables")]
     [SerializeField] private float wallSlideSpeed;
+    [SerializeField] private float wallJumpXForce;
+    [SerializeField] private float wallJumpMult;
+    [SerializeField] private bool DetectWalls;
+    private float wallTimer;
+    [SerializeField] private float wallBuffer;
+    [SerializeField] private float wallDashForce;
+    [SerializeField] private bool hasWallDashed;
+
+
 
     [Header("Player Input")]
     private Vector2 playerDirections;
@@ -92,7 +101,7 @@ public class PlayerMove : MonoBehaviour
 
         if (jumpRec)
         {
-            jumpTimer -= Time.deltaTime;
+            jumpTimer -= Time.fixedDeltaTime;
 
             if (jumpTimer <= 0)
             {
@@ -102,12 +111,22 @@ public class PlayerMove : MonoBehaviour
         }
         if (playerState == state.divelanding)
         {
-            diveLandTimer -= Time.deltaTime;
+            diveLandTimer -= Time.fixedDeltaTime;
 
             if (diveLandTimer <= 0)
             {
                 UpdateState(state.grounded);
                 diveLandTimer = diveLandMaxTime;
+            }
+        }
+        if (!DetectWalls)
+        {
+            wallTimer -= Time.fixedDeltaTime;
+
+            if (wallTimer <= 0)
+            {
+                DetectWalls = true;
+                wallTimer = wallBuffer;
             }
         }
 
@@ -190,7 +209,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.grounded);
                 }
-                if (WallDirectionDetect() != 0)
+                if (WallDirectionDetect() != 0 && WallDirectionDetect() != 3)
                 {
                     UpdateState(state.walled);
                 }
@@ -216,7 +235,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.diving);
                 }
-                if(WallDirectionDetect() != 0)
+                if (WallDirectionDetect() != 0 && WallDirectionDetect() != 3)
                 {
                     UpdateState(state.walled);
                 }
@@ -272,10 +291,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.jumping);
                 }
-                if (flipActRec || diveActRec)
-                {
-                    UpdateState(state.diving);
-                }
+
 
                 //wall run
                 //wall slide
@@ -303,19 +319,23 @@ public class PlayerMove : MonoBehaviour
                 }
                 else if (prevState == state.walled)
                 {
-
+                    _rb.velocity = new Vector2(-WallDirectionDetect() * wallJumpXForce * Time.fixedDeltaTime, wallJumpMult * jumpForce * Time.fixedDeltaTime); //wall jump
+                    Debug.Log("trying to wall jump");
                 }
                 else
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime); //jump
                 }
                 jumpRec = false;
+                hasWallDashed = false;
                 break;
             case state.grounded:
                 hasFlipped = false;
+                hasWallDashed = false;
                 break;
             case state.divelanding:
                 hasFlipped = false;
+                hasWallDashed = false;
                 storedSpeed = _rb.velocity.x;
                 _rb.velocity = new Vector2(0f, _rb.velocity.y);
                 break;
@@ -327,10 +347,15 @@ public class PlayerMove : MonoBehaviour
                 DiveSpringBoost();
                 break;
             case state.walled:
+                hasFlipped = false;
                 _rb.velocity = new Vector2(0, _rb.velocity.y);
                 break;
-
         }
+        if (prevState == state.walled)
+        {
+            DetectWalls = false;
+        }
+        
     }
     private void DirectionFacing()
         {
@@ -366,23 +391,26 @@ public class PlayerMove : MonoBehaviour
     }
     private void WallMovement()
     {
-        if (WallDirectionDetect() == rawPlayerDirections.x && _rb.velocity.y >= 0) //wall run
+        if ((flipActRec || diveActRec) && !hasWallDashed) //wall dash
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, wallSlideSpeed, float.MinValue));
-            Debug.Log("wall run");
+            _rb.velocity = new Vector2(0, wallDashForce);
+            hasWallDashed = true;
+            flipActRec = false;
+            diveActRec = false;
         }
-        else if (WallDirectionDetect() == rawPlayerDirections.x && _rb.velocity.y < 0) //wall slide
+        else if (flipActRec || diveActRec)
+        {
+            flipActRec = false;
+            diveActRec = false;
+        }
+        if (WallDirectionDetect() == rawPlayerDirections.x && _rb.velocity.y < 0) //wall slide
         {
             _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlideSpeed, float.MaxValue));
-            Debug.Log("wall slide");
         }
         else //move away from wall
         {
             MovementCalc();
         }
-
-
-
     }
     private void AirFlip()
     {
@@ -395,18 +423,7 @@ public class PlayerMove : MonoBehaviour
     private void Dive()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
-        if (prevState == state.walled) //wall dive
-        {
-            if (WallDirectionDetect() == -1)
-            {
-
-            }
-            if (WallDirectionDetect() == -1)
-            {
-
-            }
-        }
-        else if (prevState != state.grounded) //air dive
+        if (prevState != state.grounded) //air dive
         {
             if (facingLeft)
             {
@@ -463,20 +480,29 @@ public class PlayerMove : MonoBehaviour
     {
         RaycastHit2D leftwallcast = Physics2D.BoxCast(transform.position, wallBoxSize, 0, -transform.right, leftCastDistance, collisionlayer);
         RaycastHit2D rightwallcast = Physics2D.BoxCast(transform.position, wallBoxSize, 0, transform.right, rightCastDistance, collisionlayer);
-
-        if (leftwallcast)
+        if (DetectWalls)
         {
-            return -1;
-        }
-        else if (rightwallcast)
-        {
-            return 1;
+            if (leftwallcast && rightwallcast)
+            {
+                return 2;
+            }
+            else if (leftwallcast)
+            {
+                return -1;
+            }
+            else if (rightwallcast)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
         else
         {
-            return 0;
+            return 3;
         }
-
     }
     private void OnDrawGizmos()
     {
