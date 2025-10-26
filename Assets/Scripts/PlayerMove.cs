@@ -10,7 +10,6 @@ public class PlayerMove : MonoBehaviour
     {
         grounded, jumping, midair, diving, divelanding, sliding, rolling, walled, boosting, arialboosting
     }
-
     [Header("Ground Variables")]
     [SerializeField] private float accelRate;
     [SerializeField] private float decelRate;
@@ -25,23 +24,24 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float airspeedmod;
     [SerializeField] private float jumpBuffer; 
 
-
     [Header("Flip/Dive Variables")]
     [SerializeField] private float flipJumpForce;
     [SerializeField] private float diveBoost;
     [SerializeField] private bool hasFlipped; //hide
-    [SerializeField] private bool isFlipping; //hide and unused
     [SerializeField] private float diveLandMaxTime;
     [SerializeField] private float diveSpringHeight;
     [SerializeField] private float diveSpringLength;
     [SerializeField] private float divespeedmod;
+
+    [Header("Wall Variables")]
+    [SerializeField] private float wallSlideSpeed;
 
     [Header("Player Input")]
     private Vector2 playerDirections;
     private Vector2 rawPlayerDirections;
     [SerializeField] private state playerState;
     [SerializeField] private bool jumpRec; //hide
-    private bool jumpCutRec;
+    private bool jumpCutRec;//hide
     [SerializeField] private bool flipActRec; //hide
     [SerializeField] private bool diveActRec; //hide
     [SerializeField] private bool facingLeft; //hide
@@ -49,6 +49,7 @@ public class PlayerMove : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask collisionlayer;
     [SerializeField] private Vector2 boxSize;
+    [SerializeField] private Vector2 wallBoxSize;
     [SerializeField] private float castDistance;
     [SerializeField] private float rightCastDistance;
     [SerializeField] private float leftCastDistance;
@@ -62,6 +63,7 @@ public class PlayerMove : MonoBehaviour
     private float diveLandTimer;
     private state prevState;
     private float storedSpeed;
+    
     [Header("Boost")]
     [SerializeField] private int boostStage;
 
@@ -188,7 +190,11 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.grounded);
                 }
-                
+                if (WallDirectionDetect() != 0)
+                {
+                    UpdateState(state.walled);
+                }
+
                 //walled state switch
                 break;
             case state.midair:
@@ -209,6 +215,10 @@ public class PlayerMove : MonoBehaviour
                 if (diveActRec)
                 {
                     UpdateState(state.diving);
+                }
+                if(WallDirectionDetect() != 0)
+                {
+                    UpdateState(state.walled);
                 }
 
                 //walled state switch
@@ -248,6 +258,25 @@ public class PlayerMove : MonoBehaviour
                 }
                 break;
             case state.walled:
+                WallMovement();
+
+                if (WallDirectionDetect() == 0)
+                {
+                    UpdateState(state.midair);
+                }
+                if (FloorDetect())
+                {
+                    UpdateState(state.grounded);
+                }
+                if (jumpRec)
+                {
+                    UpdateState(state.jumping);
+                }
+                if (flipActRec || diveActRec)
+                {
+                    UpdateState(state.diving);
+                }
+
                 //wall run
                 //wall slide
                 //wall jump and jump state switch
@@ -272,6 +301,10 @@ public class PlayerMove : MonoBehaviour
                 {
                     _rb.velocity = new Vector2(storedSpeed, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
                 }
+                else if (prevState == state.walled)
+                {
+
+                }
                 else
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime); //jump
@@ -292,6 +325,9 @@ public class PlayerMove : MonoBehaviour
             case state.boosting:
                 boostStage += 1;
                 DiveSpringBoost();
+                break;
+            case state.walled:
+                _rb.velocity = new Vector2(0, _rb.velocity.y);
                 break;
 
         }
@@ -314,7 +350,7 @@ public class PlayerMove : MonoBehaviour
         float currentSpeed = _rb.velocity.x;
         acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
         float newSpeed = 0;
-        if (playerState == state.grounded)
+        if (playerState == state.grounded || playerState == state.walled)
         {
             newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.fixedDeltaTime); //unrestricted movement
         }
@@ -328,6 +364,26 @@ public class PlayerMove : MonoBehaviour
         }
         _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
     }
+    private void WallMovement()
+    {
+        if (WallDirectionDetect() == rawPlayerDirections.x && _rb.velocity.y >= 0) //wall run
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, wallSlideSpeed, float.MinValue));
+            Debug.Log("wall run");
+        }
+        else if (WallDirectionDetect() == rawPlayerDirections.x && _rb.velocity.y < 0) //wall slide
+        {
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlideSpeed, float.MaxValue));
+            Debug.Log("wall slide");
+        }
+        else //move away from wall
+        {
+            MovementCalc();
+        }
+
+
+
+    }
     private void AirFlip()
     {
         _rb.velocity = new Vector2(_rb.velocity.x, 0f);
@@ -339,7 +395,18 @@ public class PlayerMove : MonoBehaviour
     private void Dive()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
-        if (playerState != state.grounded) 
+        if (prevState == state.walled) //wall dive
+        {
+            if (WallDirectionDetect() == -1)
+            {
+
+            }
+            if (WallDirectionDetect() == -1)
+            {
+
+            }
+        }
+        else if (prevState != state.grounded) //air dive
         {
             if (facingLeft)
             {
@@ -351,21 +418,20 @@ public class PlayerMove : MonoBehaviour
                 _rb.AddForce(new Vector2((forwardSpeed + diveBoost), 0f), ForceMode2D.Impulse);
             }
         }
-        else
+        else //ground dive
         {
             if (facingLeft)
             {
                 int direction = -1;
-                _rb.AddForce(new Vector2((direction * (forwardSpeed + diveBoost)), 0f), ForceMode2D.Impulse);
+                _rb.velocity = new Vector2(direction * diveSpringLength, diveSpringHeight);
             }
             else
             {
-                _rb.AddForce(new Vector2((forwardSpeed + diveBoost), 0f), ForceMode2D.Impulse);
+                _rb.velocity = new Vector2(diveSpringLength, diveSpringHeight);
             }
         }
         diveActRec = false;
     }
-
     private void DiveSpringBoost()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
@@ -393,8 +459,30 @@ public class PlayerMove : MonoBehaviour
             return false;
         }
     }
+    private int WallDirectionDetect()
+    {
+        RaycastHit2D leftwallcast = Physics2D.BoxCast(transform.position, wallBoxSize, 0, -transform.right, leftCastDistance, collisionlayer);
+        RaycastHit2D rightwallcast = Physics2D.BoxCast(transform.position, wallBoxSize, 0, transform.right, rightCastDistance, collisionlayer);
+
+        if (leftwallcast)
+        {
+            return -1;
+        }
+        else if (rightwallcast)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+        Gizmos.DrawWireCube(transform.position - transform.right * leftCastDistance, wallBoxSize);
+        Gizmos.DrawWireCube(transform.position + transform.right * rightCastDistance, wallBoxSize);
+
     }
 }
