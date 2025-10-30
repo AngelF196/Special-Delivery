@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 253714253}
   - component: {fileID: 253714252}
   - component: {fileID: 253714254}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ GameObject:
   - component: {fileID: 687845994}
   - component: {fileID: 687845993}
   - component: {fileID: 687845992}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Square (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1758,11 +1758,12 @@ MonoBehaviour:
   diveSpringHeight: 7.25
   diveSpringLength: 7.36
   divespeedmod: 0.1
+  diveYbump: 8
   wallSlideSpeed: 1.83
   wallJumpXForce: 303.7
   wallJumpMult: 1
   DetectWalls: 1
-  wallBuffer: 0.41
+  wallBuffer: 0.2
   wallDashForce: 12
   hasWallDashed: 0
   playerState: 0
@@ -1770,15 +1771,18 @@ MonoBehaviour:
   flipActRec: 0
   diveActRec: 0
   facingLeft: 0
-  collisionlayer:
+  floorLayer:
     serializedVersion: 2
     m_Bits: 8
-  boxSize: {x: 0.56, y: 0.12}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  boxSize: {x: 0.55, y: 0.12}
   wallBoxSize: {x: 0.04, y: 0.5}
   castDistance: 0.32
   rightCastDistance: 0.28
   leftCastDistance: 0.28
-  boostStage: 5
+  boostStage: 2
 --- !u!212 &2014159930
 SpriteRenderer:
   m_ObjectHideFlags: 0
