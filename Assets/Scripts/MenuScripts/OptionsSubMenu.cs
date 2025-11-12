@@ -24,6 +24,7 @@ public class OptionsSubMenu : MonoBehaviour
     [SerializeField] private GameObject _audioOptions;
     [SerializeField] private GameObject _videoOptions;
     [SerializeField] private GameObject _keybindOptions;
+    [SerializeField] private GameObject _keybindContent;
     private Selectable _elementUnderSelectedTab;
     private Selectable _elementAboveBackButton; 
 
@@ -132,6 +133,25 @@ public class OptionsSubMenu : MonoBehaviour
         // Visually deselect all other buttons
         _cb = _audioTab.colors;
         _cb.normalColor = Color.white;
-        _audioTab.colors = _videoTab.colors = _cb;;
+        _audioTab.colors = _videoTab.colors = _cb;
+
+        // Change navigation of certain UI elements
+        _elementAboveBackButton = _keybindContent.transform.Find("ContPauseGroup").GetComponentInChildren<Selectable>();
+        Navigation _nav = _backButton.navigation;
+        _nav.selectOnUp = _elementAboveBackButton;
+        _nav.selectOnDown = _keybindTab;
+        _backButton.navigation = _nav;
+
+        _elementUnderSelectedTab = _keybindContent.transform.Find("KeyLeftGroup").GetComponentInChildren<Selectable>();
+        _nav = _selectedTab.navigation;
+        _nav.selectOnDown = _elementUnderSelectedTab;
+        _selectedTab.navigation = _nav;
+        // Preserve left and right navigation of the other tabs
+        _nav = _audioTab.navigation;
+        _nav.selectOnDown = _elementUnderSelectedTab;
+        _audioTab.navigation = _nav;
+        _nav = _videoTab.navigation;
+        _nav.selectOnDown = _elementUnderSelectedTab;
+        _videoTab.navigation = _nav;
     }
 }
