@@ -96,10 +96,7 @@ public class PlayerMove : MonoBehaviour
     {
         FloorDetect();
         InputGather();
-        if (Input.GetAxisRaw("Horizontal") != 0)
-        {
-            DirectionFacing();
-        }
+        DirectionFacing(false);
     }
 
     private void FixedUpdate()
@@ -396,18 +393,32 @@ public class PlayerMove : MonoBehaviour
         }
         
     }
-    private void DirectionFacing()
+    private void DirectionFacing(bool flipped)
+    {
+        if (flipped == false && !hasFlipped)
         {
-        if (rawPlayerDirections.x == -1)
+            if (_rb.velocity.x < 0)
+            {
+                facingLeft = true;
+            }
+            else if (_rb.velocity.x > 0)
+            {
+                facingLeft = false;
+            }
+        }
+        else if (flipped && hasFlipped)
         {
-            facingLeft = true;
+            Debug.Log("flip turn?");
+            if (rawPlayerDirections.x == -1)
+            {
+                facingLeft = true;
+            }
+            else if (rawPlayerDirections.x == 1)
+            {
+                facingLeft = false;
+            }
         }
-        else
-        {
-            facingLeft = false;
-        }
-        }
-
+    }
     private void MovementCalc()
     {
         float targetSpeed = rawPlayerDirections.x * maxSpeed; //reflects left/right input
@@ -458,6 +469,7 @@ public class PlayerMove : MonoBehaviour
 
         hasFlipped = true;
         flipActRec = false;
+        DirectionFacing(true);
     }
     private void Dive()
     {
