@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
     private enum state
     {
-        grounded, jumping, midair, diving, divelanding, sliding, rolling, walled, boosting, arialboosting
+        grounded, jumping, midair, diving, divelanding, walled, boosting
     }
     [Header("Ground Variables")]
     [SerializeField] private float accelRate;
@@ -241,8 +240,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.walled);
                 }
-
-                //walled state switch
                 break;
             case state.midair:
                 MovementCalc();
@@ -267,8 +264,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.walled);
                 }
-
-                //walled state switch
                 break;
             case state.diving:
                 MovementCalc();
@@ -277,7 +272,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.divelanding);
                 }
-
                 //wall bonk
                 break;
             case state.divelanding:
@@ -303,7 +297,11 @@ public class PlayerMove : MonoBehaviour
                 {
                     AirFlip();
                 }
-                break;
+                if (WallDirectionDetect() != 0 && WallDirectionDetect() != 3)
+                {
+                    UpdateState(state.walled);
+                }
+                    break;
             case state.walled:
                 WallMovement();
 
@@ -323,12 +321,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.jumping);
                 }
-
-
-                //wall run
-                //wall slide
-                //wall jump and jump state switch
-                //midair state switch
                 break;
         }
     }
@@ -347,7 +339,14 @@ public class PlayerMove : MonoBehaviour
             case state.jumping:
                 if(prevState == state.divelanding)
                 {
-                    _rb.velocity = new Vector2(storedSpeed, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
+                    if (MathF.Sign(rawPlayerDirections.x) != MathF.Sign(storedSpeed)) 
+                    {
+                        _rb.velocity = new Vector2(storedSpeed/2, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
+                    }
+                    else
+                    {
+                        _rb.velocity = new Vector2(storedSpeed, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
+                    }
                 }
                 else if (prevState == state.walled)
                 {
@@ -384,7 +383,8 @@ public class PlayerMove : MonoBehaviour
                 break;
             case state.walled:
                 hasFlipped = false;
-                _rb.velocity = new Vector2(0, _rb.velocity.y);
+                if (prevState != state.walled)
+                    _rb.velocity = new Vector2(0, _rb.velocity.y);
                 break;
             case state.midair:
                 DetectWalls = true;
@@ -462,44 +462,57 @@ public class PlayerMove : MonoBehaviour
     private void Dive()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
-        float divespeed = Mathf.Clamp(forwardSpeed + diveBoost, 0f, maxSpeed + 10f);
+        float divespeed = Mathf.Clamp(forwardSpeed, 5f, maxSpeed);
         if (prevState != state.grounded) //air dive
         {
-            if (facingLeft)
+            Debug.Log(_rb.velocity.y);
+            if (_rb.velocity.y < -6)
             {
-                int direction = -1;
-                _rb.velocity = new Vector2(direction * divespeed, diveYbump);
+                if (facingLeft)
+                {
+                    _rb.velocity = new Vector2(-1 * divespeed, _rb.velocity.y);
+                }
+                else
+                {
+                    _rb.velocity = new Vector2(divespeed, _rb.velocity.y);
+                }
             }
             else
             {
-                _rb.velocity = new Vector2(divespeed, diveYbump);
+                float ybump = Mathf.Clamp( _rb.velocity.y * 10f , diveYbump, _rb.velocity.y + diveYbump);
+                if (facingLeft)
+                {
+                    _rb.velocity = new Vector2(-1 * divespeed, ybump);
+                }
+                else
+                {
+                    _rb.velocity = new Vector2(divespeed, ybump);
+                }
             }
         }
         else //ground dive
         {
             if (facingLeft)
             {
-                int direction = -1;
-                _rb.velocity = new Vector2(direction * diveSpringLength, diveSpringHeight);
+                _rb.velocity = new Vector2(_rb.velocity.x - 3, diveSpringHeight);
             }
             else
             {
-                _rb.velocity = new Vector2(diveSpringLength, diveSpringHeight);
+                _rb.velocity = new Vector2(_rb.velocity.x + 3, diveSpringHeight);
             }
         }
         diveActRec = false;
     }
     private void DiveSpringBoost()
     {
-        float forwardSpeed = Mathf.Abs(_rb.velocity.x);
         if (facingLeft)
         {
             int direction = -1;
-            _rb.velocity = new Vector2(direction * diveSpringLength, diveSpringHeight);
+            _rb.velocity = new Vector2(direction * (Mathf.Abs(storedSpeed) + diveSpringLength), diveSpringHeight);
         }
         else
         {
-            _rb.velocity = new Vector2(diveSpringLength, diveSpringHeight);
+            _rb.velocity = new Vector2(storedSpeed + diveSpringLength, diveSpringHeight);
         }
         flipActRec = false;
         diveActRec = false;
