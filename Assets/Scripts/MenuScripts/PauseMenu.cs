@@ -5,12 +5,16 @@ using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
+    [Header("Pause Menu Objects")]
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _mainPauseMenu;
     [SerializeField] private GameObject _optionsMenu;
     [SerializeField] private GameObject _quitButton;
+    [Header("Scripts to Deactivate When Pausing")]
+    [SerializeField] private PlayerMove _playerScript;
     [SerializeField] private EventSystem _eventSystem;
-    private bool _gamePaused = false;
+
+    public static bool gamePaused = false;
     private bool _pressedPause;
     private bool _isOnMainPauseMenu = true;
 
@@ -24,28 +28,31 @@ public class PauseMenu : MonoBehaviour
         {
             if (_isOnMainPauseMenu)
             {
-                _gamePaused = !_gamePaused;
+                gamePaused = !gamePaused;
+                _playerScript.enabled = !_playerScript.enabled;
                 _isOnMainPauseMenu = true;
-                _pauseMenu.SetActive(_gamePaused);
-                _mainPauseMenu.SetActive(_gamePaused);
+                _pauseMenu.SetActive(gamePaused);
+                _mainPauseMenu.SetActive(gamePaused);
                 _optionsMenu.SetActive(false);
                 Time.timeScale = 0.0f;
 
-                if (!_gamePaused)
+                if (!gamePaused)
                 {
                     Time.timeScale = 1.0f;
                 }
             }
             else
             {
-                _eventSystem.SetSelectedGameObject(_optionsMenu.transform.Find("BackButton").gameObject);
+                BackButton();
             }
+            
         }
     }
 
     public void ResumeButton()
     {
-        _gamePaused = false;
+        gamePaused = false;
+        _playerScript.enabled = true;
         _pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
     }
@@ -60,6 +67,7 @@ public class PauseMenu : MonoBehaviour
     public void BackButton()
     {
         _mainPauseMenu.SetActive(true);
+        _eventSystem.SetSelectedGameObject(_optionsMenu);
         _optionsMenu.SetActive(false);
         _isOnMainPauseMenu = true;
     }

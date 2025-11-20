@@ -78,7 +78,7 @@ public class PlayerMove : MonoBehaviour
     {
         FloorDetect();
         InputGather();
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (CustomInputManager.GetRawAxis("Horizontal") != 0)
         {
             DirectionFacing();
         }
@@ -113,15 +113,15 @@ public class PlayerMove : MonoBehaviour
 
     private void InputGather()
     {
-        playerDirections = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        rawPlayerDirections = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        playerDirections = new Vector2(CustomInputManager.GetAxis("Horizontal"), CustomInputManager.GetAxis("Vertical"));
+        rawPlayerDirections = new Vector2(CustomInputManager.GetRawAxis("Horizontal"), CustomInputManager.GetRawAxis("Vertical"));
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (CustomInputManager.GetKeyJustPressed("Jump"))
         {
             jumpRec = true;
         }
-        jumpCutRec = Input.GetKey(KeyCode.Space) == false && playerState == state.jumping;
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        jumpCutRec = CustomInputManager.GetKeyPressed("Jump") == false && playerState == state.jumping;
+        if (CustomInputManager.GetKeyJustPressed("Airflip/Dive"))
         {
             if (!hasFlipped)
             {
