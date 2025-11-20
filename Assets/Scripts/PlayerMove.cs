@@ -408,7 +408,6 @@ public class PlayerMove : MonoBehaviour
         }
         else if (flipped && hasFlipped)
         {
-            Debug.Log("flip turn?");
             if (rawPlayerDirections.x == -1)
             {
                 facingLeft = true;
