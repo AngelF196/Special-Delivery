@@ -170,7 +170,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (!hasFlipped)
             {
-                flipActRec = true;
+                flipActRec = true; //Change to dive act to make superjump
             }
             else if (hasFlipped)
             {
@@ -196,7 +196,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     if (_rb.velocity.y > 0)
                     {
-                        UpdateState(state.jumping);
+                        UpdateState(state.jumping, false);
                     }
                     else
                     {
@@ -322,12 +322,15 @@ public class PlayerMove : MonoBehaviour
         }
     }
     
-    private void UpdateState(state newstate)
+    private void UpdateState(state newstate, bool doAction = true)
     {
         Debug.Log(newstate.ToString() + " state");
         prevState = playerState;
         playerState = newstate;
-        StateAction(newstate);
+        if (doAction)
+        {
+            StateAction(newstate);
+        }
     }
     private void StateAction(state newstate)
     {
