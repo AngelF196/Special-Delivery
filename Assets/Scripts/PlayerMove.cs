@@ -62,6 +62,7 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private Vector2 wallBoxSize;
+    [SerializeField] private Vector3 wallBoxOrigin;
     [SerializeField] private float castDistance;
     [SerializeField] private float rightCastDistance;
     [SerializeField] private float leftCastDistance;
@@ -545,8 +546,8 @@ public class PlayerMove : MonoBehaviour
     }
     private int WallDirectionDetect()
     {
-        RaycastHit2D leftwallcast = Physics2D.BoxCast(transform.position, wallBoxSize, 0, -transform.right, leftCastDistance, wallLayer);
-        RaycastHit2D rightwallcast = Physics2D.BoxCast(transform.position, wallBoxSize, 0, transform.right, rightCastDistance, wallLayer);
+        RaycastHit2D leftwallcast = Physics2D.BoxCast(transform.position + wallBoxOrigin, wallBoxSize, 0, -transform.right, leftCastDistance, wallLayer);
+        RaycastHit2D rightwallcast = Physics2D.BoxCast(transform.position + wallBoxOrigin, wallBoxSize, 0, transform.right, rightCastDistance, wallLayer);
         if (DetectWalls)
         {
             if (leftwallcast && rightwallcast)
@@ -574,7 +575,7 @@ public class PlayerMove : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
-        Gizmos.DrawWireCube(transform.position - transform.right * leftCastDistance, wallBoxSize);
-        Gizmos.DrawWireCube(transform.position + transform.right * rightCastDistance, wallBoxSize);
+        Gizmos.DrawWireCube(transform.position + wallBoxOrigin - transform.right * leftCastDistance, wallBoxSize);
+        Gizmos.DrawWireCube(transform.position + wallBoxOrigin + transform.right * rightCastDistance, wallBoxSize);
     }
 }
