@@ -9,9 +9,13 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _mainPauseMenu;
     [SerializeField] private GameObject _optionsMenu;
+    [SerializeField] private GameObject _optionsButton;
     [SerializeField] private GameObject _quitButton;
+    
     [Header("Scripts to Deactivate When Pausing")]
     [SerializeField] private PlayerMove _playerScript;
+
+    [Header("Other")]
     [SerializeField] private EventSystem _eventSystem;
 
     public static bool gamePaused = false;
@@ -44,6 +48,7 @@ public class PauseMenu : MonoBehaviour
             else
             {
                 BackButton();
+                _eventSystem.SetSelectedGameObject(_optionsButton);
             }
             
         }
@@ -67,7 +72,6 @@ public class PauseMenu : MonoBehaviour
     public void BackButton()
     {
         _mainPauseMenu.SetActive(true);
-        _eventSystem.SetSelectedGameObject(_optionsMenu);
         _optionsMenu.SetActive(false);
         _isOnMainPauseMenu = true;
     }
