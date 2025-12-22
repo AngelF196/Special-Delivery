@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Check-in.unity
     guid: a7964ba478d2f2042804db3ce138b488
+  - enabled: 0
+    path: Assets/Scenes/Movement Testing.unity
+    guid: b6e7c464f8ead4046a595be305f6ff31
+  - enabled: 1
+    path: Assets/Scenes/City Blockout.unity
+    guid: 2400480fe56ecbb47869fda75c69ac82
   m_configObjects: {}
