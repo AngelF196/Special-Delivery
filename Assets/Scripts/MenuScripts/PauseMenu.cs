@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -74,5 +75,10 @@ public class PauseMenu : MonoBehaviour
         _mainPauseMenu.SetActive(true);
         _optionsMenu.SetActive(false);
         _isOnMainPauseMenu = true;
+    }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("Title Screen");
     }
 }
