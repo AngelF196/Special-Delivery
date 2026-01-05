@@ -266,7 +266,7 @@ public class PlayerMove : MonoBehaviour
             case state.diving:
                 MovementCalc();
 
-                if (FloorDetect())
+                if (FloorDetect() && _rb.velocity.y <= 0)
                 {
                     UpdateState(state.divelanding);
                 }
@@ -373,7 +373,7 @@ public class PlayerMove : MonoBehaviour
                 hasFlipped = false;
                 hasWallDashed = false;
                 storedSpeed = _rb.velocity.x;
-                _rb.velocity = new Vector2(0f, _rb.velocity.y);
+                //_rb.velocity = new Vector2(0f, _rb.velocity.y);
                 break;
             case state.diving:
                 Dive();
