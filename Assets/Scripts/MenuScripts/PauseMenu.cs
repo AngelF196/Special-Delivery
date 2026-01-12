@@ -19,9 +19,16 @@ public class PauseMenu : MonoBehaviour
     [Header("Other")]
     [SerializeField] private EventSystem _eventSystem;
 
-    public static bool gamePaused = false;
-    private bool _pressedPause;
+    public static bool gamePaused = false;  // Static variable to use here and in other classes
+    private bool _pressedPause;  // For use with CustomInputManager
     private bool _isOnMainPauseMenu = true;
+
+    void Awake()
+    {
+        _playerScript.enabled = true;
+        Time.timeScale = 1.0f;
+        gamePaused = false;
+    }
 
     // Update is called once per frame
     void Update()

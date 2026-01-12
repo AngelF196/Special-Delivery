@@ -1045,7 +1045,7 @@ PrefabInstance:
       objectReference: {fileID: 2029152931}
     - target: {fileID: 465445841238129647, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: _showVisualization
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2487040147629412384, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _eventSystem: {fileID: 1706954820}
   elementToSelect: {fileID: 464435561}
-  _showVisualization: 1
+  _showVisualization: 0
   _navColor: {r: 0.17483196, g: 0.16793872, b: 0.86415094, a: 1}
 --- !u!1 &1096248529
 GameObject:
@@ -2374,7 +2374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _eventSystem: {fileID: 1706954820}
   elementToSelect: {fileID: 966678746}
-  _showVisualization: 1
+  _showVisualization: 0
   _navColor: {r: 0.77254903, g: 0.09521338, b: 0.047058806, a: 1}
 --- !u!114 &1456366950
 MonoBehaviour:
@@ -2539,7 +2539,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: File 2
+  m_text: File 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

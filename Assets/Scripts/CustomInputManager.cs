@@ -28,7 +28,7 @@ public class CustomInputManager : MonoBehaviour
         KeyCode.RightArrow,
         KeyCode.Space,
         KeyCode.LeftShift,
-        KeyCode.Return,
+        KeyCode.P,
         KeyCode.Backspace,
         KeyCode.Escape
     };
