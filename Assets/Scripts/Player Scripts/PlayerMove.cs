@@ -13,8 +13,8 @@ public class PlayerMove : MonoBehaviour
     [Header("Ground Variables")]
     [SerializeField] private float accelRate;
     [SerializeField] private float decelRate;
-    private float acceleration;
     [SerializeField] private float maxSpeed;
+    private float acceleration;
 
     [Header("Air Variables")]
     [SerializeField] private float jumpForce;
@@ -31,23 +31,15 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float diveSpringLength;
     [SerializeField] private float divespeedmod;
     [SerializeField] private float diveYbump;
-    private float diveLandTimer;
     [SerializeField] private float diveLandMaxTime;
+    private float diveLandTimer;
 
     [Header("Wall Variables")]
     [SerializeField] private float wallSlideSpeed;
     [SerializeField] private float wallJumpXForce;
     [SerializeField] private float wallJumpMult;
-
     [SerializeField] private float wallDashForce;
     [SerializeField] private bool hasWallDashed;
-
-
-
-    [SerializeField] private state playerState;
-    [SerializeField] private bool facingLeft; //hide
-
-
 
     // References
     private Rigidbody2D _rb;
@@ -56,12 +48,12 @@ public class PlayerMove : MonoBehaviour
     PlayerInput _inputs;
 
     //misc shit
-
+    private state playerState;
     private state prevState;
     private float storedSpeed;
-    
-    [Header("Boost")]
-    [SerializeField] private int boostStage;
+    public state currentState => playerState;
+    public float baseMaxSpeed => maxSpeed;
+    private bool facingLeft;
 
     void Start()
     {
@@ -293,8 +285,8 @@ public class PlayerMove : MonoBehaviour
                 Dive();
                 break;
             case state.boosting:
-                boostStage += 1;
                 DiveSpringBoost();
+                _boost.IncrementStage();
                 break;
             case state.walled:
                 hasFlipped = false;
@@ -308,6 +300,7 @@ public class PlayerMove : MonoBehaviour
         if (prevState == state.walled)
         {
             _collision.DetectWalls = false;
+            _boost.ResetWallTimer();
         }
         
     }
@@ -338,7 +331,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void MovementCalc()
     {
-        float targetSpeed = _inputs.RawDirections.x * maxSpeed; //reflects left/right input
+        float targetSpeed = _inputs.RawDirections.x * _boost.CurrentMaxSpeed(); //reflects left/right input
         float currentSpeed = _rb.velocity.x;
         acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
         float newSpeed = 0;
@@ -391,7 +384,7 @@ public class PlayerMove : MonoBehaviour
     private void Dive()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
-        float divespeed = Mathf.Clamp(forwardSpeed, 5f, maxSpeed);
+        float divespeed = Mathf.Clamp(forwardSpeed, 5f, _boost.CurrentMaxSpeed());
         if (prevState != state.grounded) //air dive
         {
             Debug.Log(_rb.velocity.y);

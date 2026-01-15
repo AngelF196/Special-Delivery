@@ -2566,6 +2566,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 523199292399372890, guid: 14d348ec892082048873447adb7c9fb7, type: 3}
+      propertyPath: stageDuration.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 523199292399372890, guid: 14d348ec892082048873447adb7c9fb7, type: 3}
+      propertyPath: stageMaxSpeed.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 523199292399372890, guid: 14d348ec892082048873447adb7c9fb7, type: 3}
+      propertyPath: stageMinSpeed.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5232612894306829648, guid: 14d348ec892082048873447adb7c9fb7, type: 3}
       propertyPath: jumpForce
       value: 556
@@ -8082,7 +8094,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 79.0649, y: -1.7203, z: 4.4847555}
   m_LocalScale: {x: 0.50278765, y: 0.4736096, z: 0.42}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1836664264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
