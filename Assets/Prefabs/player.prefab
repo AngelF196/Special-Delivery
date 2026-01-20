@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 260625062503990690}
   - component: {fileID: 6009881180936346924}
   - component: {fileID: 5232612894306829648}
+  - component: {fileID: 523199292399372890}
+  - component: {fileID: 9173120100700438788}
+  - component: {fileID: 4220318651176745671}
   - component: {fileID: 4962443513107557599}
   - component: {fileID: 7476165751695722377}
   m_Layer: 0
@@ -107,27 +110,46 @@ MonoBehaviour:
   maxFallSpeed: 50
   jumpcut: 0.7
   airspeedmod: 0.35
-  jumpBuffer: 0.27
   flipJumpForce: 4.01
   diveBoost: 5
   hasFlipped: 0
-  diveLandMaxTime: 0.5
   diveSpringHeight: 7.25
   diveSpringLength: 7.36
   divespeedmod: 0.1
   diveYbump: 8
+  diveLandMaxTime: 0.5
   wallSlideSpeed: 1.83
   wallJumpXForce: 303.7
   wallJumpMult: 1
-  DetectWalls: 1
-  wallBuffer: 0.2
   wallDashForce: 12
   hasWallDashed: 0
   playerState: 0
-  jumpRec: 0
-  flipActRec: 0
-  diveActRec: 0
   facingLeft: 0
+  boostStage: 0
+--- !u!114 &523199292399372890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638359687577552935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3b8d80f4552d44e9981898a96a5a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9173120100700438788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638359687577552935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4641620d8835e3b41abf042acb6e520b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -136,10 +158,29 @@ MonoBehaviour:
     m_Bits: 64
   boxSize: {x: 0.55, y: 0.12}
   wallBoxSize: {x: 0.04, y: 0.5}
+  wallBoxOrigin: {x: 0, y: 0, z: 0}
   castDistance: 0.32
   rightCastDistance: 0.28
   leftCastDistance: 0.28
-  boostStage: 2
+  wallBuffer: 0.2
+  DetectWalls: 1
+--- !u!114 &4220318651176745671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638359687577552935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2549e6ee3b6b50a4b89f1f6dba04d4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpRec: 0
+  flipActRec: 0
+  diveActRec: 0
+  jumpHeld: 0
+  inputBuffer: 0.27
 --- !u!50 &4962443513107557599
 Rigidbody2D:
   serializedVersion: 4

@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private enum state
+    public enum state
     {
         grounded, jumping, midair, diving, divelanding, walled, boosting
     }
+
     [Header("Ground Variables")]
     [SerializeField] private float accelRate;
     [SerializeField] private float decelRate;
-    private float acceleration;
     [SerializeField] private float maxSpeed;
+    private float acceleration;
 
     [Header("Air Variables")]
     [SerializeField] private float jumpForce;
@@ -21,82 +22,52 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float maxFallSpeed;
     [SerializeField] private float jumpcut;
     [SerializeField] private float airspeedmod;
-    [SerializeField] private float jumpBuffer; 
 
     [Header("Flip/Dive Variables")]
     [SerializeField] private float flipJumpForce;
     [SerializeField] private float diveBoost;
     [SerializeField] private bool hasFlipped; //hide
-    [SerializeField] private float diveLandMaxTime;
     [SerializeField] private float diveSpringHeight;
     [SerializeField] private float diveSpringLength;
     [SerializeField] private float divespeedmod;
     [SerializeField] private float diveYbump;
-
+    [SerializeField] private float diveLandMaxTime;
+    private float diveLandTimer;
 
     [Header("Wall Variables")]
     [SerializeField] private float wallSlideSpeed;
     [SerializeField] private float wallJumpXForce;
     [SerializeField] private float wallJumpMult;
-    [SerializeField] private bool DetectWalls;
-    private float wallTimer;
-    [SerializeField] private float wallBuffer;
     [SerializeField] private float wallDashForce;
     [SerializeField] private bool hasWallDashed;
 
-
-
-    [Header("Player Input")]
-    private Vector2 playerDirections;
-    private Vector2 rawPlayerDirections;
-    [SerializeField] private state playerState;
-    [SerializeField] private bool jumpRec; //hide
-    private bool jumpCutRec;//hide
-    [SerializeField] private bool flipActRec; //hide
-    [SerializeField] private bool diveActRec; //hide
-    [SerializeField] private bool facingLeft; //hide
-
-    [Header("Collision")]
-    [SerializeField] private LayerMask floorLayer;
-    [SerializeField] private LayerMask wallLayer;
-
-    [SerializeField] private Vector2 boxSize;
-    [SerializeField] private Vector2 wallBoxSize;
-    [SerializeField] private Vector3 wallBoxOrigin;
-    [SerializeField] private float castDistance;
-    [SerializeField] private float rightCastDistance;
-    [SerializeField] private float leftCastDistance;
-
     // References
     private Rigidbody2D _rb;
-    private Collider2D _collider;
+    PlayerBoost _boost;
+    PlayerEnvironment _collision;
+    PlayerInput _inputs;
 
     //misc shit
-    private float jumpTimer;
-    private float diveTimer;
-    private float flipTimer;
-    private float diveLandTimer;
+    private state playerState;
     private state prevState;
     private float storedSpeed;
-    
-    [Header("Boost")]
-    [SerializeField] private int boostStage;
+    public state currentState => playerState;
+    public float baseMaxSpeed => maxSpeed;
+    private bool facingLeft;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<Collider2D>();
+        _boost = GetComponent<PlayerBoost>();
+        _inputs = GetComponent<PlayerInput>();
+        _collision = GetComponent<PlayerEnvironment>();
+
         hasFlipped = false;
-        jumpTimer = jumpBuffer;
-        diveTimer = jumpBuffer;
         diveLandTimer = diveLandMaxTime;
-        boostStage = 0;
     }
 
     void Update()
     {
-        FloorDetect();
-        InputGather();
         DirectionFacing(false);
     }
 
@@ -104,36 +75,6 @@ public class PlayerMove : MonoBehaviour
     {
         Action();
 
-        if (jumpRec)
-        {
-            jumpTimer -= Time.fixedDeltaTime;
-
-            if (jumpTimer <= 0)
-            {
-                jumpRec = false;
-                jumpTimer = jumpBuffer;
-            }
-        }
-        if (diveActRec)
-        {
-            diveTimer -= Time.fixedDeltaTime;
-
-            if (diveTimer <= 0)
-            {
-                diveActRec = false;
-                diveTimer = jumpBuffer;
-            }
-        }
-        if (flipActRec)
-        {
-            flipTimer -= Time.fixedDeltaTime;
-
-            if (flipTimer <= 0)
-            {
-                flipActRec = false;
-                flipTimer = jumpBuffer;
-            }
-        }
         if (playerState == state.divelanding)
         {
             diveLandTimer -= Time.fixedDeltaTime;
@@ -143,43 +84,8 @@ public class PlayerMove : MonoBehaviour
                 UpdateState(state.grounded);
                 diveLandTimer = diveLandMaxTime;
             }
+
         }
-        if (!DetectWalls)
-        {
-            wallTimer -= Time.fixedDeltaTime;
-
-            if (wallTimer <= 0)
-            {
-                DetectWalls = true;
-                wallTimer = wallBuffer;
-            }
-        }
-
-    }
-
-    private void InputGather()
-    {
-        playerDirections = new Vector2(CustomInputManager.GetAxis("Horizontal"), CustomInputManager.GetAxis("Vertical"));
-        rawPlayerDirections = new Vector2(CustomInputManager.GetRawAxis("Horizontal"), CustomInputManager.GetRawAxis("Vertical"));
-
-        if (CustomInputManager.GetKeyJustPressed("Jump"))
-        {
-            jumpRec = true;
-        }
-        jumpCutRec = CustomInputManager.GetKeyPressed("Jump") == false && playerState == state.jumping;
-        if (CustomInputManager.GetKeyJustPressed("Airflip/Dive"))
-        {
-            if (!hasFlipped)
-            {
-                flipActRec = true; //Change to dive act to make superjump
-            }
-            else if (hasFlipped)
-            {
-                diveActRec = true;
-            }
-        }
-
-
     }
 
     private void Action()
@@ -189,11 +95,11 @@ public class PlayerMove : MonoBehaviour
             case state.grounded:
                 MovementCalc();
 
-                if (jumpRec)
+                if (_inputs.saysJump)
                 {
                     UpdateState(state.jumping);
                 }
-                if (FloorDetect() == false) //Covers if going straight from ground to airborne
+                if (_collision.FloorDetect() == false) //Covers if going straight from ground to airborne
                 {
                     if (_rb.velocity.y > 0)
                     {
@@ -204,25 +110,25 @@ public class PlayerMove : MonoBehaviour
                         UpdateState(state.midair);
                     }
                 }
-                if (diveActRec || flipActRec)
+                if (_inputs.saysDive || _inputs.saysFlip)
                 {
                     UpdateState(state.diving);
-                    diveActRec = false;
-                    flipActRec = false;
+                    _inputs.Consume(PlayerInput.Action.dive);
+                    _inputs.Consume(PlayerInput.Action.flip);
                 }
                 break;
             case state.jumping:
                 MovementCalc();
 
-                if (jumpCutRec)
+                if (_inputs.jumpCutRec)
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, jumpcut * _rb.velocity.y);
                 }
-                if (flipActRec)
+                if (_inputs.saysFlip && !hasFlipped)
                 {
                     AirFlip();
                 }
-                if (diveActRec)
+                if (_inputs.saysDive)
                 {
                     UpdateState(state.diving);
                 }
@@ -230,11 +136,11 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.midair);
                 }
-                if (FloorDetect())
+                if (_collision.FloorDetect())
                 {
                     UpdateState(state.grounded);
                 }
-                if (WallDirectionDetect() != 0 && WallDirectionDetect() != 3)
+                if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3)
                 {
                     UpdateState(state.walled);
                 }
@@ -246,19 +152,19 @@ public class PlayerMove : MonoBehaviour
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 }
-                if (FloorDetect())
+                if (_collision.FloorDetect())
                 {
                     UpdateState(state.grounded);
                 }
-                if (flipActRec)
+                if (_inputs.saysFlip && !hasFlipped)
                 {
                     AirFlip();
                 }
-                if (diveActRec)
+                if (_inputs.saysDive)
                 {
                     UpdateState(state.diving);
                 }
-                if (WallDirectionDetect() != 0 && WallDirectionDetect() != 3)
+                if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3)
                 {
                     UpdateState(state.walled);
                 }
@@ -266,18 +172,18 @@ public class PlayerMove : MonoBehaviour
             case state.diving:
                 MovementCalc();
 
-                if (FloorDetect())
+                if (_collision.FloorDetect() && _rb.velocity.y <= 0)
                 {
                     UpdateState(state.divelanding);
                 }
                 //wall bonk
                 break;
             case state.divelanding:
-                if (flipActRec || diveActRec)
+                if (_inputs.saysFlip || _inputs.saysDive)
                 {
                     UpdateState(state.boosting);
                 }
-                if (jumpRec)
+                if (_inputs.saysJump)
                 {
                     UpdateState(state.jumping);
                 }
@@ -287,15 +193,15 @@ public class PlayerMove : MonoBehaviour
             case state.boosting:
                 MovementCalc();
 
-                if (FloorDetect())
+                if (_collision.FloorDetect())
                 {
                     UpdateState(state.grounded);
                 }
-                if (flipActRec)
+                if (_inputs.saysFlip)
                 {
                     AirFlip();
                 }
-                if (WallDirectionDetect() != 0 && WallDirectionDetect() != 3)
+                if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3)
                 {
                     UpdateState(state.walled);
                 }
@@ -307,15 +213,15 @@ public class PlayerMove : MonoBehaviour
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 }
-                if (WallDirectionDetect() == 0)
+                if (_collision.WallDirectionDetect() == 0)
                 {
                     UpdateState(state.midair);
                 }
-                if (FloorDetect())
+                if (_collision.FloorDetect())
                 {
                     UpdateState(state.grounded);
                 }
-                if (jumpRec)
+                if (_inputs.saysJump)
                 {
                     UpdateState(state.jumping);
                 }
@@ -340,7 +246,7 @@ public class PlayerMove : MonoBehaviour
             case state.jumping:
                 if(prevState == state.divelanding)
                 {
-                    if (MathF.Sign(rawPlayerDirections.x) != MathF.Sign(storedSpeed)) 
+                    if (MathF.Sign(_inputs.RawDirections.x) != MathF.Sign(storedSpeed)) 
                     {
                         _rb.velocity = new Vector2(storedSpeed/2, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
                     }
@@ -351,18 +257,18 @@ public class PlayerMove : MonoBehaviour
                 }
                 else if (prevState == state.walled)
                 {
-                    _rb.velocity = new Vector2(-WallDirectionDetect() * wallJumpXForce * Time.fixedDeltaTime, wallJumpMult * jumpForce * Time.fixedDeltaTime); //wall jump
+                    _rb.velocity = new Vector2(-_collision.WallDirectionDetect() * wallJumpXForce * Time.fixedDeltaTime, wallJumpMult * jumpForce * Time.fixedDeltaTime); //wall jump
                 }
                 else if (prevState == state.midair)
                 {
-                    DetectWalls = true;
+                    _collision.DetectWalls = true;
                 }
                 else
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime); //jump
                 }
 
-                jumpRec = false;
+                _inputs.Consume(PlayerInput.Action.jump);
                 hasWallDashed = false;
                 break;
             case state.grounded:
@@ -373,14 +279,14 @@ public class PlayerMove : MonoBehaviour
                 hasFlipped = false;
                 hasWallDashed = false;
                 storedSpeed = _rb.velocity.x;
-                _rb.velocity = new Vector2(0f, _rb.velocity.y);
+                //_rb.velocity = new Vector2(0f, _rb.velocity.y);
                 break;
             case state.diving:
                 Dive();
                 break;
             case state.boosting:
-                boostStage += 1;
                 DiveSpringBoost();
+                _boost.IncrementStage();
                 break;
             case state.walled:
                 hasFlipped = false;
@@ -388,12 +294,13 @@ public class PlayerMove : MonoBehaviour
                     _rb.velocity = new Vector2(0, _rb.velocity.y);
                 break;
             case state.midair:
-                DetectWalls = true;
+                _collision.DetectWalls = true;
                 break;
         }
         if (prevState == state.walled)
         {
-            DetectWalls = false;
+            _collision.DetectWalls = false;
+            _boost.ResetWallTimer();
         }
         
     }
@@ -412,11 +319,11 @@ public class PlayerMove : MonoBehaviour
         }
         else if (flipped && hasFlipped)
         {
-            if (rawPlayerDirections.x == -1)
+            if (_inputs.RawDirections.x == -1)
             {
                 facingLeft = true;
             }
-            else if (rawPlayerDirections.x == 1)
+            else if (_inputs.RawDirections.x == 1)
             {
                 facingLeft = false;
             }
@@ -424,7 +331,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void MovementCalc()
     {
-        float targetSpeed = rawPlayerDirections.x * maxSpeed; //reflects left/right input
+        float targetSpeed = _inputs.RawDirections.x * _boost.CurrentMaxSpeed(); //reflects left/right input
         float currentSpeed = _rb.velocity.x;
         acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
         float newSpeed = 0;
@@ -444,19 +351,19 @@ public class PlayerMove : MonoBehaviour
     }
     private void WallMovement()
     {
-        if ((flipActRec || diveActRec) && !hasWallDashed) //wall dash
+        if ((_inputs.saysFlip || _inputs.saysDive) && !hasWallDashed) //wall dash
         {
             _rb.velocity = new Vector2(0, wallDashForce);
             hasWallDashed = true;
-            flipActRec = false;
-            diveActRec = false;
+            _inputs.Consume(PlayerInput.Action.flip);
+            _inputs.Consume(PlayerInput.Action.dive);
         }
-        else if (flipActRec || diveActRec)
+        else if (_inputs.saysFlip || _inputs.saysDive)
         {
-            flipActRec = false;
-            diveActRec = false;
+            _inputs.Consume(PlayerInput.Action.flip);
+            _inputs.Consume(PlayerInput.Action.dive);
         }
-        if (WallDirectionDetect() == rawPlayerDirections.x && _rb.velocity.y < 0) //wall slide
+        if (_collision.WallDirectionDetect() == _inputs.RawDirections.x && _rb.velocity.y < 0) //wall slide
         {
             _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlideSpeed, float.MaxValue));
         }
@@ -471,13 +378,13 @@ public class PlayerMove : MonoBehaviour
         _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
 
         hasFlipped = true;
-        flipActRec = false;
+        _inputs.Consume(PlayerInput.Action.flip);
         DirectionFacing(true);
     }
     private void Dive()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
-        float divespeed = Mathf.Clamp(forwardSpeed, 5f, maxSpeed);
+        float divespeed = Mathf.Clamp(forwardSpeed, 5f, _boost.CurrentMaxSpeed());
         if (prevState != state.grounded) //air dive
         {
             Debug.Log(_rb.velocity.y);
@@ -516,7 +423,7 @@ public class PlayerMove : MonoBehaviour
                 _rb.velocity = new Vector2(_rb.velocity.x + 3, diveSpringHeight);
             }
         }
-        diveActRec = false;
+        _inputs.Consume(PlayerInput.Action.dive);
     }
     private void DiveSpringBoost()
     {
@@ -529,53 +436,9 @@ public class PlayerMove : MonoBehaviour
         {
             _rb.velocity = new Vector2(storedSpeed + diveSpringLength, diveSpringHeight);
         }
-        flipActRec = false;
-        diveActRec = false;
+        _inputs.Consume(PlayerInput.Action.flip);
+        _inputs.Consume(PlayerInput.Action.dive);
     }
 
-    private bool FloorDetect()
-    {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, floorLayer))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private int WallDirectionDetect()
-    {
-        RaycastHit2D leftwallcast = Physics2D.BoxCast(transform.position + wallBoxOrigin, wallBoxSize, 0, -transform.right, leftCastDistance, wallLayer);
-        RaycastHit2D rightwallcast = Physics2D.BoxCast(transform.position + wallBoxOrigin, wallBoxSize, 0, transform.right, rightCastDistance, wallLayer);
-        if (DetectWalls)
-        {
-            if (leftwallcast && rightwallcast)
-            {
-                return 2;
-            }
-            else if (leftwallcast)
-            {
-                return -1;
-            }
-            else if (rightwallcast)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        else
-        {
-            return 3;
-        }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
-        Gizmos.DrawWireCube(transform.position + wallBoxOrigin - transform.right * leftCastDistance, wallBoxSize);
-        Gizmos.DrawWireCube(transform.position + wallBoxOrigin + transform.right * rightCastDistance, wallBoxSize);
-    }
+
 }
