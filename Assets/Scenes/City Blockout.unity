@@ -6074,7 +6074,7 @@ PrefabInstance:
     - target: {fileID: 465445841238129647, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: _eventSystem
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1903672665}
     - target: {fileID: 465445841238129647, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: elementToSelect
       value: 
@@ -9434,7 +9434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 6425125268519694176}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1903672666
@@ -11310,7 +11310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c96869b8d74c1ac41a835a675ed5775b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eventSystem: {fileID: 0}
+  _eventSystem: {fileID: 1903672665}
   elementToSelect: {fileID: 42084436}
   _showVisualization: 0
   _navColor: {r: 0.8415094, g: 0, b: 0, a: 1}
