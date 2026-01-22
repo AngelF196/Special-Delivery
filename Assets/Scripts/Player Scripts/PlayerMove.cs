@@ -46,14 +46,17 @@ public class PlayerMove : MonoBehaviour
     PlayerBoost _boost;
     PlayerEnvironment _collision;
     PlayerInput _inputs;
+    PlayerAnimation _animation;
 
     //misc shit
     private state playerState;
     private state prevState;
     private float storedSpeed;
+
+    //Shit for other scripts
     public state currentState => playerState;
     public float baseMaxSpeed => maxSpeed;
-    private bool facingLeft;
+    private bool facingLeft; //Don't remove
 
     void Start()
     {
@@ -61,6 +64,7 @@ public class PlayerMove : MonoBehaviour
         _boost = GetComponent<PlayerBoost>();
         _inputs = GetComponent<PlayerInput>();
         _collision = GetComponent<PlayerEnvironment>();
+        _animation = GetComponent<PlayerAnimation>();
 
         hasFlipped = false;
         diveLandTimer = diveLandMaxTime;
@@ -234,6 +238,7 @@ public class PlayerMove : MonoBehaviour
         Debug.Log(newstate.ToString() + " state");
         prevState = playerState;
         playerState = newstate;
+        //_animation.UpdateAnimationState(newstate, prevState);
         if (doAction)
         {
             StateAction(newstate);
