@@ -56,6 +56,8 @@ public class PlayerMove : MonoBehaviour
     //Shit for other scripts
     public state currentState => playerState;
     public float baseMaxSpeed => maxSpeed;
+    public bool isFacingLeft => facingLeft;
+
     private bool facingLeft; //Don't remove
 
     void Start()
@@ -64,7 +66,7 @@ public class PlayerMove : MonoBehaviour
         _boost = GetComponent<PlayerBoost>();
         _inputs = GetComponent<PlayerInput>();
         _collision = GetComponent<PlayerEnvironment>();
-        _animation = GetComponent<PlayerAnimation>();
+        _animation = GetComponentInChildren<PlayerAnimation>();
 
         hasFlipped = false;
         diveLandTimer = diveLandMaxTime;
@@ -238,7 +240,7 @@ public class PlayerMove : MonoBehaviour
         Debug.Log(newstate.ToString() + " state");
         prevState = playerState;
         playerState = newstate;
-        //_animation.UpdateAnimationState(newstate, prevState);
+        _animation.UpdateAnimationState(newstate, prevState);
         if (doAction)
         {
             StateAction(newstate);
@@ -360,6 +362,7 @@ public class PlayerMove : MonoBehaviour
         {
             _rb.velocity = new Vector2(0, wallDashForce);
             hasWallDashed = true;
+            _animation.WallClimbAnimation();
             _inputs.Consume(PlayerInput.Action.flip);
             _inputs.Consume(PlayerInput.Action.dive);
         }
@@ -379,6 +382,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void AirFlip()
     {
+        _animation.FlipAnimation();
         _rb.velocity = new Vector2(_rb.velocity.x, 0f);
         _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
 

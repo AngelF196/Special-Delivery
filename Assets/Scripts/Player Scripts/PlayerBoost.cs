@@ -40,8 +40,8 @@ public class PlayerBoost : MonoBehaviour
     {
         if (boosting)
         {
-            HandleTimers();
             EnforceSpeed();
+            HandleTimers();
         }
     }
 
@@ -59,12 +59,14 @@ public class PlayerBoost : MonoBehaviour
                 boosting = true;
             }
             currentStage++;
-            stageTimer = stageDuration[currentStage];
+            Debug.Log($"Stage Incremented To: {currentStage}");
+            stageTimer = stageDuration[currentStage - 1];
         }
     }
     private void StopBoosting()
     {
         currentStage = 0;
+        Debug.Log($"Stage Reset To: {currentStage}");
         boosting = false;
         stageTimer = 0f;
         ResetWallTimer();
@@ -85,7 +87,8 @@ public class PlayerBoost : MonoBehaviour
         }
 
         if (stageTimer < 0f) 
-        { 
+        {
+            Debug.Log("Timer ran out!");
             StopBoosting();
         }
     }
@@ -99,21 +102,23 @@ public class PlayerBoost : MonoBehaviour
         {
             return;
         }
-        if (speed < stageMinSpeed[currentStage])
+        if (speed < stageMinSpeed[currentStage - 1] && currentStage != 0)
         {
             currentStage--;
+            Debug.Log($"Stage Decremented To: {currentStage}");
+
             // StopBoost();
 
             if (currentStage <= 0)
                 StopBoosting();
             else
-                stageTimer = stageDuration[currentStage];
+                stageTimer = stageDuration[currentStage - 1];
         }
     }
     public float CurrentMaxSpeed()
     {
         if(!boosting) {  return _baseMovement.baseMaxSpeed; }
-        else { return stageMaxSpeed[currentStage]; }
+        else { return stageMaxSpeed[currentStage - 1]; }
     }
 
     public void ResetWallTimer()
