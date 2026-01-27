@@ -142,7 +142,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.midair);
                 }
-                if (_collision.FloorDetect())
+                if (_collision.FloorDetect() && _rb.velocity.y <= 0f)
                 {
                     UpdateState(state.grounded);
                 }

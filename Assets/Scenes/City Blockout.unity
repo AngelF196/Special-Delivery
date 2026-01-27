@@ -9100,7 +9100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.253403
+      value: -4.25489
       objectReference: {fileID: 0}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12282,10 +12282,10 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  boxSize: {x: 0.582, y: 0.12}
+  boxSize: {x: 0.582, y: 0.06}
   wallBoxSize: {x: 0.12, y: 1.05}
   wallBoxOrigin: {x: 0, y: 0.21, z: 0}
-  castDistance: 0.73
+  castDistance: 0.77
   rightCastDistance: 0.28
   leftCastDistance: 0.28
   wallBuffer: 0.2
