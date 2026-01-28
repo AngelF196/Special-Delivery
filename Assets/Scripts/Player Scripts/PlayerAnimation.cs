@@ -113,6 +113,7 @@ public class PlayerAnimation : MonoBehaviour
                     _animator.SetBool("Grounded", false);
                     _animator.SetBool("Running", false);
                     _animator.SetBool("Wall_Slide", false);
+                    _animator.SetBool("Falling", false);
                     break;
                 case (PlayerMove.state.divelanding):
                     walled = false;
@@ -121,6 +122,7 @@ public class PlayerAnimation : MonoBehaviour
                     _animator.SetBool("Grounded", false);
                     _animator.SetBool("Running", false);
                     _animator.SetBool("Wall_Slide", false);
+                    _animator.SetBool("Falling", false);
                     break;
                 case (PlayerMove.state.walled):
                     grounded = false;
