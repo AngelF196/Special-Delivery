@@ -1,0 +1,31 @@
+<svg width="2481" height="1212" viewBox="0 0 2481 1212" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="2481" height="1212" fill="white"/>
+<g filter="url(#filter0_dg_73_51)">
+<rect x="328" y="51" width="1920" height="1080" rx="29" fill="white"/>
+<rect x="328" y="51" width="1920" height="1080" rx="29" fill="url(#paint0_linear_73_51)" fill-opacity="0.2"/>
+<rect x="335.5" y="58.5" width="1905" height="1065" rx="21.5" stroke="#BCB2B2" stroke-width="15"/>
+<rect x="335.5" y="58.5" width="1905" height="1065" rx="21.5" stroke="#080505" stroke-opacity="0.23" stroke-width="15"/>
+</g>
+<defs>
+<filter id="filter0_dg_73_51" x="311" y="38" width="1954" height="1114" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="13" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_73_51"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_73_51"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_73_51" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="2 2" numOctaves="3" seed="6544" />
+<feDisplacementMap in="shape" scale="10" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect2_texture_73_51">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+<linearGradient id="paint0_linear_73_51" x1="463.265" y1="133.239" x2="829.922" y2="848.482" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.6"/>
+<stop offset="1" stop-color="#888080"/>
+</linearGradient>
+</defs>
+</svg>
