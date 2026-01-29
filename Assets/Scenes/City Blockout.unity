@@ -11509,7 +11509,7 @@ MonoBehaviour:
   diveSpringLength: 7.36
   divespeedmod: 0.1
   diveYbump: 8
-  diveLandMaxTime: 0.5
+  diveLandMaxTime: 0.84
   wallSlideSpeed: 1.83
   wallJumpXForce: 303.7
   wallJumpMult: 1
