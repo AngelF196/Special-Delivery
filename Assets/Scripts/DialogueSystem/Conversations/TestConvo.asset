@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
   m_Name: TestConvo
   m_EditorClassIdentifier: 
-  speakerName: Stick Man
   dialogueLines:
-  - test, test, can you even hear me?
-  - "oh damn it, turns out you can. i didn't even want you to hear me out.\t"
-  - anyways, i have a package i want you to deliver. can you do that, or are you
-    just gonna stand around? or if you're not gonna do that, i guess i'll just rot
-    away into obscurity, never to be seen ever again.
-  - cool, i guess...
+  - speakerName: Stick Man
+    dialogueText: test test, can you hear me?
+  - speakerName: Mail Boy
+    dialogueText: Yes I can!! Mail Boy at your service!
+  - speakerName: Stick Man
+    dialogueText: oh damn it, i didn't even want you to hear me out.
+  - speakerName: Stick Man
+    dialogueText: anyways, i need this package delivered. but no one wants to do
+      it for me. damn people won't let me freeload.
+  - speakerName: Mail Boy
+    dialogueText: Y-yes I can! Sorry to hear about what you're going through...

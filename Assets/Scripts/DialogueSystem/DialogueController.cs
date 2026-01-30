@@ -10,12 +10,19 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _dialogueText;
     [SerializeField] private int _charactersPerSecond = 20;
 
+    private Queue<string> _dialogueName = new Queue<string>();
     private Queue<string> _paragraphs = new Queue<string>();
     private bool _conversationEnded = false;
+    private string _name;
     private string _line;
+    private bool _isInConvo = false;
 
     private Coroutine typeDialogueCoroutine;
     private bool _isTyping;
+
+    // Public variables for use with other scripts
+    public bool conversationIsActive => _isInConvo;
+    public bool finishedConvo => _conversationEnded;
 
     public void DisplayNextLine(Conversation conversation)
     {
@@ -36,13 +43,17 @@ public class DialogueController : MonoBehaviour
 
         if (!_isTyping)
         {
+            _name = _dialogueName.Dequeue();
             // Assigns the line that is removed from the queue, and then type it out
             _line = _paragraphs.Dequeue();
+
+            _characterName.text = _name;
             typeDialogueCoroutine = StartCoroutine(TypeOutLine(_line));
         }
         else
             FinishLineEarly();
 
+        // Make a check to ensure all lines of dialogue are removed from the queue
         if(_paragraphs.Count == 0)
         {
             _conversationEnded = true;
@@ -56,13 +67,13 @@ public class DialogueController : MonoBehaviour
             gameObject.SetActive(true);
         }
 
-        _characterName.text = convo.speakerName;
-
         for (int i = 0; i < convo.dialogueLines.Length; i++)
         {
             // Adds a line of dialogue to the queue
-            _paragraphs.Enqueue(convo.dialogueLines[i]);
+            _paragraphs.Enqueue(convo.dialogueLines[i].dialogueText);
+            _dialogueName.Enqueue(convo.dialogueLines[i].speakerName);
         }
+        _isInConvo = true;
     }
 
     private void EndConversation()
@@ -73,6 +84,8 @@ public class DialogueController : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
+        _isInConvo = false;
     }
 
     private IEnumerator TypeOutLine(string line)

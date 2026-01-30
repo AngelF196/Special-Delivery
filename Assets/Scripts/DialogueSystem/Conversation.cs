@@ -5,8 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Conversation/New Conversation", order = 1)]
 public class Conversation : ScriptableObject
 {
-    public string speakerName;
+    [System.Serializable]
+    public struct DialogueLine
+    {
+        public string speakerName;
+
+        [TextArea(3, 5)]
+        public string dialogueText;
+    }
     
-    [TextArea(3, 5)]
-    public string[] dialogueLines;
+    public DialogueLine[] dialogueLines;
 }
