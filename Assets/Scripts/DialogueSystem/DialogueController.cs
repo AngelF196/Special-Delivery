@@ -3,18 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using UnityEngine.UI;
+using System;
 
 public class DialogueController : MonoBehaviour
 {
+    [Header("Main Dialogue System Variables")]
+    [SerializeField] private Image _leftCharacterPortrait;
+    [SerializeField] private Image _rightCharacterPortrait;
     [SerializeField] private TextMeshProUGUI _characterName;
     [SerializeField] private TextMeshProUGUI _dialogueText;
-    [SerializeField] private int _charactersPerSecond = 20;
+    [SerializeField] private int _charactersPerSecond = 40;
 
-    private Queue<string> _dialogueName = new Queue<string>();
-    private Queue<string> _paragraphs = new Queue<string>();
+    [Header("Debug Stuff")]
+    [SerializeField] private Color _talkingColor = Color.white;
+    [SerializeField] private Color _listeningColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+
+    private Queue<Conversation> _conversationObjs = new Queue<Conversation>();
     private bool _conversationEnded = false;
     private string _name;
     private string _line;
+    private int _index = 0;
     private bool _isInConvo = false;
 
     private Coroutine typeDialogueCoroutine;
@@ -28,7 +37,7 @@ public class DialogueController : MonoBehaviour
     {
         // After intreracting with the NPC, check if there' nothing in its Queue
         // Because the queue is empty upon initialization, the conversation will start
-        if (_paragraphs.Count == 0)
+        if (_conversationObjs.Count == 0)
         {
             if (!_conversationEnded)
             {
@@ -42,19 +51,12 @@ public class DialogueController : MonoBehaviour
         }
 
         if (!_isTyping)
-        {
-            _name = _dialogueName.Dequeue();
-            // Assigns the line that is removed from the queue, and then type it out
-            _line = _paragraphs.Dequeue();
-
-            _characterName.text = _name;
-            typeDialogueCoroutine = StartCoroutine(TypeOutLine(_line));
-        }
+            UpdateDialogueUI();
         else
             FinishLineEarly();
 
         // Make a check to ensure all lines of dialogue are removed from the queue
-        if(_paragraphs.Count == 0)
+        if(_conversationObjs.Count == 0)
         {
             _conversationEnded = true;
         }
@@ -70,8 +72,7 @@ public class DialogueController : MonoBehaviour
         for (int i = 0; i < convo.dialogueLines.Length; i++)
         {
             // Adds a line of dialogue to the queue
-            _paragraphs.Enqueue(convo.dialogueLines[i].dialogueText);
-            _dialogueName.Enqueue(convo.dialogueLines[i].speakerName);
+            _conversationObjs.Enqueue(convo);
         }
         _isInConvo = true;
     }
@@ -86,6 +87,29 @@ public class DialogueController : MonoBehaviour
         }
 
         _isInConvo = false;
+        _index = 0;
+    }
+
+    private void UpdateDialogueUI()
+    {
+        Conversation.DialogueLine nextLine = _conversationObjs.Dequeue().dialogueLines[_index];
+        _line = nextLine.dialogueText;
+        _name = nextLine.speakerName;
+        _index++;
+        switch (nextLine.portraitSideToHighlight)
+        {
+            case Conversation.PortraitSide.LEFT_SIDE:
+                _leftCharacterPortrait.color = _talkingColor;
+                _rightCharacterPortrait.color = _listeningColor;
+                break;
+            case Conversation.PortraitSide.RIGHT_SIDE:
+                _leftCharacterPortrait.color = _listeningColor;
+                _rightCharacterPortrait.color = _talkingColor;
+                break;
+        }
+
+        _characterName.text = _name;
+        typeDialogueCoroutine = StartCoroutine(TypeOutLine(_line));
     }
 
     private IEnumerator TypeOutLine(string line)
@@ -112,7 +136,7 @@ public class DialogueController : MonoBehaviour
         // Stops the TypeOutLine coroutine and shows the full line early
         StopCoroutine(typeDialogueCoroutine);
 
-        _dialogueText.maxVisibleCharacters = _line.ToCharArray().Length;
+        _dialogueText.maxVisibleCharacters = _line.Length;
         _isTyping = false;
     }
 }

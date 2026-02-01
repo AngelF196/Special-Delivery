@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: TestConvo
   m_EditorClassIdentifier: 
   dialogueLines:
-  - speakerName: Stick Man
+  - portraitSideToHighlight: 0
+    speakerName: Stick Man
     dialogueText: test test, can you hear me?
-  - speakerName: Mail Boy
+  - portraitSideToHighlight: 1
+    speakerName: Mail Boy
     dialogueText: Yes I can!! Mail Boy at your service!
-  - speakerName: Stick Man
+  - portraitSideToHighlight: 0
+    speakerName: Stick Man
     dialogueText: oh damn it, i didn't even want you to hear me out.
-  - speakerName: Stick Man
+  - portraitSideToHighlight: 0
+    speakerName: Stick Man
     dialogueText: anyways, i need this package delivered. but no one wants to do
       it for me. damn people won't let me freeload.
-  - speakerName: Mail Boy
+  - portraitSideToHighlight: 1
+    speakerName: Mail Boy
     dialogueText: Y-yes I can! Sorry to hear about what you're going through...
