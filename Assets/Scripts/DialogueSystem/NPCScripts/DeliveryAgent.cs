@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEngine;
 
-public class Stickman : BaseNPC, ITalkable
+public class DeliveryAgent : BaseNPC, ITalkable
 {
     [SerializeField] private Conversation _conversation;
     [SerializeField] private DialogueController _dialogueController;

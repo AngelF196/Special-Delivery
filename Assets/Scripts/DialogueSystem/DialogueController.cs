@@ -31,7 +31,6 @@ public class DialogueController : MonoBehaviour
 
     // Public variables for use with other scripts
     public bool conversationIsActive => _isInConvo;
-    public bool finishedConvo => _conversationEnded;
 
     public void DisplayNextLine(Conversation conversation)
     {
