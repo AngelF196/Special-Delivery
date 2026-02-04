@@ -10271,6 +10271,7 @@ MonoBehaviour:
   _characterName: {fileID: 318522389}
   _dialogueText: {fileID: 1439561373}
   _charactersPerSecond: 40
+  _dialogueDelimiter: ^^
   _talkingColor: {r: 1, g: 0, b: 0, a: 1}
   _listeningColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.7647059}
 --- !u!114 &1894119853

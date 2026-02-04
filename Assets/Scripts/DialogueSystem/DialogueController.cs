@@ -5,15 +5,22 @@ using TMPro;
 using System.Linq;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
 
 public class DialogueController : MonoBehaviour
 {
-    [Header("Main Dialogue System Variables")]
+    [Header("Dialogue System References")]
     [SerializeField] private Image _leftCharacterPortrait;
     [SerializeField] private Image _rightCharacterPortrait;
     [SerializeField] private TextMeshProUGUI _characterName;
     [SerializeField] private TextMeshProUGUI _dialogueText;
+
+    [Header("Dialogue System Controls")]
     [SerializeField] private int _charactersPerSecond = 40;
+    [SerializeField, Tooltip("The combination of (preferably special) characters where, when detected, will stop for a moment and then yell out something. This delimiter must be present in at least one spot to indicate the start.\n\nWhile the ending delimiter (second one) is optional, if it's not present, it is assumed that it will be in the end of a dialogue line.")]
+    private string _yellingDelimiter = "^^";
+    [SerializeField, Tooltip("The amount of time the typing is paused after arriving at the delimiter. This pause takes effect each time the controller arrives at a dialogue delimiter.")]
+    private float _delimiterPauseTime = 0.5f;
 
     [Header("Debug Stuff")]
     [SerializeField] private Color _talkingColor = Color.white;
@@ -107,6 +114,7 @@ public class DialogueController : MonoBehaviour
                 break;
         }
 
+
         _characterName.text = _name;
         typeDialogueCoroutine = StartCoroutine(TypeOutLine(_line));
     }
@@ -114,13 +122,26 @@ public class DialogueController : MonoBehaviour
     private IEnumerator TypeOutLine(string line)
     {
         _isTyping = true;
-        int maxVisibleChars = 0;
+
+        int maxVisibleChars = 0;  // Index for individual characters in a dialogue line & updater on the showing of characters
+        int delIndexLocation = line.IndexOf(_yellingDelimiter);
 
         _dialogueText.text = line;
         _dialogueText.maxVisibleCharacters = maxVisibleChars;
-
-        foreach(char c in _line.ToCharArray())
+        
+        Debug.Log("First location of delimiter: " + delIndexLocation);
+        foreach(char c in _dialogueText.text.ToCharArray())
         {
+            if (maxVisibleChars == delIndexLocation)
+            {
+                string subStr = _dialogueText.text.Substring(delIndexLocation + _yellingDelimiter.Length);
+                _dialogueText.text = _dialogueText.text[0..delIndexLocation] + subStr;
+
+                delIndexLocation = _dialogueText.text.IndexOf(_yellingDelimiter);
+                Debug.Log("Next location of delimiter: " + delIndexLocation);
+                yield return new WaitForSeconds(_delimiterPauseTime);
+            }
+            
             maxVisibleChars++;
             _dialogueText.maxVisibleCharacters = maxVisibleChars;
             yield return new WaitForSeconds(1.0f / _charactersPerSecond);
@@ -135,7 +156,18 @@ public class DialogueController : MonoBehaviour
         // Stops the TypeOutLine coroutine and shows the full line early
         StopCoroutine(typeDialogueCoroutine);
 
-        _dialogueText.maxVisibleCharacters = _line.Length;
+        string lineWithoutDelimiters = _dialogueText.text;
+        int delIndexLocation = lineWithoutDelimiters.IndexOf(_yellingDelimiter);
+        while (delIndexLocation != -1)
+        {
+            string subStr = _dialogueText.text.Substring(delIndexLocation + _yellingDelimiter.Length);
+            _dialogueText.text = _dialogueText.text[0..delIndexLocation] + subStr;
+
+            delIndexLocation = _dialogueText.text.IndexOf(_yellingDelimiter);
+            Debug.Log("Next location of delimiter: " + delIndexLocation);
+        }
+
+        _dialogueText.maxVisibleCharacters = _dialogueText.text.Length;
         _isTyping = false;
     }
 }

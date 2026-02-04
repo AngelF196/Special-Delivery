@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: EscalatorMan
   m_EditorClassIdentifier: 
   dialogueLines:
-  - portraitSideToHighlight: 0
-    speakerName: Escalator Man
-    dialogueText: Runnin' up that escalator, feelin' that cardio going up,
-  - portraitSideToHighlight: 0
-    speakerName: Escalator Man
-    dialogueText: better not stop, 'cause I got places to be!
   - portraitSideToHighlight: 1
     speakerName: Mail Boy
     dialogueText: Heya! You need a package to deliver?
   - portraitSideToHighlight: 0
     speakerName: Escalator Man
     dialogueText: Nah, I just wanna run up this escalator to get some cardio in.
-      Pretty fun if I say so!
   - portraitSideToHighlight: 1
     speakerName: Mail Boy
     dialogueText: But isn't there a gym for you to do that?
@@ -43,5 +36,5 @@ MonoBehaviour:
     dialogueText: I am so sorry that this happened to you. Anything I can do?
   - portraitSideToHighlight: 0
     speakerName: Escalator Man
-    dialogueText: Nah, nothing you need to do. Other than to STOP TALKING TO ME!!
+    dialogueText: Nah, nothing you need to do. Other than to ^^STOP TALKING TO ME!!^^
       I'm locking in for a marathon!

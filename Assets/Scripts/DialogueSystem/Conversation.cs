@@ -16,7 +16,7 @@ public class Conversation : ScriptableObject
         public PortraitSide portraitSideToHighlight;
         public string speakerName;
 
-        [TextArea(2, 2)]
+        [TextArea(2, 3)]
         public string dialogueText;
     }
     
