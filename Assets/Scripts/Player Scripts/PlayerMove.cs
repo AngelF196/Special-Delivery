@@ -293,7 +293,6 @@ public class PlayerMove : MonoBehaviour
                 break;
             case state.boosting:
                 DiveSpringBoost();
-                _boost.IncrementStage();
                 break;
             case state.walled:
                 hasFlipped = false;
@@ -436,14 +435,15 @@ public class PlayerMove : MonoBehaviour
     }
     private void DiveSpringBoost()
     {
+        _boost.IncrementStage();
         if (facingLeft)
         {
             int direction = -1;
-            _rb.velocity = new Vector2(direction * (Mathf.Abs(storedSpeed) + diveSpringLength), diveSpringHeight);
+            _rb.velocity = new Vector2(direction * _boost.CurrentMaxSpeed(), diveSpringHeight);
         }
         else
         {
-            _rb.velocity = new Vector2(storedSpeed + diveSpringLength, diveSpringHeight);
+            _rb.velocity = new Vector2(_boost.CurrentMaxSpeed(), diveSpringHeight);
         }
         _inputs.Consume(PlayerInput.Action.flip);
         _inputs.Consume(PlayerInput.Action.dive);
