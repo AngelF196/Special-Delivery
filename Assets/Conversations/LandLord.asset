@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
+  m_Name: LandLord
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - portraitSideToHighlight: 0
+    speakerName: Land Lord
+    dialogueText: Lazy no good residents... always wanting affordable housing.
+  - portraitSideToHighlight: 1
+    speakerName: Mail Boy
+    dialogueText: Something wrong, sir?
+  - portraitSideToHighlight: 0
+    speakerName: Land Lord
+    dialogueText: Yes, there is. And I want you to do something about it.
+  - portraitSideToHighlight: 0
+    speakerName: Land Lord
+    dialogueText: Could you carry these "flyers" to the post office?
+  - portraitSideToHighlight: 1
+    speakerName: Mail Boy
+    dialogueText: Well, I don't think I actually am able to do that right now. Maybe
+      later?
+  - portraitSideToHighlight: 0
+    speakerName: Land Lord
+    dialogueText: god damn it...

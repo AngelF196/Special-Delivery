@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
+  m_Name: EscalatorMan
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - portraitSideToHighlight: 1
+    speakerName: Mail Boy
+    dialogueText: Heya! You need a package to deliver?
+  - portraitSideToHighlight: 0
+    speakerName: Escalator Man
+    dialogueText: Nah, I just wanna run up this escalator to get some cardio in.
+  - portraitSideToHighlight: 1
+    speakerName: Mail Boy
+    dialogueText: But isn't there a gym for you to do that?
+  - portraitSideToHighlight: 0
+    speakerName: Escalator Man
+    dialogueText: Last time I went in there, some asshole dropped a dumbbell on my
+      head without any warning... what I was able to hear before passing out was
+      the sound of cheering.
+  - portraitSideToHighlight: 0
+    speakerName: Escalator Man
+    dialogueText: Haven't gone back to that place ever since, so I've resorted to
+      this escalator.
+  - portraitSideToHighlight: 1
+    speakerName: Mail Boy
+    dialogueText: I am so sorry that this happened to you. Anything I can do?
+  - portraitSideToHighlight: 0
+    speakerName: Escalator Man
+    dialogueText: Nah, nothing you need to do. Other than to ^^STOP TALKING TO ME!!^^
+      I'm locking in for a marathon!
