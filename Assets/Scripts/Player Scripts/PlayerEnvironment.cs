@@ -12,6 +12,7 @@ public class PlayerEnvironment : MonoBehaviour
 
     [Header("Cast Params")]
     [SerializeField] private Vector2 boxSize;
+    [SerializeField] private Vector3 floorBoxOrigin;
     [SerializeField] private Vector2 wallBoxSize;
     [SerializeField] private Vector3 wallBoxOrigin;
     [SerializeField] private float castDistance;
@@ -39,7 +40,7 @@ public class PlayerEnvironment : MonoBehaviour
     }
     public bool FloorDetect()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, floorLayer))
+        if (Physics2D.BoxCast(transform.position - floorBoxOrigin, boxSize, 0, -transform.up, castDistance, floorLayer))
         {
             return true;
         }
@@ -78,7 +79,8 @@ public class PlayerEnvironment : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+
+        Gizmos.DrawWireCube(transform.position - floorBoxOrigin - transform.up * castDistance, boxSize);
         Gizmos.DrawWireCube(transform.position + wallBoxOrigin - transform.right * leftCastDistance, wallBoxSize);
         Gizmos.DrawWireCube(transform.position + wallBoxOrigin + transform.right * rightCastDistance, wallBoxSize);
     }
