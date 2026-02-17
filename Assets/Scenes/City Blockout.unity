@@ -6011,10 +6011,6 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6445068169582656035, guid: 9360a83da856e6e4e856be9ac22c0732, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6881709998674790318, guid: 9360a83da856e6e4e856be9ac22c0732, type: 3}
       propertyPath: m_Material
       value: 
@@ -6913,6 +6909,10 @@ PrefabInstance:
       propertyPath: elementToSelect
       value: 
       objectReference: {fileID: 6210969020655020013}
+    - target: {fileID: 984400877291192956, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2450500485646258897, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -6923,7 +6923,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6001650681878875785, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.30541992
+      value: -0.30517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001650681878875785, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.14135742
       objectReference: {fileID: 0}
     - target: {fileID: 7308821901446345331, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_Name
@@ -6931,6 +6935,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7308821901446345331, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8298068277939413693, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.00012207031
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307068063968696359, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826411484401464770, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864555466604693290, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -11808,7 +11828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35920832, y: 0.2866667}
   m_AnchorMax: {x: 0.64250016, y: 0.36666667}
-  m_AnchoredPosition: {x: 0, y: 0.0015869141}
+  m_AnchoredPosition: {x: 0, y: 0.0017089844}
   m_SizeDelta: {x: -1.052185, y: -1.5633011}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &258691651392111342
@@ -12101,7 +12121,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35920832, y: 0.14666666}
   m_AnchorMax: {x: 0.64250016, y: 0.23}
-  m_AnchoredPosition: {x: 0, y: 0.0008544922}
+  m_AnchoredPosition: {x: 0, y: 0.0009765625}
   m_SizeDelta: {x: -1.052185, y: -3.5632858}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295785692469810287
@@ -12230,7 +12250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35920832, y: 0.5683334}
   m_AnchorMax: {x: 0.64250016, y: 0.6483334}
-  m_AnchoredPosition: {x: 0, y: 0.21829224}
+  m_AnchoredPosition: {x: 0, y: 0.21826172}
   m_SizeDelta: {x: -1.052185, y: -1.5633011}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2175489114810372432
@@ -12784,7 +12804,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0ed4e065a3d87f1498b8e2031f4f0792, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -12903,6 +12923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelRate: 20
   decelRate: 20
+  diveLandDecel: 1.21
   maxSpeed: 10
   jumpForce: 556
   handspringMult: 1.33
@@ -12956,7 +12977,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.374, y: 0.79333335}
   m_AnchorMax: {x: 0.623, y: 0.90000004}
-  m_AnchoredPosition: {x: 0.5, y: 0.9998779}
+  m_AnchoredPosition: {x: 0.5, y: 0.99975586}
   m_SizeDelta: {x: -1.9627991, y: 0.38220215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &6009881181322807045
