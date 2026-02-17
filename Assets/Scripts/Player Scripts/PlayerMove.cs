@@ -87,6 +87,7 @@ public class PlayerMove : MonoBehaviour
 
             if (diveLandTimer <= 0)
             {
+                Debug.Log("dive land timer ran out");
                 UpdateState(state.grounded);
                 diveLandTimer = diveLandMaxTime;
             }
@@ -285,6 +286,7 @@ public class PlayerMove : MonoBehaviour
             case state.divelanding:
                 hasFlipped = false;
                 hasWallDashed = false;
+                diveLandTimer = diveLandMaxTime;
                 storedSpeed = _rb.velocity.x;
                 //_rb.velocity = new Vector2(0f, _rb.velocity.y);
                 break;
