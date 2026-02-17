@@ -13,6 +13,7 @@ public class PlayerMove : MonoBehaviour
     [Header("Ground Variables")]
     [SerializeField] private float accelRate;
     [SerializeField] private float decelRate;
+    [SerializeField] private float diveLandDecel;
     [SerializeField] private float maxSpeed;
     private float acceleration;
 
@@ -186,6 +187,7 @@ public class PlayerMove : MonoBehaviour
                 //wall bonk
                 break;
             case state.divelanding:
+                MovementCalc();
                 if (_inputs.saysFlip || _inputs.saysDive)
                 {
                     UpdateState(state.boosting);
@@ -355,7 +357,11 @@ public class PlayerMove : MonoBehaviour
         {
             newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * divespeedmod * Time.fixedDeltaTime); //heavy restricted movement
         }
-        _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
+        else if (playerState == state.divelanding)
+        {
+            newSpeed = Mathf.MoveTowards(currentSpeed, (targetSpeed/diveLandDecel), acceleration * Time.fixedDeltaTime);
+        }
+            _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
     }
     private void WallMovement()
     {
