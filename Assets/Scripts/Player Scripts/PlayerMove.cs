@@ -88,7 +88,6 @@ public class PlayerMove : MonoBehaviour
 
             if (diveLandTimer <= 0)
             {
-                Debug.Log("dive land timer ran out");
                 UpdateState(state.grounded);
                 diveLandTimer = diveLandMaxTime;
             }
@@ -206,7 +205,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.grounded);
                 }
-                if (_inputs.saysFlip)
+                if (_inputs.saysFlip && !hasFlipped)
                 {
                     AirFlip();
                 }
@@ -403,7 +402,6 @@ public class PlayerMove : MonoBehaviour
         float divespeed = Mathf.Clamp(forwardSpeed, 5f, _boost.CurrentMaxSpeed());
         if (prevState != state.grounded) //air dive
         {
-            Debug.Log(_rb.velocity.y);
             if (_rb.velocity.y < -6)
             {
                 if (facingLeft)
