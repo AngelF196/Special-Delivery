@@ -96,6 +96,17 @@ public class DialogueController : MonoBehaviour
         _index = 0;
     }
 
+    public void ExitConversationAfterStrayingFromNPC()
+    {
+        FinishLineEarly();
+        _conversationObjs.Clear();
+        _name = "";
+        _line = "";
+        _index = 0;
+
+        EndConversation();
+    }
+
     private void UpdateDialogueUI()
     {
         Conversation.DialogueLine nextLine = _conversationObjs.Dequeue().dialogueLines[_index];

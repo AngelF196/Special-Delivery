@@ -5,23 +5,25 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private DialogueController _dialogueController;
-    [SerializeField] private PlayerMove _player;
+    [SerializeField] private GameObject _player;
+    private PlayerMove _pm;
+    private Rigidbody2D _playerRb;
 
     void Start()
     {
-
+        _pm = _player.GetComponent<PlayerMove>();
+        _playerRb = _player.GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        // Disable player movement if a conversation between two characters is active
         if (_dialogueController.conversationIsActive)
         {
-            _player.enabled = false;
+            _pm.enabled = false;
         }
         else
         {
-            _player.enabled = true;
+            _pm.enabled = true;
         }
     }
 }

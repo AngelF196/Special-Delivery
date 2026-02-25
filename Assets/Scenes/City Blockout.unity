@@ -4966,7 +4966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogueController: {fileID: 1894119852}
-  _player: {fileID: 5232612894423687033}
+  _player: {fileID: 6638359687125029390}
 --- !u!4 &838647099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2600436304115704049, guid: c1964a866557a524f87e509f852484c3, type: 3}
