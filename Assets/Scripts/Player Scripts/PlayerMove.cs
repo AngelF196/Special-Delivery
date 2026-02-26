@@ -90,7 +90,6 @@ public class PlayerMove : MonoBehaviour
 
             if (diveLandTimer <= 0)
             {
-                Debug.Log("dive land timer ran out");
                 UpdateState(state.grounded);
                 diveLandTimer = diveLandMaxTime;
             }
