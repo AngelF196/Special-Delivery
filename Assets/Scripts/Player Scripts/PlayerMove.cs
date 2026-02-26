@@ -33,6 +33,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float divespeedmod;
     [SerializeField] private float diveYbump;
     [SerializeField] private float diveLandMaxTime;
+    [SerializeField] private float groundDiveLength;
+    [SerializeField] private float groundDiveHeight;
     private float diveLandTimer;
 
     [Header("Wall Variables")]
@@ -118,11 +120,9 @@ public class PlayerMove : MonoBehaviour
                         UpdateState(state.midair);
                     }
                 }
-                if (_inputs.saysDive || _inputs.saysFlip)
+                if (_inputs.saysDive)
                 {
                     UpdateState(state.diving);
-                    _inputs.Consume(PlayerInput.Action.dive);
-                    _inputs.Consume(PlayerInput.Action.flip);
                 }
                 break;
             case state.jumping:
@@ -206,7 +206,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     UpdateState(state.grounded);
                 }
-                if (_inputs.saysFlip)
+                if (_inputs.saysFlip && !hasFlipped)
                 {
                     AirFlip();
                 }
@@ -359,7 +359,7 @@ public class PlayerMove : MonoBehaviour
         }
         else if (playerState == state.divelanding)
         {
-            newSpeed = Mathf.MoveTowards(currentSpeed, (targetSpeed/diveLandDecel), acceleration * Time.fixedDeltaTime);
+            newSpeed = Mathf.MoveTowards(currentSpeed, (currentSpeed/diveLandDecel), acceleration * Time.fixedDeltaTime);
         }
             _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
     }
@@ -390,7 +390,9 @@ public class PlayerMove : MonoBehaviour
     private void AirFlip()
     {
         _animation.FlipAnimation();
-        _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+        if (_rb.velocity.y <= 0) {
+            _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+        }
         _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
 
         hasFlipped = true;
@@ -403,7 +405,6 @@ public class PlayerMove : MonoBehaviour
         float divespeed = Mathf.Clamp(forwardSpeed, 5f, _boost.CurrentMaxSpeed());
         if (prevState != state.grounded) //air dive
         {
-            Debug.Log(_rb.velocity.y);
             if (_rb.velocity.y < -6)
             {
                 if (facingLeft)
@@ -432,11 +433,11 @@ public class PlayerMove : MonoBehaviour
         {
             if (facingLeft)
             {
-                _rb.velocity = new Vector2(_rb.velocity.x - 3, diveSpringHeight);
+                _rb.velocity = new Vector2(_rb.velocity.x - groundDiveLength, groundDiveHeight);
             }
             else
             {
-                _rb.velocity = new Vector2(_rb.velocity.x + 3, diveSpringHeight);
+                _rb.velocity = new Vector2(_rb.velocity.x + groundDiveLength, groundDiveHeight);
             }
         }
         _inputs.Consume(PlayerInput.Action.dive);
