@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ac8aa6de8df3e49bebf0514dd811d0, type: 3}
+  m_Name: Sexy Bits Employee
+  m_EditorClassIdentifier: 
+  characterName: Sexy Bits Employee
+  normalSprite: {fileID: 21300000, guid: c3177dd5a4c1e644d9384a73b89c257b, type: 3}
+  surprisedSprite: {fileID: 21300000, guid: 5a8841b721aca2545897c3f41f42c2f3, type: 3}
+  confusedSprite: {fileID: 21300000, guid: 6747392d6b4595b449e24e4533b3f39b, type: 3}

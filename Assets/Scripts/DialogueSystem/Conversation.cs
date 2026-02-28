@@ -11,7 +11,7 @@ public class Conversation : ScriptableObject
         LEFT_SIDE, RIGHT_SIDE
     }
 
-    public enum Emotions
+    public enum Expressions
     {
         Normal, Surprised, Confused
     }
@@ -19,13 +19,14 @@ public class Conversation : ScriptableObject
     [System.Serializable]
     public struct DialogueLine
     {
-        public PortraitSide portraitSideToHighlight;
-        public Emotions characterEmotions;
-        public string speakerName;
+        public PortraitSide speakerSideToHighlight;
+        public Expressions expression;
 
         [TextArea(2, 3)]
         public string dialogueText;
     }
     
+    public Character leftSpeaker;
+    public Character rightSpeaker;
     public DialogueLine[] dialogueLines;
 }

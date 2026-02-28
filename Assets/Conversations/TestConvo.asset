@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
   m_Name: TestConvo
   m_EditorClassIdentifier: 
+  leftSpeaker: {fileID: 11400000, guid: 862d23b20c50acd40bf1ff3a02a76a2a, type: 2}
+  rightSpeaker: {fileID: 11400000, guid: 1020b560f53d0c14391b21ddb8f92c1c, type: 2}
   dialogueLines:
-  - portraitSideToHighlight: 0
-    speakerName: Stick Man
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: test test, can you hear me?
-  - portraitSideToHighlight: 1
-    speakerName: Mail Boy
+  - speakerSideToHighlight: 1
+    expression: 0
     dialogueText: Yes I can!! Mail Boy at your service!
-  - portraitSideToHighlight: 0
-    speakerName: Stick Man
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: oh damn it, i didn't even want you to hear me out.
-  - portraitSideToHighlight: 0
-    speakerName: Stick Man
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: anyways, i need this package delivered. but no one wants to do
       it for me. damn people won't let me freeload.
-  - portraitSideToHighlight: 1
-    speakerName: Mail Boy
+  - speakerSideToHighlight: 1
+    expression: 0
     dialogueText: Y-yes I can! Sorry to hear about what you're going through...

@@ -80,6 +80,10 @@ public class DialogueController : MonoBehaviour
             // Adds a line of dialogue to the queue
             _conversationObjs.Enqueue(convo);
         }
+        // Set default sprite on both speakers to normal sprite upon starting a conversation
+        _leftCharacterPortrait.sprite = convo.leftSpeaker.normalSprite;
+        _rightCharacterPortrait.sprite = convo.rightSpeaker.normalSprite;
+
         _isInConvo = true;
     }
 
@@ -109,19 +113,56 @@ public class DialogueController : MonoBehaviour
 
     private void UpdateDialogueUI()
     {
-        Conversation.DialogueLine nextLine = _conversationObjs.Dequeue().dialogueLines[_index];
+        Conversation convoObj = _conversationObjs.Dequeue();
+        Conversation.DialogueLine nextLine = convoObj.dialogueLines[_index];
         _line = nextLine.dialogueText;
-        _name = nextLine.speakerName;
         _index++;
-        switch (nextLine.portraitSideToHighlight)
+
+        switch (nextLine.speakerSideToHighlight)
         {
             case Conversation.PortraitSide.LEFT_SIDE:
+                _name = convoObj.leftSpeaker.characterName;
                 _leftCharacterPortrait.color = _talkingColor;
                 _rightCharacterPortrait.color = _listeningColor;
+
+                switch (nextLine.expression)
+                {
+                    case Conversation.Expressions.Normal:
+                        Debug.Log("Normal portrait on left character");
+                        _leftCharacterPortrait.sprite = convoObj.leftSpeaker.normalSprite;
+                        break;
+                    case Conversation.Expressions.Surprised:
+                        Debug.Log("Surprised portrait on left character");
+                        _leftCharacterPortrait.sprite = convoObj.leftSpeaker.surprisedSprite;
+                        break;
+                    case Conversation.Expressions.Confused:
+                        Debug.Log("Confused portrait on left character");
+                        _leftCharacterPortrait.sprite = convoObj.leftSpeaker.confusedSprite;
+                        break;
+                }
+
                 break;
             case Conversation.PortraitSide.RIGHT_SIDE:
+                _name = convoObj.rightSpeaker.characterName;
                 _leftCharacterPortrait.color = _listeningColor;
                 _rightCharacterPortrait.color = _talkingColor;
+
+                switch (nextLine.expression)
+                {
+                    case Conversation.Expressions.Normal:
+                        Debug.Log("Normal portrait on right character");
+                        _rightCharacterPortrait.sprite = convoObj.rightSpeaker.normalSprite;
+                        break;
+                    case Conversation.Expressions.Surprised:
+                        Debug.Log("Surprised portrait on right character");
+                        _rightCharacterPortrait.sprite = convoObj.rightSpeaker.surprisedSprite;
+                        break;
+                    case Conversation.Expressions.Confused:
+                        Debug.Log("Confused portrait on right character");
+                        _rightCharacterPortrait.sprite = convoObj.rightSpeaker.confusedSprite;
+                        break;
+                }
+
                 break;
         }
 

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
   m_Name: Manager
   m_EditorClassIdentifier: 
+  leftSpeaker: {fileID: 11400000, guid: b6d0ea1ea761ac040b239cc6899c8af9, type: 2}
+  rightSpeaker: {fileID: 11400000, guid: 1020b560f53d0c14391b21ddb8f92c1c, type: 2}
   dialogueLines:
-  - portraitSideToHighlight: 0
-    speakerName: Manager
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: ^^MAIL BOY!!!^^ Where do you think you're going?
-  - portraitSideToHighlight: 1
-    speakerName: Mail Boy
+  - speakerSideToHighlight: 1
+    expression: 2
     dialogueText: ...delivering packages??
-  - portraitSideToHighlight: 0
-    speakerName: Manager
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: Ah, forget it. You're lucky this is just a demo.
