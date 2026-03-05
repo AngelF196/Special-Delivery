@@ -26,4 +26,16 @@ public class GameManager : MonoBehaviour
             _pm.enabled = true;
         }
     }
+
+    // Event method added to the gamePausedEvent event
+    public void GamePaused()
+    {
+        Debug.Log("game paused");
+    }
+
+    // Event method added to the gameResumedEvent event
+    public void GameResumed()
+    {
+        Debug.Log("game resumed");
+    }
 }
