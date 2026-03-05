@@ -301,6 +301,10 @@ public class PlayerMove : MonoBehaviour
                 hasFlipped = false;
                 if (prevState != state.walled)
                     _rb.velocity = new Vector2(0, _rb.velocity.y);
+                if (prevState == state.diving)
+                {
+                    UpdateState(state.diving, false);
+                }
                 break;
             case state.midair:
                 _collision.DetectWalls = true;
@@ -388,11 +392,13 @@ public class PlayerMove : MonoBehaviour
     }
     private void AirFlip()
     {
+        if (playerState == state.grounded) { return; }
         _animation.FlipAnimation();
-        if (_rb.velocity.y <= 0) {
+        if (_rb.velocity.y <= 5) {
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+            _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
+            Debug.Log("flip");
         }
-        _rb.AddForce(Vector2.up * flipJumpForce, ForceMode2D.Impulse);
 
         hasFlipped = true;
         _inputs.Consume(PlayerInput.Action.flip);
@@ -402,30 +408,17 @@ public class PlayerMove : MonoBehaviour
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
         float divespeed = Mathf.Clamp(forwardSpeed, 5f, _boost.CurrentMaxSpeed());
-        if (prevState != state.grounded) //air dive
+        if (prevState == state.midair || prevState == state.jumping) //air dive
         {
-            if (_rb.velocity.y < -6)
+            _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+            float ybump = Mathf.Clamp( _rb.velocity.y + 10f , diveYbump, _rb.velocity.y + diveYbump);
+            if (facingLeft)
             {
-                if (facingLeft)
-                {
-                    _rb.velocity = new Vector2(-1 * divespeed, _rb.velocity.y);
-                }
-                else
-                {
-                    _rb.velocity = new Vector2(divespeed, _rb.velocity.y);
-                }
+                _rb.velocity = new Vector2(-1 * divespeed, ybump);
             }
             else
             {
-                float ybump = Mathf.Clamp( _rb.velocity.y * 10f , diveYbump, _rb.velocity.y + diveYbump);
-                if (facingLeft)
-                {
-                    _rb.velocity = new Vector2(-1 * divespeed, ybump);
-                }
-                else
-                {
-                    _rb.velocity = new Vector2(divespeed, ybump);
-                }
+                _rb.velocity = new Vector2(divespeed, ybump);
             }
         }
         else //ground dive
