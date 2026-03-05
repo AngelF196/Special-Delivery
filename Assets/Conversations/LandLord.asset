@@ -12,23 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
   m_Name: LandLord
   m_EditorClassIdentifier: 
+  leftSpeaker: {fileID: 11400000, guid: 6c66cb74443ba4f48997c550697b1a3c, type: 2}
+  rightSpeaker: {fileID: 11400000, guid: 1020b560f53d0c14391b21ddb8f92c1c, type: 2}
   dialogueLines:
-  - portraitSideToHighlight: 0
-    speakerName: Land Lord
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: Lazy no good residents... always wanting affordable housing.
-  - portraitSideToHighlight: 1
-    speakerName: Mail Boy
+  - speakerSideToHighlight: 1
+    expression: 0
     dialogueText: Something wrong, sir?
-  - portraitSideToHighlight: 0
-    speakerName: Land Lord
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: Yes, there is. And I want you to do something about it.
-  - portraitSideToHighlight: 0
-    speakerName: Land Lord
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: Could you carry these "flyers" to the post office?
-  - portraitSideToHighlight: 1
-    speakerName: Mail Boy
+  - speakerSideToHighlight: 1
+    expression: 0
     dialogueText: Well, I don't think I actually am able to do that right now. Maybe
       later?
-  - portraitSideToHighlight: 0
-    speakerName: Land Lord
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: god damn it...

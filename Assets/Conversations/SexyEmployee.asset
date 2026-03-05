@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
   m_Name: SexyEmployee
   m_EditorClassIdentifier: 
+  leftSpeaker: {fileID: 11400000, guid: c9880e21eb740a54ca2b2bb5bc57a88e, type: 2}
+  rightSpeaker: {fileID: 11400000, guid: 1020b560f53d0c14391b21ddb8f92c1c, type: 2}
   dialogueLines:
-  - portraitSideToHighlight: 0
-    speakerName: Sexy Bits Employee
+  - speakerSideToHighlight: 0
+    expression: 0
     dialogueText: Hey there, handsome. Looking to buy some Sexy Bits to tune up your
       PC?
-  - portraitSideToHighlight: 1
-    speakerName: Mail Boy
+  - speakerSideToHighlight: 1
+    expression: 0
     dialogueText: Uuhhh, no.
-  - portraitSideToHighlight: 1
-    speakerName: Mail Boy
+  - speakerSideToHighlight: 1
+    expression: 0
     dialogueText: I'm just passing by.

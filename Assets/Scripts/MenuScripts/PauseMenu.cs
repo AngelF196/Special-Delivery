@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -23,11 +24,21 @@ public class PauseMenu : MonoBehaviour
     private bool _pressedPause;  // For use with CustomInputManager
     private bool _isOnMainPauseMenu = true;
 
+    // Events
+    public UnityEvent gamePausedEvent;
+    public UnityEvent gameResumedEvent;
+
     void Awake()
     {
         _playerScript.enabled = true;
         Time.timeScale = 1.0f;
         gamePaused = false;
+    }
+
+    void Start()
+    {
+        gamePausedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GamePaused);
+        gameResumedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GameResumed);
     }
 
     // Update is called once per frame
@@ -46,11 +57,16 @@ public class PauseMenu : MonoBehaviour
                 _pauseMenu.SetActive(gamePaused);
                 _mainPauseMenu.SetActive(gamePaused);
                 _optionsMenu.SetActive(false);
-                Time.timeScale = 0.0f;
 
-                if (!gamePaused)
+                if (gamePaused)
+                {
+                    gamePausedEvent.Invoke();
+                    Time.timeScale = 0.0f;
+                }
+                else
                 {
                     Time.timeScale = 1.0f;
+                    gameResumedEvent.Invoke();
                 }
             }
             else
