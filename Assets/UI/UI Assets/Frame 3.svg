@@ -1,0 +1,29 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_dg_229_139)">
+<path d="M260 459C260 442.984 272.984 430 289 430H1123C1139.02 430 1152 442.984 1152 459V929C1152 945.016 1139.02 958 1123 958H706H289C272.984 958 260 945.016 260 929V459Z" fill="#FDEAC1"/>
+<path d="M260 459C260 442.984 272.984 430 289 430H1123C1139.02 430 1152 442.984 1152 459V929C1152 945.016 1139.02 958 1123 958H706H289C272.984 958 260 945.016 260 929V459Z" fill="url(#paint0_linear_229_139)" fill-opacity="0.2"/>
+<path d="M289 437.5H1123C1134.87 437.5 1144.5 447.126 1144.5 459V929C1144.5 940.874 1134.87 950.5 1123 950.5H289C277.126 950.5 267.5 940.874 267.5 929V459L267.507 458.445C267.801 446.828 277.311 437.5 289 437.5Z" stroke="black" stroke-opacity="0.58" stroke-width="15"/>
+<path d="M289 437.5H1123C1134.87 437.5 1144.5 447.126 1144.5 459V929C1144.5 940.874 1134.87 950.5 1123 950.5H289C277.126 950.5 267.5 940.874 267.5 929V459L267.507 458.445C267.801 446.828 277.311 437.5 289 437.5Z" stroke="#080505" stroke-opacity="0.23" stroke-width="15"/>
+</g>
+<defs>
+<filter id="filter0_dg_229_139" x="255" y="425" width="902" height="541" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_229_139"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_229_139" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.99900001287460327 0.99900001287460327" numOctaves="3" seed="6544" />
+<feDisplacementMap in="shape" scale="10" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect2_texture_229_139">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+<linearGradient id="paint0_linear_229_139" x1="2308.47" y1="1265.17" x2="2492.98" y2="1607.2" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.6"/>
+<stop offset="1" stop-color="#888080"/>
+</linearGradient>
+</defs>
+</svg>
