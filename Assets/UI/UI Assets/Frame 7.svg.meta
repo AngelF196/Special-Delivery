@@ -8,14 +8,14 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
-  svgType: 4
+  svgType: 1
   texturedSpriteMeshType: 0
-  svgPixelsPerUnit: 100
+  svgPixelsPerUnit: 250
   gradientResolution: 64
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
-  viewportOptions: 1
+  viewportOptions: 0
   preserveViewport: 0
   advancedMode: 0
   predefinedResolutionIndex: 1
@@ -28,27 +28,27 @@ ScriptedImporter:
   maxTangentAngleEnabled: 0
   maxTangentAngle: 5
   keepTextureAspectRatio: 1
-  textureSize: 256
+  textureSize: 1024
   textureWidth: 256
   textureHeight: 256
   wrapMode: 0
   filterMode: 1
   sampleCount: 4
   preserveSVGImageAspect: 0
-  useSVGPixelsPerUnit: 0
+  useSVGPixelsPerUnit: 1
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: Frame 7
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       alignment: 0
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 89, y: 88, z: 85, w: 87}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
-      spriteID: 28c5c14893300094b807f5a4ae760b9c
+        width: 1024
+        height: 449
+      spriteID: 2851ac78f7eb43d448b87d65bd6b0914
     PhysicsOutlines: []

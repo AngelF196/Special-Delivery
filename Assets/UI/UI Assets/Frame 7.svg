@@ -1,12 +1,14 @@
-<svg width="691" height="594" viewBox="0 0 691 594" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="348" height="160" viewBox="0 0 348 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_270_5)">
 <g filter="url(#filter0_dg_270_5)">
-<path d="M142 258C142 241.984 154.984 229 171 229H457C473.016 229 486 241.984 486 258V351C486 367.016 473.016 380 457 380H314H171C154.984 380 142 367.016 142 351V258Z" fill="#FDEAC1"/>
-<path d="M142 258C142 241.984 154.984 229 171 229H457C473.016 229 486 241.984 486 258V351C486 367.016 473.016 380 457 380H314H171C154.984 380 142 367.016 142 351V258Z" fill="url(#paint0_linear_270_5)" fill-opacity="0.2"/>
-<path d="M171 236.5H457C468.874 236.5 478.5 246.126 478.5 258V351C478.5 362.874 468.874 372.5 457 372.5H171C159.126 372.5 149.5 362.874 149.5 351V258L149.507 257.445C149.801 245.828 159.311 236.5 171 236.5Z" stroke="black" stroke-opacity="0.58" stroke-width="15"/>
-<path d="M171 236.5H457C468.874 236.5 478.5 246.126 478.5 258V351C478.5 362.874 468.874 372.5 457 372.5H171C159.126 372.5 149.5 362.874 149.5 351V258L149.507 257.445C149.801 245.828 159.311 236.5 171 236.5Z" stroke="#080505" stroke-opacity="0.23" stroke-width="15"/>
+<path d="M2 29C2 12.9837 14.9837 0 31 0H317C333.016 0 346 12.9837 346 29V122C346 138.016 333.016 151 317 151H174H31C14.9837 151 2 138.016 2 122V29Z" fill="#FDEAC1"/>
+<path d="M2 29C2 12.9837 14.9837 0 31 0H317C333.016 0 346 12.9837 346 29V122C346 138.016 333.016 151 317 151H174H31C14.9837 151 2 138.016 2 122V29Z" fill="url(#paint0_linear_270_5)" fill-opacity="0.2"/>
+<path d="M31 7.5H317C328.874 7.5 338.5 17.1259 338.5 29V122C338.5 133.874 328.874 143.5 317 143.5H31C19.1259 143.5 9.5 133.874 9.5 122V29L9.50684 28.4453C9.80104 16.8275 19.3113 7.5 31 7.5Z" stroke="black" stroke-opacity="0.58" stroke-width="15"/>
+<path d="M31 7.5H317C328.874 7.5 338.5 17.1259 338.5 29V122C338.5 133.874 328.874 143.5 317 143.5H31C19.1259 143.5 9.5 133.874 9.5 122V29L9.50684 28.4453C9.80104 16.8275 19.3113 7.5 31 7.5Z" stroke="#080505" stroke-opacity="0.23" stroke-width="15"/>
+</g>
 </g>
 <defs>
-<filter id="filter0_dg_270_5" x="137" y="224" width="354" height="164" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_dg_270_5" x="-3" y="-5" width="354" height="164" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4"/>
@@ -21,9 +23,12 @@
 <feMergeNode in="displacedImage"/>
 </feMerge>
 </filter>
-<linearGradient id="paint0_linear_270_5" x1="931.994" y1="467.846" x2="975.542" y2="576.707" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_270_5" x1="791.994" y1="238.846" x2="835.542" y2="347.707" gradientUnits="userSpaceOnUse">
 <stop stop-color="white" stop-opacity="0.6"/>
 <stop offset="1" stop-color="#888080"/>
 </linearGradient>
+<clipPath id="clip0_270_5">
+<rect width="348" height="160" fill="white"/>
+</clipPath>
 </defs>
 </svg>
