@@ -1,13 +1,13 @@
-<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1017" height="578" viewBox="0 0 1017 578" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_in_229_12)">
-<rect x="451" y="254" width="1017" height="572" fill="#FCB881" fill-opacity="0.82"/>
-<rect x="451" y="254" width="1017" height="572" fill="#2E1A06" fill-opacity="0.2"/>
-<rect x="451" y="254" width="1017" height="572" fill="url(#paint0_linear_229_12)" fill-opacity="0.2"/>
-<rect x="451" y="254" width="1017" height="572" fill="#7D5C39" fill-opacity="0.2"/>
-<rect x="451" y="254" width="1017" height="572" fill="#B68D36" fill-opacity="0.2"/>
+<rect y="3" width="1017" height="572" fill="#FCB881" fill-opacity="0.82"/>
+<rect y="3" width="1017" height="572" fill="#2E1A06" fill-opacity="0.2"/>
+<rect y="3" width="1017" height="572" fill="url(#paint0_linear_229_12)" fill-opacity="0.2"/>
+<rect y="3" width="1017" height="572" fill="#7D5C39" fill-opacity="0.2"/>
+<rect y="3" width="1017" height="572" fill="#B68D36" fill-opacity="0.2"/>
 </g>
 <defs>
-<filter id="filter0_in_229_12" x="451" y="254" width="1017" height="576" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_in_229_12" x="0" y="3" width="1017" height="576" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
@@ -30,7 +30,7 @@
 <feMergeNode in="color1" />
 </feMerge>
 </filter>
-<linearGradient id="paint0_linear_229_12" x1="959.5" y1="254" x2="959.5" y2="826" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_229_12" x1="508.5" y1="3" x2="508.5" y2="575" gradientUnits="userSpaceOnUse">
 <stop stop-color="#101E0E" stop-opacity="0"/>
 <stop offset="0.4375" stop-color="#050904" stop-opacity="0.711538"/>
 <stop offset="1"/>

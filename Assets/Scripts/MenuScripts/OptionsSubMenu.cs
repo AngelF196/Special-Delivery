@@ -49,14 +49,14 @@ public class OptionsSubMenu : MonoBehaviour
         _audioOptions.SetActive(true);
 
         // Keep selected tab highlighted
-        Color32 activeMenuColor = new Color32(0x68, 0xD5, 0xD9, 0xFF);
+        Color32 activeMenuColor = new Color32(0xFF, 0xD4, 0x00, 0xFF);
         ColorBlock _cb = _selectedTab.colors;
         _cb.normalColor = activeMenuColor;
         _selectedTab.colors = _cb;
 
         // Visually deselect all other buttons
         _cb = _videoTab.colors;
-        _cb.normalColor = Color.white;
+        _cb.normalColor = new Color32(255, 255, 255, 0);
         _videoTab.colors = _keybindTab.colors = _cb;
 
         // Change navigation of certain UI elements
@@ -87,14 +87,14 @@ public class OptionsSubMenu : MonoBehaviour
         _videoOptions.SetActive(true);
 
         // Keep selected tab highlighted
-        Color32 activeMenuColor = new Color32(0x68, 0xD5, 0xD9, 0xFF);
+        Color32 activeMenuColor = new Color32(0xFF, 0xD4, 0x00, 0xFF);
         ColorBlock _cb = _selectedTab.colors;
         _cb.normalColor = activeMenuColor;
         _selectedTab.colors = _cb;
 
         // Visually deselect all other buttons
         _cb = _audioTab.colors;
-        _cb.normalColor = Color.white;
+        _cb.normalColor = new Color32(255, 255, 255, 0);;
         _audioTab.colors = _keybindTab.colors = _cb;
 
         // Change navigation of certain UI elements
@@ -125,14 +125,14 @@ public class OptionsSubMenu : MonoBehaviour
         _keybindOptions.SetActive(true);
 
         // Keep selected tab highlighted
-        Color32 activeMenuColor = new Color32(0x68, 0xD5, 0xD9, 0xFF);
+        Color32 activeMenuColor = new Color32(0xFF, 0xD4, 0x00, 0xFF);
         ColorBlock _cb = _selectedTab.colors;
         _cb.normalColor = activeMenuColor;
         _selectedTab.colors = _cb;
 
         // Visually deselect all other buttons
         _cb = _audioTab.colors;
-        _cb.normalColor = Color.white;
+        _cb.normalColor = new Color32(255, 255, 255, 0);;
         _audioTab.colors = _videoTab.colors = _cb;
 
         // Change navigation of certain UI elements
