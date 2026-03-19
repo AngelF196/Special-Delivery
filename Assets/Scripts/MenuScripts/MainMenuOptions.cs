@@ -32,7 +32,7 @@ public class MainMenuOptions : MonoBehaviour
 
     public void GoToSelectedFile()
     {
-        SceneManager.LoadScene("City Blockout");
+        SceneManager.LoadScene("Final Demo");
     }
 
     public void QuitGame()
