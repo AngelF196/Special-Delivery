@@ -15,7 +15,7 @@ ScriptedImporter:
   alignment: 0
   customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
-  viewportOptions: 1
+  viewportOptions: 0
   preserveViewport: 0
   advancedMode: 0
   predefinedResolutionIndex: 1
@@ -35,7 +35,7 @@ ScriptedImporter:
   filterMode: 1
   sampleCount: 4
   preserveSVGImageAspect: 0
-  useSVGPixelsPerUnit: 0
+  useSVGPixelsPerUnit: 1
   spriteData:
     TessellationDetail: 0
     SpriteRect:
@@ -50,5 +50,5 @@ ScriptedImporter:
         y: 0
         width: 0
         height: 0
-      spriteID: fd2a575da06c1d7489b0b62a99415a83
+      spriteID: 228e615aa7ccbec4593e2c72ff27ac6a
     PhysicsOutlines: []
