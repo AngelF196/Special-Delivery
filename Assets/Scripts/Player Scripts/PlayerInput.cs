@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
 public class PlayerInput : MonoBehaviour
@@ -34,18 +35,19 @@ public class PlayerInput : MonoBehaviour
     }
     void Update()
     {
-        InputGather();
-
         if (jumpRec)
         {
+            jumpRec = false;
             jumpTimer = inputBuffer;
         }
         if (diveActRec)
         {
+            diveActRec = false;
             diveTimer = inputBuffer;
         }
         if (flipActRec)
         {
+            flipActRec = false;
             flipTimer = inputBuffer;
         }
 
@@ -69,14 +71,47 @@ public class PlayerInput : MonoBehaviour
             break;
         }
     }
-    private void InputGather()
-    {
-        playerDirections = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        rawPlayerDirections = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        jumpRec = Input.GetKeyDown(KeyCode.Space);
-        jumpHeld = Input.GetKey(KeyCode.Space);
-        diveActRec = Input.GetKeyDown(KeyCode.LeftShift);
-        flipActRec = Input.GetKeyDown(KeyCode.Z);
+    public void OnJump(InputAction.CallbackContext context) 
+    { 
+        if (context.started) 
+        { 
+            jumpRec = true; 
+            jumpHeld = true; 
+        } 
+        else if (context.canceled) 
+        { 
+            jumpHeld = false; 
+        } 
+    }
+    public void OnFlip(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            flipActRec = true;
+        }
+    }
+    public void OnDiveAction(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            diveActRec = true;
+        }
+    }
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            playerDirections = context.ReadValue<Vector2>();
+            rawPlayerDirections = new Vector2(
+                Mathf.Abs(playerDirections.x) > 0.2f ? Mathf.Sign(playerDirections.x) : 0f,
+                Mathf.Abs(playerDirections.y) > 0.2f ? Mathf.Sign(playerDirections.y) : 0f
+            );
+        }
+        else if (context.canceled)
+        {
+            playerDirections = Vector2.zero;
+            rawPlayerDirections = Vector2.zero;
+        }
     }
 }
