@@ -450,5 +450,10 @@ public class PlayerMove : MonoBehaviour
         _inputs.Consume(PlayerInput.Action.dive);
     }
 
+    public void SetRigidBodyVelocity(Vector2 targetVelocity)
+    {
+        Debug.Log("tried");
+        _rb.velocity = targetVelocity;
+    }
 
 }

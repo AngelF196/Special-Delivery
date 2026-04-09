@@ -19,6 +19,8 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private EventSystem _eventSystem;
+    private PlayerInput _playerInput;
+
 
     public static bool gamePaused = false;  // Static variable to use here and in other classes
     private bool _pressedPause;  // For use with CustomInputManager
@@ -37,44 +39,38 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        _playerInput = GameObject.Find("player").GetComponent<PlayerInput>();
+        _playerInput.playerPause.AddListener(respondToPause);
         gamePausedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GamePaused);
         gameResumedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GameResumed);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void respondToPause()
     {
-        if (!KeybindButton.isMakingInput)
-            _pressedPause = CustomInputManager.GetKeyJustPressed("Pause1") || CustomInputManager.GetKeyJustPressed("Pause2") || CustomInputManager.GetKeyJustPressed("Pause3");
-
-        if (_pressedPause)
+        if (_isOnMainPauseMenu)
         {
-            if (_isOnMainPauseMenu)
-            {
-                gamePaused = !gamePaused;
-                _playerScript.enabled = !_playerScript.enabled;
-                _isOnMainPauseMenu = true;
-                _pauseMenu.SetActive(gamePaused);
-                _mainPauseMenu.SetActive(gamePaused);
-                _optionsMenu.SetActive(false);
+            gamePaused = !gamePaused;
+            _playerScript.enabled = !_playerScript.enabled;
+            _isOnMainPauseMenu = true;
+            _pauseMenu.SetActive(gamePaused);
+            _mainPauseMenu.SetActive(gamePaused);
+            _optionsMenu.SetActive(false);
 
-                if (gamePaused)
-                {
-                    gamePausedEvent.Invoke();
-                    Time.timeScale = 0.0f;
-                }
-                else
-                {
-                    Time.timeScale = 1.0f;
-                    gameResumedEvent.Invoke();
-                }
+            if (gamePaused)
+            {
+                gamePausedEvent.Invoke();
+                Time.timeScale = 0.0f;
             }
             else
             {
-                BackButton();
-                _eventSystem.SetSelectedGameObject(_optionsButton);
+                Time.timeScale = 1.0f;
+                gameResumedEvent.Invoke();
             }
-            
+        }
+        else
+        {
+            BackButton();
+            _eventSystem.SetSelectedGameObject(_optionsButton);
         }
     }
 

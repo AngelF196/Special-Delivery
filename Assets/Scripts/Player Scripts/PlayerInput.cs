@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.Events;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -14,11 +15,20 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private bool diveActRec; //hide
     [SerializeField] private bool jumpHeld;
 
+    [Space]
+
     [Header("Input Buffering")]
     [SerializeField] private float inputBuffer;
     private float jumpTimer;
     private float diveTimer;
     private float flipTimer;
+
+    [Space]
+
+    [Header("Input Buffering")]
+    public UnityEvent playerInteract;
+    public UnityEvent playerPause;
+
 
     //PlayerMove Access
     public bool saysJump => jumpTimer > 0f;
@@ -112,6 +122,21 @@ public class PlayerInput : MonoBehaviour
         {
             playerDirections = Vector2.zero;
             rawPlayerDirections = Vector2.zero;
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            playerInteract.Invoke();
+        }
+    }
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            playerPause.Invoke();
         }
     }
 }
