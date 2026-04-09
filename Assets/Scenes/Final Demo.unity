@@ -24065,7 +24065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.882164
+      value: 18.885107
       objectReference: {fileID: 0}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.y
@@ -28336,6 +28336,12 @@ MonoBehaviour:
   diveActRec: 0
   jumpHeld: 0
   inputBuffer: 0.27
+  playerInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  playerPause:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!68 &4511540591110192077
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -29074,11 +29080,35 @@ MonoBehaviour:
     m_ActionId: f395dc54-55b7-4324-98ae-80f59d596b86
     m_ActionName: Player/Dive Action[/SwitchProControllerHID/buttonEast,/Keyboard/shift]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4220318650823958766}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_ActionId: 6111d2ea-2652-44ba-b48d-23ecae467109
     m_ActionName: Player/Interact[/SwitchProControllerHID/buttonNorth,/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4220318650823958766}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_ActionId: 71f53bf6-6e21-4f79-8994-27015c69bcce
     m_ActionName: Player/Pause[/SwitchProControllerHID/start,/Keyboard/escape]
   - m_PersistentCalls:
