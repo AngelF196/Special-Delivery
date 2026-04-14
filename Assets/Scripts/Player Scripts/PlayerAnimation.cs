@@ -128,10 +128,10 @@ public class PlayerAnimation : MonoBehaviour
                 case (PlayerMove.state.walled):
                     grounded = false;
                     _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Wall_Slide", true);
                     _animator.SetBool("Falling", false);
                     _animator.SetBool("Running", false);
                     _animator.SetBool("Jumping", false);
+                    _animator.SetBool("Wall_Slide", true);
                     break;
                 case (PlayerMove.state.boosting):
                     _animator.SetBool("Running", false);

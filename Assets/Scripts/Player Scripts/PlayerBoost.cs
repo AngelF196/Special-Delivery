@@ -25,11 +25,13 @@ public class PlayerBoost : MonoBehaviour
     //References
     PlayerMove _baseMovement;
     Rigidbody2D _rb;
+    PlayerEnvironment _environment;
 
     private void Start()
     {
         _baseMovement = GetComponent<PlayerMove>();
         _rb = GetComponent<Rigidbody2D>();
+        _environment = GetComponent<PlayerEnvironment>();
 
         currentStage = 0;
         stageTimer = 0f;
@@ -40,8 +42,8 @@ public class PlayerBoost : MonoBehaviour
     {
         if (boosting)
         {
-            EnforceSpeed();
             HandleTimers();
+            EnforceSpeed();
         }
     }
 
@@ -76,12 +78,12 @@ public class PlayerBoost : MonoBehaviour
     {
         stageTimer -= Time.fixedDeltaTime;
 
-        if(_baseMovement.currentState == PlayerMove.state.walled && !wallTimerStarted)
+        if(_environment.WallDirectionDetect() > 0 && !wallTimerStarted)
         {
             wallTimerStarted = true;
             wallBufferTimer = wallBufferMaxTime;
         }
-        else if (_baseMovement.currentState == PlayerMove.state.walled && wallTimerStarted) 
+        else if (_environment.WallDirectionDetect() > 0 && wallTimerStarted) 
         {
             wallBufferTimer -= Time.fixedDeltaTime;
         }

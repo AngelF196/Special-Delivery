@@ -252,7 +252,7 @@
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "",
                     "action": "Flip",
                     "isComposite": false,
                     "isPartOfComposite": false
