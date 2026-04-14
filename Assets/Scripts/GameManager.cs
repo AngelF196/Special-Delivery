@@ -27,6 +27,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void EnteredConversation()
+    {
+        _pm.enabled = false;
+    }
+
+    public void ExitedConversation()
+    {
+        _pm.enabled = true;
+    }
+
     // Event method added to the gamePausedEvent event
     public void GamePaused()
     {
@@ -37,5 +47,17 @@ public class GameManager : MonoBehaviour
     public void GameResumed()
     {
         Debug.Log("game resumed");
+    }
+
+    // Event method for the DialogueController's activateQuest event
+    public void QuestStarted(Quest questToActivate)
+    {
+        Debug.Log("A quest named \"" + questToActivate.questName + "\" has started! Starting timer...");
+    }
+
+    // Method that the game manager will utilize on its end.
+    private void QuestEnded()
+    {
+        Debug.Log("This quest has ended. Stopping timer...");
     }
 }

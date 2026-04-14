@@ -24,3 +24,5 @@ MonoBehaviour:
   - speakerSideToHighlight: 0
     expression: 0
     dialogueText: Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  activateQuest: 1
+  questToActivate: {fileID: 11400000, guid: d4fe35bcdf5028b41b700786824f259c, type: 2}
