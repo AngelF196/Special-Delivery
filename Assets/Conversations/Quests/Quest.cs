@@ -4,4 +4,5 @@ using UnityEngine;
 public class Quest : ScriptableObject
 {
     public string questName;
+    public Vector2 endpointCoordinates;
 }

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: NewQuest
   m_EditorClassIdentifier: 
   questName: ...too eepy to do things
+  endpointCoordinates: {x: -12, y: 21}
