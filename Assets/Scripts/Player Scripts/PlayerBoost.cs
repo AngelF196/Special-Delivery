@@ -104,7 +104,7 @@ public class PlayerBoost : MonoBehaviour
         {
             return;
         }
-        if (speed < stageMinSpeed[currentStage - 1] && currentStage != 0)
+        if (currentStage != 0 && speed < stageMinSpeed[currentStage - 1])
         {
             currentStage--;
             Debug.Log($"Stage Decremented To: {currentStage}");

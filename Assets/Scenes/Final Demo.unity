@@ -11890,6 +11890,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookDistance: 6.8
+  lookSpeed: 10.07
+  lookAheadSpeed: 3.18
+  lookAheadDiv: 35
 --- !u!212 &980980438
 SpriteRenderer:
   m_ObjectHideFlags: 0

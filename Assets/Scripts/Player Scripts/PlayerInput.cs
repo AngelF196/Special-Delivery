@@ -146,12 +146,10 @@ public class PlayerInput : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        Debug.Log("right stick touched");
         if (context.performed)
         {
             playerLookDirections = context.ReadValue<Vector2>();
             playerLookDirections.Normalize();
-            Debug.Log(playerLookDirections);
         }
         else if (context.canceled)
         {
