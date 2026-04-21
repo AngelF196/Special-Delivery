@@ -21,15 +21,18 @@ public class PlayerBoost : MonoBehaviour
     private bool wallTimerStarted;
     public int boostStage => currentStage;
     public bool isBoosting => boosting;
+    private List<int> wallReturns = new List<int> {-1, 1, 2};
 
     //References
     PlayerMove _baseMovement;
     Rigidbody2D _rb;
+    PlayerEnvironment _environment;
 
     private void Start()
     {
         _baseMovement = GetComponent<PlayerMove>();
         _rb = GetComponent<Rigidbody2D>();
+        _environment = GetComponent<PlayerEnvironment>();
 
         currentStage = 0;
         stageTimer = 0f;
@@ -40,8 +43,8 @@ public class PlayerBoost : MonoBehaviour
     {
         if (boosting)
         {
-            EnforceSpeed();
             HandleTimers();
+            EnforceSpeed();
         }
     }
 
@@ -76,12 +79,12 @@ public class PlayerBoost : MonoBehaviour
     {
         stageTimer -= Time.fixedDeltaTime;
 
-        if(_baseMovement.currentState == PlayerMove.state.walled && !wallTimerStarted)
+        if(wallReturns.Contains(_environment.WallDirectionDetect()) && !wallTimerStarted)
         {
             wallTimerStarted = true;
             wallBufferTimer = wallBufferMaxTime;
         }
-        else if (_baseMovement.currentState == PlayerMove.state.walled && wallTimerStarted) 
+        else if (wallReturns.Contains(_environment.WallDirectionDetect()) && wallTimerStarted) 
         {
             wallBufferTimer -= Time.fixedDeltaTime;
         }
@@ -102,7 +105,7 @@ public class PlayerBoost : MonoBehaviour
         {
             return;
         }
-        if (speed < stageMinSpeed[currentStage - 1] && currentStage != 0)
+        if (currentStage != 0 && speed < stageMinSpeed[currentStage - 1])
         {
             currentStage--;
             Debug.Log($"Stage Decremented To: {currentStage}");

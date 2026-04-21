@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     [Header("Player Input")]
     private Vector2 playerDirections;
     private Vector2 rawPlayerDirections;
+    private Vector2 playerLookDirections;
     [SerializeField] private bool jumpRec; //hide
     [SerializeField] private bool flipActRec; //hide
     [SerializeField] private bool diveActRec; //hide
@@ -25,10 +26,9 @@ public class PlayerInput : MonoBehaviour
 
     [Space]
 
-    [Header("Input Buffering")]
+    [Header("UI Events")]
     public UnityEvent playerInteract;
     public UnityEvent playerPause;
-
 
     //PlayerMove Access
     public bool saysJump => jumpTimer > 0f;
@@ -43,6 +43,10 @@ public class PlayerInput : MonoBehaviour
         dive,
         flip
     }
+
+    //Player Look Access
+    public Vector2 look => playerLookDirections;
+
     void Update()
     {
         if (jumpRec)
@@ -137,6 +141,19 @@ public class PlayerInput : MonoBehaviour
         if (context.started)
         {
             playerPause.Invoke();
+        }
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            playerLookDirections = context.ReadValue<Vector2>();
+            playerLookDirections.Normalize();
+        }
+        else if (context.canceled)
+        {
+            playerLookDirections = Vector2.zero;
         }
     }
 }

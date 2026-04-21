@@ -9,6 +9,7 @@ public class PlayerAnimation : MonoBehaviour
     private Animator _animator;
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
+    private PlayerEnvironment _environment;
     private bool grounded;
     private bool walled;
 
@@ -20,6 +21,7 @@ public class PlayerAnimation : MonoBehaviour
         _boost = GetComponentInParent<PlayerBoost>();
         _baseMovement = GetComponentInParent<PlayerMove>();
         _animator = GetComponentInParent<Animator>();
+        _environment = GetComponentInParent<PlayerEnvironment>();
     }
 
     // Update is called once per frame
@@ -128,11 +130,18 @@ public class PlayerAnimation : MonoBehaviour
                 case (PlayerMove.state.walled):
                     grounded = false;
                     _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Wall_Slide", true);
                     _animator.SetBool("Falling", false);
                     _animator.SetBool("Running", false);
                     _animator.SetBool("Jumping", false);
-                    break;
+                    if (_environment.WallDirectionDetect() == -1 && _baseMovement.isFacingLeft)
+                    {
+                        _animator.SetBool("Wall_Slide", true);
+                    }
+                    else if (_environment.WallDirectionDetect() == 1 && !_baseMovement.isFacingLeft)
+                    {
+                        _animator.SetBool("Wall_Slide", true);
+                    }
+                break;
                 case (PlayerMove.state.boosting):
                     _animator.SetBool("Running", false);
                     break;
