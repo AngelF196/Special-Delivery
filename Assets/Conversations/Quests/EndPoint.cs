@@ -18,4 +18,10 @@ public class EndPoint : MonoBehaviour
         arrivedAtEnd.Invoke();
         Destroy(this.gameObject);
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, Vector3.one);
+    }
 }
