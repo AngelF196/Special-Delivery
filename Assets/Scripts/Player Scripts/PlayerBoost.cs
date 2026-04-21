@@ -21,6 +21,7 @@ public class PlayerBoost : MonoBehaviour
     private bool wallTimerStarted;
     public int boostStage => currentStage;
     public bool isBoosting => boosting;
+    private List<int> wallReturns = new List<int> {-1, 1, 2};
 
     //References
     PlayerMove _baseMovement;
@@ -78,12 +79,12 @@ public class PlayerBoost : MonoBehaviour
     {
         stageTimer -= Time.fixedDeltaTime;
 
-        if(_environment.WallDirectionDetect() > 0 && !wallTimerStarted)
+        if(wallReturns.Contains(_environment.WallDirectionDetect()) && !wallTimerStarted)
         {
             wallTimerStarted = true;
             wallBufferTimer = wallBufferMaxTime;
         }
-        else if (_environment.WallDirectionDetect() > 0 && wallTimerStarted) 
+        else if (wallReturns.Contains(_environment.WallDirectionDetect()) && wallTimerStarted) 
         {
             wallBufferTimer -= Time.fixedDeltaTime;
         }

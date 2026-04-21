@@ -109,25 +109,16 @@ public class PlayerMove : MonoBehaviour
             case state.grounded:
                 MovementCalc();
 
-                if (_inputs.saysJump)
-                {
-                    UpdateState(state.jumping);
-                }
+                if (_inputs.saysJump) UpdateState(state.jumping);
+                
                 if (_collision.FloorDetect() == false) //Covers if going straight from ground to airborne
                 {
-                    if (_rb.velocity.y > 0)
-                    {
-                        UpdateState(state.jumping, false);
-                    }
-                    else
-                    {
-                        UpdateState(state.midair);
-                    }
+                    if (_rb.velocity.y > 0) UpdateState(state.jumping, false);
+                    
+                    else UpdateState(state.midair);
                 }
-                if (_inputs.saysDive)
-                {
-                    UpdateState(state.diving);
-                }
+                if (_inputs.saysDive) UpdateState(state.diving);
+                
                 break;
             case state.jumping:
                 MovementCalc();
@@ -136,46 +127,28 @@ public class PlayerMove : MonoBehaviour
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, jumpcut * _rb.velocity.y);
                 }
-                if (_inputs.saysFlip && !hasFlipped)
-                {
-                    AirFlip();
-                }
-                if (_inputs.saysDive)
-                {
-                    UpdateState(state.diving);
-                }
-                if (_rb.velocity.y <= 0f)
-                {
-                    UpdateState(state.midair);
-                }
-                if (_collision.FloorDetect() && _rb.velocity.y <= 0f)
-                {
-                    UpdateState(state.grounded);
-                }
-                if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3)
-                {
-                    UpdateState(state.walled);
-                }
+                if (_inputs.saysFlip && !hasFlipped) AirFlip();
+                
+                if (_inputs.saysDive) UpdateState(state.diving);
+                
+                if (_rb.velocity.y <= 0f) UpdateState(state.midair);
+                
+                if (_collision.FloorDetect() && _rb.velocity.y <= 0f) UpdateState(state.grounded);
+                
+                if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3) UpdateState(state.walled);
+               
                 break;
             case state.midair:
                 MovementCalc();
 
-                if (_rb.velocity.y <= -maxFallSpeed)
-                {
-                    _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
-                }
-                if (_collision.FloorDetect())
-                {
-                    UpdateState(state.grounded);
-                }
-                if (_inputs.saysFlip && !hasFlipped)
-                {
-                    AirFlip();
-                }
-                if (_inputs.saysDive)
-                {
-                    UpdateState(state.diving);
-                }
+                if (_rb.velocity.y <= -maxFallSpeed) _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
+                
+                if (_collision.FloorDetect()) UpdateState(state.grounded);
+                
+                if (_inputs.saysFlip && !hasFlipped) AirFlip();
+                
+                if (_inputs.saysDive) UpdateState(state.diving);
+                
                 if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3)
                 {
                     UpdateState(state.walled);
@@ -184,41 +157,28 @@ public class PlayerMove : MonoBehaviour
             case state.diving:
                 MovementCalc();
 
-                if (_collision.FloorDetect() && _rb.velocity.y <= 0)
-                {
-                    UpdateState(state.divelanding);
-                }
+                if (_collision.FloorDetect() && _rb.velocity.y <= 0) UpdateState(state.divelanding);
+                
                 //wall bonk
                 break;
             case state.divelanding:
                 MovementCalc();
-                if (_inputs.saysFlip || _inputs.saysDive)
-                {
-                    UpdateState(state.boosting);
-                }
-                if (_inputs.saysJump)
-                {
-                    UpdateState(state.jumping);
-                }
 
+                if (_inputs.saysFlip || _inputs.saysDive) UpdateState(state.boosting);                
+                if (_inputs.saysJump) UpdateState(state.jumping);
+                
                 //family guy death pose
                 break;
             case state.boosting:
                 MovementCalc();
 
-                if (_collision.FloorDetect())
-                {
-                    UpdateState(state.grounded);
-                }
-                if (_inputs.saysFlip && !hasFlipped)
-                {
-                    AirFlip();
-                }
-                if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3)
-                {
-                    UpdateState(state.walled);
-                }
-                    break;
+                if (_collision.FloorDetect()) UpdateState(state.grounded);
+                
+                if (_inputs.saysFlip && !hasFlipped) AirFlip();
+
+                if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3) UpdateState(state.walled);
+
+                break;
             case state.walled:
                 WallMovement();
 
@@ -226,18 +186,10 @@ public class PlayerMove : MonoBehaviour
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 }
-                if (_collision.WallDirectionDetect() == 0)
-                {
-                    UpdateState(state.midair);
-                }
-                if (_collision.FloorDetect())
-                {
-                    UpdateState(state.grounded);
-                }
-                if (_inputs.saysJump)
-                {
-                    UpdateState(state.jumping);
-                }
+
+                if (_collision.WallDirectionDetect() == 0) UpdateState(state.midair);
+                if (_collision.FloorDetect()) UpdateState(state.grounded);
+                if (_inputs.saysJump) UpdateState(state.jumping);               
                 break;
         }
     }
@@ -248,10 +200,7 @@ public class PlayerMove : MonoBehaviour
         prevState = playerState;
         playerState = newstate;
         _animation.UpdateAnimationState(newstate, prevState);
-        if (doAction)
-        {
-            StateAction(newstate);
-        }
+        if (doAction) StateAction(newstate);
     }
     private void StateAction(state newstate)
     {
@@ -277,7 +226,7 @@ public class PlayerMove : MonoBehaviour
                     }
                     else
                     {
-                        _rb.velocity = new Vector2(-_collision.WallDirectionDetect() * _boost.CurrentMaxSpeed(), wallJumpMult * jumpForce * Time.fixedDeltaTime); //wall jump
+                        _rb.velocity = new Vector2(-_collision.WallDirectionDetect() * _boost.CurrentMaxSpeed(), wallJumpMult * jumpForce * Time.fixedDeltaTime); // boost wall jump
 
                     }
                 }
@@ -335,27 +284,18 @@ public class PlayerMove : MonoBehaviour
     {
         if (flipped == false && !hasFlipped)
         {
-            if (_rb.velocity.x < 0)
-            {
-                facingLeft = true;
-            }
-            else if (_rb.velocity.x > 0)
-            {
-                facingLeft = false;
-            }
+            if (_rb.velocity.x < 0) facingLeft = true;
+            
+            else if (_rb.velocity.x > 0) facingLeft = false;         
         }
         else if (flipped && hasFlipped)
         {
-            if (_inputs.RawDirections.x == -1)
-            {
-                facingLeft = true;
-            }
-            else if (_inputs.RawDirections.x == 1)
-            {
-                facingLeft = false;
-            }
+            if (_inputs.RawDirections.x == -1) facingLeft = true;
+            
+            else if (_inputs.RawDirections.x == 1) facingLeft = false;   
         }
     }
+
     private void MovementCalc()
     {
         float targetSpeed = _inputs.RawDirections.x * _boost.CurrentMaxSpeed(); //reflects left/right input
@@ -380,17 +320,18 @@ public class PlayerMove : MonoBehaviour
         }
             _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
     }
+
     private void WallMovement()
     {
         if ((_inputs.saysFlip || _inputs.saysDive) && !hasWallDashed) //wall dash
         {
-            _rb.velocity = new Vector2(0, wallDashForce);
+            _rb.velocity = new Vector2(0, wallDashForce + (_boost.boostStage * 2));
             hasWallDashed = true;
             _animation.WallClimbAnimation();
             _inputs.Consume(PlayerInput.Action.flip);
             _inputs.Consume(PlayerInput.Action.dive);
         }
-        else if (_inputs.saysFlip || _inputs.saysDive)
+        else if (_inputs.saysFlip || _inputs.saysDive) //wall dash already used
         {
             _inputs.Consume(PlayerInput.Action.flip);
             _inputs.Consume(PlayerInput.Action.dive);
@@ -406,6 +347,7 @@ public class PlayerMove : MonoBehaviour
             MovementCalc();
         }
     }
+
     private void AirFlip()
     {
         if (playerState == state.grounded) { return; }
@@ -419,6 +361,7 @@ public class PlayerMove : MonoBehaviour
         _inputs.Consume(PlayerInput.Action.flip);
         DirectionFacing(true);
     }
+
     private void Dive()
     {
         float forwardSpeed = Mathf.Abs(_rb.velocity.x);
@@ -427,28 +370,18 @@ public class PlayerMove : MonoBehaviour
         {
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
             float ybump = Mathf.Clamp( _rb.velocity.y + 10f , diveYbump, _rb.velocity.y + diveYbump);
-            if (facingLeft)
-            {
-                _rb.velocity = new Vector2(-1 * divespeed, ybump);
-            }
-            else
-            {
-                _rb.velocity = new Vector2(divespeed, ybump);
-            }
+            if (facingLeft) _rb.velocity = new Vector2(-divespeed, ybump);
+          
+            else _rb.velocity = new Vector2(divespeed, ybump);
         }
         else //ground dive
         {
-            if (facingLeft)
-            {
-                _rb.velocity = new Vector2(_rb.velocity.x - groundDiveLength, groundDiveHeight);
-            }
-            else
-            {
-                _rb.velocity = new Vector2(_rb.velocity.x + groundDiveLength, groundDiveHeight);
-            }
+            if (facingLeft) _rb.velocity = new Vector2(_rb.velocity.x - groundDiveLength, groundDiveHeight);
+            else _rb.velocity = new Vector2(_rb.velocity.x + groundDiveLength, groundDiveHeight);
         }
         _inputs.Consume(PlayerInput.Action.dive);
     }
+
     private void DiveSpringBoost()
     {
         _boost.IncrementStage();
@@ -468,6 +401,11 @@ public class PlayerMove : MonoBehaviour
     public void SetRigidBodyVelocity(Vector2 targetVelocity)
     {
         _rb.velocity = targetVelocity;
+    }
+
+    public void MoveRigidBody(Vector2 amount)
+    {
+        if (amount != Vector2.zero) _rb.MovePosition(_rb.position + amount);
     }
 
 }

@@ -23,7 +23,6 @@ public class PlayerEnvironment : MonoBehaviour
     private float wallTimer;
     [SerializeField] private float wallBuffer;
     [SerializeField] public bool DetectWalls;
-
     private void FixedUpdate()
     {
         if (!DetectWalls)
