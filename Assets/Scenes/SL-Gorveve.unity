@@ -350,41 +350,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 997552779305259388, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 997552779305259388, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3724566039537948084, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
       propertyPath: m_Name
       value: Isekai Machine
       objectReference: {fileID: 0}
-    - target: {fileID: 3724566039537948084, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3796498380113009589, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3796498380113009589, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6190244745936675923, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6190244745936675923, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.11
+      value: 2.16
       objectReference: {fileID: 0}
     - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -425,10 +397,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3724566039537948084, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 698084275}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
 --- !u!1 &305342888
 GameObject:
@@ -1094,25 +1063,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &698084273 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3724566039537948084, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
-  m_PrefabInstance: {fileID: 228755898}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &698084275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698084273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b059b6360f4a8541997ba37ce7234a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _velocity: 4.9
-  _direction: {x: 1, y: 0}
 --- !u!1001 &722709200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1542,6 +1492,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1015762861
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3724566039537948084, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_Name
+      value: Isekai Machine (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
 --- !u!1 &1050818246
 GameObject:
   m_ObjectHideFlags: 0
@@ -3171,3 +3178,4 @@ SceneRoots:
   - {fileID: 1941211245}
   - {fileID: 348808395}
   - {fileID: 97146389}
+  - {fileID: 1015762861}
