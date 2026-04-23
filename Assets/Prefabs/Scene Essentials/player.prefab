@@ -5043,7 +5043,8 @@ MonoBehaviour:
   decelRate: 20
   diveLandDecel: 1.21
   maxSpeed: 10
-  jumpForce: 556
+  platformVelocity: {x: 0, y: 0}
+  jumpForce: 11.1
   handspringMult: 1.33
   maxFallSpeed: 50
   jumpcut: 0.7
@@ -5059,7 +5060,7 @@ MonoBehaviour:
   groundDiveLength: 3
   groundDiveHeight: 8
   wallSlideSpeed: 1.83
-  wallJumpXForce: 303.7
+  wallJumpXForce: 6.1
   wallJumpMult: 1
   wallDashForce: 12
   hasWallDashed: 0

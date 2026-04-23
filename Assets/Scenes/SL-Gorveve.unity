@@ -374,6 +374,14 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6190244745936675923, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190244745936675923, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8255150466461494232, guid: e5d83eb5c94ac4e4b8ea7d643ab44e1e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.11

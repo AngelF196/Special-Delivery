@@ -9,9 +9,10 @@ public class SteadyMove : MonoBehaviour
     [SerializeField] private Vector2 _direction;
     private Rigidbody2D _rb;
     private PlayerMove _player;
-    private Vector2 _prevPosition = new Vector2(0,0);
-    private Vector2 _currentPosition = new Vector2(0, 0);
-    private Vector2 _deltaPosition = new Vector2(0, 0);
+    private Vector2 _prevPosition = Vector2.zero;
+    private Vector2 _currentPosition = Vector2.zero;
+    private Vector2 _deltaPosition = Vector2.zero;
+    private Vector2 _platformVelocity = Vector2.zero;
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -26,10 +27,10 @@ public class SteadyMove : MonoBehaviour
         _currentPosition = transform.position;
 
         _deltaPosition = _currentPosition - _prevPosition;
-
+        _platformVelocity = _deltaPosition/Time.fixedDeltaTime;
         if (_player != null)
         {
-            _player.MoveRigidBody(_deltaPosition);
+            _player.SetPlatformVelocity(_platformVelocity);
         }
     }
 
@@ -45,6 +46,7 @@ public class SteadyMove : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            _player.SetPlatformVelocity(Vector2.zero);
             _player = null;
         }
     }

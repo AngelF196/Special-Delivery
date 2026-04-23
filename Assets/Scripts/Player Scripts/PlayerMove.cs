@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -10,12 +11,17 @@ public class PlayerMove : MonoBehaviour
     {
         grounded, jumping, midair, diving, divelanding, walled, boosting
     }
+    private enum restriction
+    {
+        light, heavy, none, diveLanding
+    }
 
     [Header("Ground Variables")]
     [SerializeField] private float accelRate;
     [SerializeField] private float decelRate;
     [SerializeField] private float diveLandDecel;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private Vector2 platformVelocity = Vector2.zero;
     private float acceleration;
 
     [Header("Air Variables")]
@@ -63,6 +69,7 @@ public class PlayerMove : MonoBehaviour
     public float baseMaxSpeed => maxSpeed;
     public bool isFacingLeft => facingLeft;
 
+    public Vector2 localVelocity;
     private bool facingLeft; //Don't remove
 
     void Start()
@@ -87,6 +94,7 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        localVelocity = _rb.velocity - platformVelocity;
         Action();
 
         if (playerState == state.divelanding)
@@ -107,7 +115,7 @@ public class PlayerMove : MonoBehaviour
         switch (playerState)
         {
             case state.grounded:
-                MovementCalc();
+                HorizontalMovement(restriction.none);
 
                 if (_inputs.saysJump) UpdateState(state.jumping);
                 
@@ -121,7 +129,7 @@ public class PlayerMove : MonoBehaviour
                 
                 break;
             case state.jumping:
-                MovementCalc();
+                HorizontalMovement(restriction.light);
 
                 if (_inputs.jumpCutRec)
                 {
@@ -139,7 +147,7 @@ public class PlayerMove : MonoBehaviour
                
                 break;
             case state.midair:
-                MovementCalc();
+                HorizontalMovement(restriction.light);
 
                 if (_rb.velocity.y <= -maxFallSpeed) _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 
@@ -155,14 +163,14 @@ public class PlayerMove : MonoBehaviour
                 }
                 break;
             case state.diving:
-                MovementCalc();
+                HorizontalMovement(restriction.heavy);
 
                 if (_collision.FloorDetect() && _rb.velocity.y <= 0) UpdateState(state.divelanding);
                 
                 //wall bonk
                 break;
             case state.divelanding:
-                MovementCalc();
+                HorizontalMovement(restriction.diveLanding);
 
                 if (_inputs.saysFlip || _inputs.saysDive) UpdateState(state.boosting);                
                 if (_inputs.saysJump) UpdateState(state.jumping);
@@ -170,7 +178,7 @@ public class PlayerMove : MonoBehaviour
                 //family guy death pose
                 break;
             case state.boosting:
-                MovementCalc();
+                HorizontalMovement(restriction.none);
 
                 if (_collision.FloorDetect()) UpdateState(state.grounded);
                 
@@ -207,45 +215,14 @@ public class PlayerMove : MonoBehaviour
         switch (newstate)
         {
             case state.jumping:
-                if (prevState == state.divelanding)
-                {
-                    if (MathF.Sign(_inputs.RawDirections.x) != MathF.Sign(storedSpeed))
-                    {
-                        _rb.velocity = new Vector2(storedSpeed / 2, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
-                    }
-                    else
-                    {
-                        _rb.velocity = new Vector2(storedSpeed, handspringMult * jumpForce * Time.fixedDeltaTime); //hand spring
-                    }
-                }
-                else if (prevState == state.walled)
-                {
-                    if (!_boost.isBoosting)
-                    {
-                        _rb.velocity = new Vector2(-_collision.WallDirectionDetect() * wallJumpXForce * Time.fixedDeltaTime, wallJumpMult * jumpForce * Time.fixedDeltaTime); //wall jump
-                    }
-                    else
-                    {
-                        _rb.velocity = new Vector2(-_collision.WallDirectionDetect() * _boost.CurrentMaxSpeed(), wallJumpMult * jumpForce * Time.fixedDeltaTime); // boost wall jump
-
-                    }
-                }
-                else if (prevState == state.midair)
-                {
-                    _collision.DetectWalls = true;
-                }
-                else
-                {
-                    _rb.velocity = new Vector2(_rb.velocity.x, jumpForce * Time.fixedDeltaTime); //jump
-                }
-
-                _inputs.Consume(PlayerInput.Action.jump);
-                hasWallDashed = false;
+                Jumping();
                 break;
+
             case state.grounded:
                 hasFlipped = false;
                 hasWallDashed = false;
                 break;
+
             case state.divelanding:
                 hasFlipped = false;
                 hasWallDashed = false;
@@ -253,12 +230,15 @@ public class PlayerMove : MonoBehaviour
                 storedSpeed = _rb.velocity.x;
                 //_rb.velocity = new Vector2(0f, _rb.velocity.y);
                 break;
+
             case state.diving:
                 Dive();
                 break;
+
             case state.boosting:
                 DiveSpringBoost();
                 break;
+
             case state.walled:
                 hasFlipped = false;
                 if (prevState != state.walled)
@@ -268,6 +248,7 @@ public class PlayerMove : MonoBehaviour
                     UpdateState(state.diving, false);
                 }
                 break;
+
             case state.midair:
                 _collision.DetectWalls = true;
                 break;
@@ -284,9 +265,9 @@ public class PlayerMove : MonoBehaviour
     {
         if (flipped == false && !hasFlipped)
         {
-            if (_rb.velocity.x < 0) facingLeft = true;
+            if (localVelocity.x < 0) facingLeft = true;
             
-            else if (_rb.velocity.x > 0) facingLeft = false;         
+            else if (localVelocity.x > 0) facingLeft = false;         
         }
         else if (flipped && hasFlipped)
         {
@@ -296,43 +277,41 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void MovementCalc()
+    private void HorizontalMovement(restriction restriction)
     {
         float targetSpeed = _inputs.RawDirections.x * _boost.CurrentMaxSpeed(); //reflects left/right input
-        float currentSpeed = _rb.velocity.x;
+        float currentSpeed = _rb.velocity.x - platformVelocity.x;
         acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
         float newSpeed = 0;
-        if (playerState == state.grounded || playerState == state.walled)
+        switch (restriction)
         {
-            newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.fixedDeltaTime); //unrestricted movement
+            case restriction.none:
+                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.fixedDeltaTime); //unrestricted movement
+                break;
+            case restriction.light:
+                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime); //light restricted movement
+                break;
+            case restriction.heavy:
+                newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * divespeedmod * Time.fixedDeltaTime); //heavy restricted movement
+                break;
+            case restriction.diveLanding:
+                newSpeed = Mathf.MoveTowards(currentSpeed, (currentSpeed / diveLandDecel), acceleration * Time.fixedDeltaTime);
+                break;
         }
-        else if (playerState == state.jumping || playerState == state.midair)
-        {
-            newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * airspeedmod * Time.fixedDeltaTime); //light restricted movement
-        }
-        else if (playerState == state.diving || playerState == state.boosting)
-        {
-            newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * divespeedmod * Time.fixedDeltaTime); //heavy restricted movement
-        }
-        else if (playerState == state.divelanding)
-        {
-            newSpeed = Mathf.MoveTowards(currentSpeed, (currentSpeed/diveLandDecel), acceleration * Time.fixedDeltaTime);
-        }
-            _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
+        newSpeed += platformVelocity.x;
+        _rb.velocity = new Vector2(newSpeed, _rb.velocity.y);
     }
 
     private void WallMovement()
     {
-        if ((_inputs.saysFlip || _inputs.saysDive) && !hasWallDashed) //wall dash
+        if (_inputs.saysFlip || _inputs.saysDive) //wall dash
         {
-            _rb.velocity = new Vector2(0, wallDashForce + (_boost.boostStage * 2));
-            hasWallDashed = true;
-            _animation.WallClimbAnimation();
-            _inputs.Consume(PlayerInput.Action.flip);
-            _inputs.Consume(PlayerInput.Action.dive);
-        }
-        else if (_inputs.saysFlip || _inputs.saysDive) //wall dash already used
-        {
+            if (!hasWallDashed)
+            {
+                _rb.velocity = new Vector2(0, wallDashForce + (_boost.boostStage * 2));
+                hasWallDashed = true;
+                _animation.WallClimbAnimation();
+            }
             _inputs.Consume(PlayerInput.Action.flip);
             _inputs.Consume(PlayerInput.Action.dive);
         }
@@ -344,8 +323,53 @@ public class PlayerMove : MonoBehaviour
         else //move away from wall
         {
             holdingTowardsWall = false;
-            MovementCalc();
+            HorizontalMovement(restriction.light);
         }
+    }
+
+    private void Jumping()
+    {
+        float platformCarryY = Mathf.Max(0f, platformVelocity.y); // No negative influence
+        float jumpY = jumpForce;
+        float jumpX = _rb.velocity.x;
+
+        switch (prevState)
+        {
+            case state.divelanding: // Hand Spring
+                if (MathF.Sign(_inputs.RawDirections.x) != MathF.Sign(storedSpeed))
+                {
+                    jumpX = storedSpeed / 2f; // Holding against momentum 
+                }
+                else jumpX = storedSpeed;
+                
+                jumpY = handspringMult * jumpForce;
+                jumpX += platformVelocity.x;
+                jumpY += platformCarryY;
+                break;
+
+            case state.walled: // Walljump
+                if (!_boost.isBoosting)
+                {
+                    jumpX = -_collision.WallDirectionDetect() * wallJumpXForce;
+                }
+                else jumpX = -_collision.WallDirectionDetect() * _boost.CurrentMaxSpeed(); // boost wall jump
+
+                jumpY = wallJumpMult * jumpForce;
+                // jumpX += platformVelocity.x;
+                // jumpY += platformCarryY;
+                break;
+
+            case state.midair:
+                _collision.DetectWalls = true;
+                break;
+
+            default:
+                jumpY += platformCarryY;
+                break;
+        }
+        _rb.velocity = new Vector2(jumpX, jumpY);
+        _inputs.Consume(PlayerInput.Action.jump);
+        hasWallDashed = false;
     }
 
     private void AirFlip()
@@ -402,10 +426,8 @@ public class PlayerMove : MonoBehaviour
     {
         _rb.velocity = targetVelocity;
     }
-
-    public void MoveRigidBody(Vector2 amount)
+    public void SetPlatformVelocity(Vector2 velocity)
     {
-        if (amount != Vector2.zero) _rb.MovePosition(_rb.position + amount);
+        platformVelocity = velocity;
     }
-
 }

@@ -40,7 +40,7 @@ public class PlayerAnimation : MonoBehaviour
         {
             _animator.SetBool("Grounded", true);
 
-            if (_rb.velocity.x != 0f)
+            if (_baseMovement.localVelocity.x != 0f)
             {
                 _animator.SetBool("Running", true);
             }
