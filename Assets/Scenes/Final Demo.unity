@@ -23033,6 +23033,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI and Game Managing
       objectReference: {fileID: 0}
+    - target: {fileID: 2154721467949617241, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.0021973
+      objectReference: {fileID: 0}
     - target: {fileID: 4675876255082891564, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: _playerScript
       value: 
@@ -23076,6 +23080,10 @@ PrefabInstance:
     - target: {fileID: 4765116163333124355, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271907802737389049, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.18701172
       objectReference: {fileID: 0}
     - target: {fileID: 8505072674871323432, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: _player
