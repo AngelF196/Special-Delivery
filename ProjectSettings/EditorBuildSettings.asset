@@ -5,26 +5,14 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Main Menu.unity
-    guid: 85a32fb76781e404aa8ce3eea093d9ff
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Scenes/Check-in.unity
-    guid: a7964ba478d2f2042804db3ce138b488
-  - enabled: 0
-    path: Assets/Scenes/Movement Testing.unity
-    guid: b6e7c464f8ead4046a595be305f6ff31
   - enabled: 1
     path: Assets/Scenes/Title Screen.unity
     guid: 9f9f0872c7bfc7149b90aaf5e64da1d8
-  - enabled: 0
-    path: Assets/Scenes/City Blockout.unity
-    guid: 2400480fe56ecbb47869fda75c69ac82
   - enabled: 1
     path: Assets/Scenes/Final Demo.unity
     guid: 536a7c3147d60964f9e2a037a7fff85b
+  - enabled: 1
+    path: Assets/Scenes/SL-Gorveve.unity
+    guid: 811870d89312794468cf5e95439b32e0
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 08ccb037bf3a9074ebea81f480603ec2, type: 2}

@@ -30,9 +30,9 @@ public class MainMenuOptions : MonoBehaviour
         _mainMenu.SetActive(true);
     }
 
-    public void GoToSelectedFile()
+    public void GoToSelectedFile(string scene_name)
     {
-        SceneManager.LoadScene("Final Demo");
+        SceneManager.LoadScene(scene_name);
     }
 
     public void QuitGame()

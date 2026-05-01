@@ -12,11 +12,13 @@ public class PlayerBoost : MonoBehaviour
 
     [Header("Wall Buffer")]
     [SerializeField] private float wallBufferMaxTime = 0.15f;
+    [SerializeField] private float wallGraceMaxTime = 0.2f;
 
     //shit
     [SerializeField] private int currentStage;
     private float stageTimer;
     private float wallBufferTimer;
+    private float wallGraceTimer;
     private bool boosting;
     private bool wallTimerStarted;
     public int boostStage => currentStage;
@@ -79,7 +81,7 @@ public class PlayerBoost : MonoBehaviour
     {
         stageTimer -= Time.fixedDeltaTime;
 
-        if(wallReturns.Contains(_environment.WallDirectionDetect()) && !wallTimerStarted)
+        if (wallReturns.Contains(_environment.WallDirectionDetect()) && !wallTimerStarted)
         {
             wallTimerStarted = true;
             wallBufferTimer = wallBufferMaxTime;
@@ -87,6 +89,11 @@ public class PlayerBoost : MonoBehaviour
         else if (wallReturns.Contains(_environment.WallDirectionDetect()) && wallTimerStarted) 
         {
             wallBufferTimer -= Time.fixedDeltaTime;
+        }
+
+        if (wallGraceTimer > 0f)
+        {
+            wallGraceTimer -= Time.fixedDeltaTime;
         }
 
         if (stageTimer < 0f) 
@@ -105,7 +112,7 @@ public class PlayerBoost : MonoBehaviour
         {
             return;
         }
-        if (currentStage != 0 && speed < stageMinSpeed[currentStage - 1])
+        if (wallGraceTimer <= 0 && currentStage != 0 && speed < stageMinSpeed[currentStage - 1])
         {
             currentStage--;
             Debug.Log($"Stage Decremented To: {currentStage}");
@@ -128,5 +135,11 @@ public class PlayerBoost : MonoBehaviour
     {
         wallBufferTimer = 0f;
         wallTimerStarted = false;
+    }
+
+    public void StartWallGracePeriod()
+    {
+        Debug.Log("started wall grace period");
+        wallGraceTimer = wallGraceMaxTime;
     }
 }

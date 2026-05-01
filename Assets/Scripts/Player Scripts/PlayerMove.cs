@@ -258,6 +258,7 @@ public class PlayerMove : MonoBehaviour
             _collision.DetectWalls = false;
             holdingTowardsWall = false;
             _boost.ResetWallTimer();
+            _boost.StartWallGracePeriod();
         }
         
     }
@@ -317,7 +318,7 @@ public class PlayerMove : MonoBehaviour
         }
         if (_collision.WallDirectionDetect() == _inputs.RawDirections.x && _rb.velocity.y < 0) //wall slide
         {
-            _rb.velocity = new Vector2(0, Mathf.Clamp(_rb.velocity.y, -wallSlideSpeed, float.MaxValue));
+            _rb.velocity = new Vector2(0, -wallSlideSpeed);
             holdingTowardsWall = true;
         }
         else //move away from wall
@@ -333,6 +334,7 @@ public class PlayerMove : MonoBehaviour
         float jumpY = jumpForce;
         float jumpX = _rb.velocity.x;
 
+        if (prevState == state.jumping || prevState == state.midair) return;
         switch (prevState)
         {
             case state.divelanding: // Hand Spring
@@ -374,7 +376,7 @@ public class PlayerMove : MonoBehaviour
 
     private void AirFlip()
     {
-        if (playerState == state.grounded) { return; }
+        if (playerState == state.grounded) return;
         _animation.FlipAnimation();
         if (_rb.velocity.y <= 5) {
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
@@ -409,15 +411,12 @@ public class PlayerMove : MonoBehaviour
     private void DiveSpringBoost()
     {
         _boost.IncrementStage();
-        if (facingLeft)
-        {
-            int direction = -1;
-            _rb.velocity = new Vector2(direction * _boost.CurrentMaxSpeed(), diveSpringHeight);
-        }
-        else
-        {
-            _rb.velocity = new Vector2(_boost.CurrentMaxSpeed(), diveSpringHeight);
-        }
+        int direction = 0;
+        if (facingLeft) direction = -1;
+        else direction = 1;
+
+        _rb.velocity = new Vector2(direction * _boost.CurrentMaxSpeed(), diveSpringHeight);
+        
         _inputs.Consume(PlayerInput.Action.flip);
         _inputs.Consume(PlayerInput.Action.dive);
     }
