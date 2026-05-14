@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
     public bool printStates;
     public enum state
     {
-        grounded, jumping, midair, diving, divelanding, walled, boosting
+        grounded, jumping, midair, diving, divelanding, walled, boosting, bonked
     }
     private enum restriction
     {
@@ -51,6 +51,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float wallDashForce;
     [SerializeField] private bool hasWallDashed;
 
+    [Header("Bonk Variables")]
+    [SerializeField] private float bonkX;
+    [SerializeField] private float bonkY;
+
     // References
     private Rigidbody2D _rb;
     PlayerBoost _boost;
@@ -67,6 +71,7 @@ public class PlayerMove : MonoBehaviour
     public state currentState => playerState;
     public bool holdingTowardsWall = false;
     public float baseMaxSpeed => maxSpeed;
+
     public bool isFacingLeft => facingLeft;
 
     public Vector2 localVelocity;
@@ -167,7 +172,10 @@ public class PlayerMove : MonoBehaviour
 
                 if (_collision.FloorDetect() && _rb.velocity.y <= 0) UpdateState(state.divelanding);
                 
-                //wall bonk
+                if (_collision.WallDirectionDetect() == -1 && isFacingLeft
+                    || _collision.WallDirectionDetect() == 1 && !isFacingLeft) 
+                    UpdateState(state.bonked);
+                
                 break;
             case state.divelanding:
                 HorizontalMovement(restriction.diveLanding);
@@ -198,6 +206,15 @@ public class PlayerMove : MonoBehaviour
                 if (_collision.WallDirectionDetect() == 0) UpdateState(state.midair);
                 if (_collision.FloorDetect()) UpdateState(state.grounded);
                 if (_inputs.saysJump) UpdateState(state.jumping);               
+                break;
+
+            case state.bonked:
+                if (_rb.velocity.y <= -maxFallSpeed)
+                {
+                    _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
+                }
+                if (_collision.FloorDetect()) UpdateState(state.grounded);
+
                 break;
         }
     }
@@ -251,6 +268,10 @@ public class PlayerMove : MonoBehaviour
 
             case state.midair:
                 _collision.DetectWalls = true;
+                break;
+
+            case state.bonked:
+                Bonk();
                 break;
         }
         if (prevState == state.walled)
@@ -419,6 +440,13 @@ public class PlayerMove : MonoBehaviour
         
         _inputs.Consume(PlayerInput.Action.flip);
         _inputs.Consume(PlayerInput.Action.dive);
+    }
+
+    private void Bonk()
+    {
+        if (facingLeft) _rb.velocity = new Vector2(bonkX, bonkY);
+        else _rb.velocity = new Vector2(-bonkX, bonkY);
+        
     }
 
     public void SetRigidBodyVelocity(Vector2 targetVelocity)

@@ -6022,6 +6022,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1554821273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &411851596 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7039977279223435061, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+  m_PrefabInstance: {fileID: 1765155067725895901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &411851601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411851596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d338fe9a95e467f489f9846676b1cc47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiltSpeed: 2.36
+  tiltUpAmount: 0
+  tiltDownAmount: 0
 --- !u!1 &423798384
 GameObject:
   m_ObjectHideFlags: 0
@@ -23955,6 +23975,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2787148706623868235, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      propertyPath: boxSize.x
+      value: 0.5824
+      objectReference: {fileID: 0}
+    - target: {fileID: 2787148706623868235, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      propertyPath: floorBoxOrigin.y
+      value: 0.767
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846266206293639556, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      propertyPath: bonkX
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846266206293639556, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      propertyPath: bonkY
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3575818379489108864, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
       propertyPath: m_LocalPosition.x
       value: 18.9
@@ -24002,7 +24038,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7039977279223435061, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 411851601}
   m_SourcePrefab: {fileID: 100100000, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
 --- !u!212 &2105420495043552533
 SpriteRenderer:
