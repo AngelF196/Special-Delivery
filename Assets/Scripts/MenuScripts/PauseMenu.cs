@@ -80,6 +80,7 @@ public class PauseMenu : MonoBehaviour
         _playerScript.enabled = true;
         _pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
+        gameResumedEvent.Invoke();
     }
 
     public void OptionsButton()
