@@ -31,3 +31,5 @@ MonoBehaviour:
   - speakerSideToHighlight: 1
     expression: 0
     dialogueText: Y-yes I can! Sorry to hear about what you're going through...
+  activateQuest: 0
+  questToActivate: {fileID: 0}

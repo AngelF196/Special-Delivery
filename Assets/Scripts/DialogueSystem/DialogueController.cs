@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class DialogueController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private Color _talkingColor = Color.white;
     [SerializeField] private Color _listeningColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 
+    // DialogueController stuff
     private Queue<Conversation> _conversationObjs = new Queue<Conversation>();
     private bool _conversationEnded = false;
     private string _name;
@@ -33,11 +35,23 @@ public class DialogueController : MonoBehaviour
     private int _index = 0;
     private bool _isInConvo = false;
 
+    // Typing effect coroutine
     private Coroutine typeDialogueCoroutine;
     private bool _isTyping;
 
+    // Quest activation things
+    public UnityEvent<Quest> startQuest;
+    private bool _canActivateQuest = false;
+    private Quest _questObj;
+
     // Public variables for use with other scripts
     public bool conversationIsActive => _isInConvo;
+
+
+    private void Start()
+    {
+        startQuest.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().QuestStarted);
+    }
 
     public void DisplayNextLine(Conversation conversation)
     {
@@ -85,6 +99,12 @@ public class DialogueController : MonoBehaviour
         _rightCharacterPortrait.sprite = convo.rightSpeaker.normalSprite;
 
         _isInConvo = true;
+        _canActivateQuest = convo.activateQuest;
+        
+        if (convo.questToActivate != null)
+            _questObj = convo.questToActivate;
+        // else
+        //     throw new NullReferenceException("A quest will be activated after this conversation, but there is no quest object assigned to the conversation with this character.");
     }
 
     private void EndConversation()
@@ -96,8 +116,18 @@ public class DialogueController : MonoBehaviour
             gameObject.SetActive(false);
         }
 
+        StartQuest();
         _isInConvo = false;
         _index = 0;
+    }
+
+    private void StartQuest()
+    {
+        if (_canActivateQuest)
+        {
+            startQuest.Invoke(_questObj);
+            _questObj = null;
+        }
     }
 
     public void ExitConversationAfterStrayingFromNPC()
@@ -128,15 +158,12 @@ public class DialogueController : MonoBehaviour
                 switch (nextLine.expression)
                 {
                     case Conversation.Expressions.Normal:
-                        Debug.Log("Normal portrait on left character");
                         _leftCharacterPortrait.sprite = convoObj.leftSpeaker.normalSprite;
                         break;
                     case Conversation.Expressions.Surprised:
-                        Debug.Log("Surprised portrait on left character");
                         _leftCharacterPortrait.sprite = convoObj.leftSpeaker.surprisedSprite;
                         break;
                     case Conversation.Expressions.Confused:
-                        Debug.Log("Confused portrait on left character");
                         _leftCharacterPortrait.sprite = convoObj.leftSpeaker.confusedSprite;
                         break;
                 }
@@ -150,15 +177,12 @@ public class DialogueController : MonoBehaviour
                 switch (nextLine.expression)
                 {
                     case Conversation.Expressions.Normal:
-                        Debug.Log("Normal portrait on right character");
                         _rightCharacterPortrait.sprite = convoObj.rightSpeaker.normalSprite;
                         break;
                     case Conversation.Expressions.Surprised:
-                        Debug.Log("Surprised portrait on right character");
                         _rightCharacterPortrait.sprite = convoObj.rightSpeaker.surprisedSprite;
                         break;
                     case Conversation.Expressions.Confused:
-                        Debug.Log("Confused portrait on right character");
                         _rightCharacterPortrait.sprite = convoObj.rightSpeaker.confusedSprite;
                         break;
                 }
@@ -181,7 +205,7 @@ public class DialogueController : MonoBehaviour
         _dialogueText.text = line;
         _dialogueText.maxVisibleCharacters = maxVisibleChars;
         
-        Debug.Log("First location of delimiter: " + delIndexLocation);
+        // Debug.Log("First location of delimiter: " + delIndexLocation);
         foreach(char c in _dialogueText.text.ToCharArray())
         {
             if (maxVisibleChars == delIndexLocation)
@@ -190,7 +214,7 @@ public class DialogueController : MonoBehaviour
                 _dialogueText.text = _dialogueText.text[0..delIndexLocation] + subStr;
 
                 delIndexLocation = _dialogueText.text.IndexOf(_yellingDelimiter);
-                Debug.Log("Next location of delimiter: " + delIndexLocation);
+                // Debug.Log("Next location of delimiter: " + delIndexLocation);
                 yield return new WaitForSeconds(_delimiterPauseTime);
             }
             
@@ -216,7 +240,7 @@ public class DialogueController : MonoBehaviour
             _dialogueText.text = _dialogueText.text[0..delIndexLocation] + subStr;
 
             delIndexLocation = _dialogueText.text.IndexOf(_yellingDelimiter);
-            Debug.Log("Next location of delimiter: " + delIndexLocation);
+            // Debug.Log("Next location of delimiter: " + delIndexLocation);
         }
 
         _dialogueText.maxVisibleCharacters = _dialogueText.text.Length;
