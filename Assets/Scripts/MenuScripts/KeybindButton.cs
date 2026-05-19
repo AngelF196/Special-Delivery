@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEditor.PackageManager;
+using UnityEngine.EventSystems;
 
 public class KeybindButton : MonoBehaviour
 {
@@ -14,12 +16,11 @@ public class KeybindButton : MonoBehaviour
     private InputAction _moveAction;
     private InputAction _singleButtonAction;
     private Button _buttonSelected;
+    private TextMeshProUGUI buttonText;
+    [SerializeField] private GameObject _keybindMenu;
+    private EventSystem _eventSystem;
 
     // Old stuff
-    public TextMeshProUGUI buttonText;
-    [SerializeField] private GameObject _keybindMenu;
-    private string _keyMapName;
-    public static bool isMakingInput = false;
 
     // Button lists for rebinding
     private List<Button> _keyboardButtons = new List<Button>();
@@ -27,6 +28,7 @@ public class KeybindButton : MonoBehaviour
 
     void Awake()
     {
+        _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         _moveAction = playerInputActions.FindAction("Move");
 
         string rebinds = PlayerPrefs.GetString("rebinds");
@@ -108,6 +110,7 @@ public class KeybindButton : MonoBehaviour
     {
         _rebindingOperation.Dispose();
         _buttonSelected.interactable = true;
+        _eventSystem.SetSelectedGameObject(_buttonSelected.gameObject);
 
         string newBinding;
         if ( actionName.Contains("Left") || actionName.Contains("Right") )

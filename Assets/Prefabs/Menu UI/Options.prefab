@@ -677,7 +677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.545, y: 0.241315}
   m_AnchorMax: {x: 0.6410447, y: 0.795}
-  m_AnchoredPosition: {x: -0.000015258789, y: -1.6043034}
+  m_AnchoredPosition: {x: -0.000015258789, y: -1.6043053}
   m_SizeDelta: {x: 0, y: 3.2086}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &563989909572438584
@@ -3878,6 +3878,8 @@ GameObject:
   - component: {fileID: 8952714806034355156}
   - component: {fileID: 53300490618919936}
   - component: {fileID: 465445841238129647}
+  - component: {fileID: 1323608467491014939}
+  - component: {fileID: 1166728547706398706}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -4027,6 +4029,39 @@ MonoBehaviour:
   elementToSelect: {fileID: 0}
   _showVisualization: 0
   _navColor: {r: 0.04524738, g: 0.7735849, b: 0.09165565, a: 1}
+--- !u!95 &1323608467491014939
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255967732285860247}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d662c7ca5bd0adc45ab2539126dd4f92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1166728547706398706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255967732285860247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79418e579b3914e4ea7648314528d233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3266798709051926130
 GameObject:
   m_ObjectHideFlags: 0
