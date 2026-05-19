@@ -8,7 +8,6 @@ public class PlayerTilt : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerBoost boost;
 
-    [SerializeField] private float tiltSpeed;
     [SerializeField] private int tiltUpAmount;
     [SerializeField] private int tiltDownAmount;
 
@@ -45,11 +44,11 @@ public class PlayerTilt : MonoBehaviour
         float motionAngle = Mathf.Atan2(vel.y, Mathf.Abs(vel.x)) * Mathf.Rad2Deg;
 
         float targetTilt = motionAngle * 0.6f;
-        targetTilt = Mathf.Clamp(targetTilt, -65f, 25f);
+        targetTilt = Mathf.Clamp(targetTilt, tiltDownAmount, tiltUpAmount);
 
         if (movement.isFacingLeft) targetTilt = -targetTilt;
 
-        // SNAP on first frame of dive
+        // Snap on first frame of dive
         if (diveJustStarted)
         {
             currentTilt = targetTilt;

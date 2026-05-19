@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
         _pm = _player.GetComponent<PlayerMove>();
         _playerRb = _player.GetComponent<Rigidbody2D>();
         _questTimer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
+        _questTimer.enabled = false;
+
     }
 
     void Update()
