@@ -310,6 +310,8 @@ GameObject:
   - component: {fileID: 7304899134107829149}
   - component: {fileID: 1414000654090622369}
   - component: {fileID: 1081232825809200976}
+  - component: {fileID: 8077738274171268879}
+  - component: {fileID: 2918569292862109611}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -327,7 +329,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3032248062647579769}
   m_Father: {fileID: 6912241156702213276}
@@ -431,6 +433,41 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &8077738274171268879
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627803900801479525}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d662c7ca5bd0adc45ab2539126dd4f92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2918569292862109611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627803900801479525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79418e579b3914e4ea7648314528d233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectAudio: {fileID: 0}
+  _confirmAudio: {fileID: 0}
 --- !u!1 &2775294737237027834
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +850,9 @@ GameObject:
   - component: {fileID: 5034082387879245386}
   - component: {fileID: 3930401064546292001}
   - component: {fileID: 963512446718629744}
+  - component: {fileID: 8046110227605653271}
   - component: {fileID: 5297062149237318077}
+  - component: {fileID: 8520595798744601436}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -831,7 +870,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 57862413721149666}
   m_Father: {fileID: 6912241156702213276}
@@ -947,6 +986,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &8046110227605653271
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2991914145340472375}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d662c7ca5bd0adc45ab2539126dd4f92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5297062149237318077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,6 +1023,20 @@ MonoBehaviour:
   elementToSelect: {fileID: 1854196296160839571}
   _showVisualization: 0
   _navColor: {r: 0.8415094, g: 0, b: 0, a: 1}
+--- !u!114 &8520595798744601436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2991914145340472375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79418e579b3914e4ea7648314528d233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectAudio: {fileID: 0}
+  _confirmAudio: {fileID: 0}
 --- !u!1 &3096764241905754760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1183,8 @@ GameObject:
   - component: {fileID: 7407195036442140867}
   - component: {fileID: 5395035251572245024}
   - component: {fileID: 1439442233853504017}
+  - component: {fileID: 9009535776500897668}
+  - component: {fileID: 5119245123925056671}
   m_Layer: 5
   m_Name: TitleButton
   m_TagString: Untagged
@@ -1126,7 +1202,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7910153444488558062}
   m_Father: {fileID: 6912241156702213276}
@@ -1230,6 +1306,41 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &9009535776500897668
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3403643879436195745}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d662c7ca5bd0adc45ab2539126dd4f92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5119245123925056671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3403643879436195745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79418e579b3914e4ea7648314528d233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectAudio: {fileID: 0}
+  _confirmAudio: {fileID: 0}
 --- !u!1 &4301147069344066061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,6 +1680,8 @@ GameObject:
   - component: {fileID: 3438411855455842239}
   - component: {fileID: 2177511075003590088}
   - component: {fileID: 4196797186482144801}
+  - component: {fileID: 834596465999783226}
+  - component: {fileID: 922959641009076538}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -1586,7 +1699,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 80526316930927054}
   m_Father: {fileID: 6912241156702213276}
@@ -1690,6 +1803,41 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!95 &834596465999783226
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5353788790365886427}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d662c7ca5bd0adc45ab2539126dd4f92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &922959641009076538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5353788790365886427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79418e579b3914e4ea7648314528d233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectAudio: {fileID: 0}
+  _confirmAudio: {fileID: 0}
 --- !u!1 &5357553232980709725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2717,7 +2865,7 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 5009986214250572194, guid: a13e9993466fdbf469999dafe5415a88, type: 3}
   m_TrackedDevicePositionAction: {fileID: -1322171318271837502, guid: a13e9993466fdbf469999dafe5415a88, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 472159125634526712, guid: a13e9993466fdbf469999dafe5415a88, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
@@ -3978,7 +4126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3544580885103588391, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.6043015
+      value: -1.6043034
       objectReference: {fileID: 0}
     - target: {fileID: 3572268220801760859, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_AnchoredPosition.x
