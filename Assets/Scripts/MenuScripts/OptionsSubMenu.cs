@@ -136,7 +136,7 @@ public class OptionsSubMenu : MonoBehaviour
         _audioTab.colors = _videoTab.colors = _cb;
 
         // Change navigation of certain UI elements
-        _elementAboveBackButton = _keybindContent.transform.Find("ContPauseGroup").GetComponentInChildren<Selectable>();
+        _elementAboveBackButton = _keybindContent.transform.Find("ContDefaultGroup").GetComponentInChildren<Selectable>();
         Navigation _nav = _backButton.navigation;
         _nav.selectOnUp = _elementAboveBackButton;
         _nav.selectOnDown = _keybindTab;
