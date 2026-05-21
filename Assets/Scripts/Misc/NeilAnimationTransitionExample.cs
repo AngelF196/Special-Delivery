@@ -15,6 +15,11 @@ public class NeilAnimationTransitionExample : MonoBehaviour
 
     }
 
+    public void SetCircleCenter(Vector2 center)
+    {
+        circle.position = center;
+    }
+
     private void Update()
     {
         if (_playerMove == null) return;
