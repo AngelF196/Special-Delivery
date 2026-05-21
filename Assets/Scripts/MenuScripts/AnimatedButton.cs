@@ -11,23 +11,24 @@ public class AnimatedButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [Tooltip("Audio that plays when pressing any confirm action that isn't a mouse click."), SerializeField] private AudioClip _confirmAudio;
     private Animator _animator;
     private AudioSource _menuSoundPlayer;
+    private Button _lastSelectedButton;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _animator = GetComponent<Animator>();
-        _menuSoundPlayer = GameObject.Find("Menu SFX").GetComponent<AudioSource>();
+        _menuSoundPlayer = GetComponent<AudioSource>();
     }
 
     // Pointer refers to the mouse
     public void OnPointerEnter(PointerEventData data)
     {
-        _animator.SetBool("buttonSelected", true);
+        if (data.selectedObject == this.gameObject)  // Don't grow any other button that isn't selected by gamepad or keyboard 
+            _animator.SetBool("buttonSelected", true);
     }
 
     public void OnPointerExit(PointerEventData data)
     {
-        if (data.selectedObject != gameObject)
+        if (data.selectedObject != this.gameObject)
             _animator.SetBool("buttonSelected", false);
     }
 
@@ -43,6 +44,7 @@ public class AnimatedButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _menuSoundPlayer.clip = _selectAudio;
         _menuSoundPlayer.Play();
         _animator.SetBool("buttonSelected", true);
+        _lastSelectedButton = data.selectedObject.GetComponent<Button>();
     }
 
     public void OnDeselect(BaseEventData data)
