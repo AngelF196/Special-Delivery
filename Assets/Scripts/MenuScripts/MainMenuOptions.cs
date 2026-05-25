@@ -8,6 +8,7 @@ public class MainMenuOptions : MonoBehaviour
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _optionsMenu;
     [SerializeField] private GameObject _fileSelectMenu;
+    [SerializeField] private GameManager _gameManager;
 
     public void GoToOptionsMenu()
     {
@@ -32,7 +33,7 @@ public class MainMenuOptions : MonoBehaviour
 
     public void GoToSelectedFile(string scene_name)
     {
-        SceneManager.LoadScene(scene_name);
+        _gameManager.LoadScene(scene_name);
     }
 
     public void QuitGame()

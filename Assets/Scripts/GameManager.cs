@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public enum SceneTransition
     {
-        NONE, SLIDE, CIRCLE  // I dunno, these are random names I just came up with
+        none, slide, circle  // I dunno, these are random names I just came up with
     }
 
     // Event
@@ -36,15 +37,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (_dialogueController.conversationIsActive)
-        {
-            _pm.enabled = false;
+        if (_pm != null) {
+            if (_dialogueController.conversationIsActive)
+            {
+                _pm.enabled = false;
+            }
+            else
+            {
+                _pm.enabled = true;
+            }
         }
-        else
-        {
-            _pm.enabled = true;
-        }
-
         if (_questIsActive)
         {
             UpdateTimer();
@@ -74,6 +76,14 @@ public class GameManager : MonoBehaviour
         
         string time = _minutes + ":" + secondsText;
         _questTimer.text = time;
+    }
+
+    public void LoadScene(string sceneName, SceneTransition transition = SceneTransition.none, Vector2 position = default)
+    {
+        if (transition != SceneTransition.none) {
+            sceneTransition.Invoke(transition, position);
+        }
+        SceneManager.LoadScene(sceneName);
     }
 
     public void EnteredConversation()
