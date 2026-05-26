@@ -5064,7 +5064,10 @@ MonoBehaviour:
   wallJumpMult: 1
   wallDashForce: 12
   hasWallDashed: 0
+  bonkX: 3
+  bonkY: 5
   holdingTowardsWall: 0
+  localVelocity: {x: 0, y: 0}
 --- !u!114 &1882753833928157330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5094,6 +5097,7 @@ MonoBehaviour:
   - 20
   - 30
   wallBufferMaxTime: 2.59
+  wallGraceMaxTime: 0.2
   currentStage: 0
 --- !u!114 &2787148706623868235
 MonoBehaviour:
@@ -5113,8 +5117,8 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  boxSize: {x: 0.582, y: 0.06}
-  floorBoxOrigin: {x: 0, y: 0.77, z: 0}
+  boxSize: {x: 0.5824, y: 0.06}
+  floorBoxOrigin: {x: 0, y: 0.767, z: 0}
   wallBoxSize: {x: 0.12, y: 1.05}
   wallBoxOrigin: {x: 0, y: 0.21, z: 0}
   castDistance: 0
@@ -5423,6 +5427,7 @@ GameObject:
   - component: {fileID: 1564452709596282455}
   - component: {fileID: 642804386313025066}
   - component: {fileID: 2826147875366272178}
+  - component: {fileID: 7108005685738549065}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -5465,7 +5470,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a642704a361d47648b7df5a5943eb919, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5491,7 +5496,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 20.48, y: 20.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -5530,3 +5535,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6097d5ad5bbde0140a6ffac03a674c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7108005685738549065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7039977279223435061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d338fe9a95e467f489f9846676b1cc47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiltUpAmount: 25
+  tiltDownAmount: -65
