@@ -28,8 +28,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _pm = _player.GetComponent<PlayerMove>();
-        _playerRb = _player.GetComponent<Rigidbody2D>();
+        if (_pm != null)
+        {
+            _pm = _player.GetComponent<PlayerMove>();
+            _playerRb = _player.GetComponent<Rigidbody2D>();
+        }
         _questTimer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         _questTimer.enabled = false;
 
