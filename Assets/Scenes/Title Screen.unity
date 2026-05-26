@@ -1136,6 +1136,7 @@ Transform:
   m_Children:
   - {fileID: 237862119}
   - {fileID: 2144897148}
+  - {fileID: 2102240263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &723462937
@@ -1558,7 +1559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: a642704a361d47648b7df5a5943eb919, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1806,7 +1807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3544580885103588391, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.6043205
+      value: -1.6043167
       objectReference: {fileID: 0}
     - target: {fileID: 3572268220801760859, guid: 7406cb5e3454b894da680cec942e53c6, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3533,7 +3534,7 @@ GameObject:
   - component: {fileID: 2102240262}
   - component: {fileID: 2102240261}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Buildings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3597,12 +3598,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102240260}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.17, y: -0.21, z: 36.67}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.645759, y: 6.8613486, z: 16.999416}
   m_LocalScale: {x: 22.041805, y: 5.5101857, z: 22.041805}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 579182942}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2144897148 stripped
 Transform:
@@ -3619,4 +3620,3 @@ SceneRoots:
   - {fileID: 1171513937}
   - {fileID: 356908416}
   - {fileID: 579182942}
-  - {fileID: 2102240263}
