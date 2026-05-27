@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
     public bool printStates;
     public enum state
     {
-        grounded, jumping, midair, diving, divelanding, walled, boosting, bonked
+        grounded, jumping, midair, diving, divelanding, walled, boosting, bonked, bonklanding
     }
     private enum restriction
     {
@@ -66,6 +66,7 @@ public class PlayerMove : MonoBehaviour
     private state playerState;
     private state prevState;
     private float storedSpeed;
+    private bool stateTransitionStarted = false;
 
     //Shit for other scripts
     public state currentState => playerState;
@@ -213,12 +214,28 @@ public class PlayerMove : MonoBehaviour
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, -maxFallSpeed);
                 }
-                if (_collision.FloorDetect()) UpdateState(state.grounded);
+                if (_collision.FloorDetect()) UpdateState(state.bonklanding);
 
+                break;
+
+            case state.bonklanding:
+                _rb.velocity = Vector2.zero;
+                if (!stateTransitionStarted)
+                {
+                    stateTransitionStarted = true;
+                    StartCoroutine(WaitForTransition(0.5f, state.grounded));
+                }
                 break;
         }
     }
-    
+
+    IEnumerator WaitForTransition(float seconds, state targetState)
+    {
+        yield return new WaitForSeconds(seconds);
+        UpdateState(targetState);
+        stateTransitionStarted = false;
+    }
+
     private void UpdateState(state newstate, bool doAction = true)
     {
         if (printStates) Debug.Log(newstate.ToString() + " state");
@@ -272,6 +289,11 @@ public class PlayerMove : MonoBehaviour
 
             case state.bonked:
                 Bonk();
+                break;
+
+            case state.bonklanding:
+                hasFlipped = false;
+                hasWallDashed = false;
                 break;
         }
         if (prevState == state.walled)

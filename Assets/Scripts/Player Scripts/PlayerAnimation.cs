@@ -63,89 +63,123 @@ public class PlayerAnimation : MonoBehaviour
             //boost stage run cycles
         }
     }
-        public void FlipAnimation()
-        {
-            _animator.SetTrigger("Flip");
-        }
-
-        public void WallClimbAnimation()
-        {
-            _animator.SetTrigger("Wall_Climb");
-        }
-
-        public void UpdateAnimationState(PlayerMove.state state, PlayerMove.state prevState)
-        {
-            if (state != PlayerMove.state.grounded)
-            {
-                grounded = false;
-            }
-
-            switch (state)
-            {
-                case (PlayerMove.state.grounded):
-                    walled = false;
-                    grounded = true;
-                    _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Jumping", false);
-                    _animator.SetBool("Falling", false);
-                    _animator.SetBool("Wall_Slide", false);
-                    _animator.SetBool("Diving", false);
-                    break;
-                case (PlayerMove.state.jumping):
-                    walled = false;
-                    grounded = false;
-                    _animator.SetBool("Jumping", true);
-                    _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Falling", false);
-                    _animator.SetBool("Running", false);
-                    _animator.SetBool("Wall_Slide", false);
-                    break;
-                case (PlayerMove.state.midair):
-                    walled = false;
-                    grounded = false;
-                    _animator.SetBool("Falling", true);
-                    _animator.SetBool("Running", false);
-                    _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Jumping", false);
-                    _animator.SetBool("Wall_Slide", false);
-                    break;
-                case (PlayerMove.state.diving):
-                    walled = false;
-                    grounded = false;
-                    _animator.SetBool("Diving", true);
-                    _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Running", false);
-                    _animator.SetBool("Wall_Slide", false);
-                    _animator.SetBool("Falling", false);
-                    break;
-                case (PlayerMove.state.divelanding):
-                    walled = false;
-                    grounded = false;
-                    _animator.SetBool("Diving", false);
-                    _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Running", false);
-                    _animator.SetBool("Wall_Slide", false);
-                    _animator.SetBool("Falling", false);
-                    break;
-                case (PlayerMove.state.walled):
-                    grounded = false;
-                    _animator.SetBool("Grounded", false);
-                    _animator.SetBool("Falling", false);
-                    _animator.SetBool("Running", false);
-                    _animator.SetBool("Jumping", false);
-                    if (_environment.WallDirectionDetect() == -1 && _baseMovement.isFacingLeft)
-                    {
-                        _animator.SetBool("Wall_Slide", true);
-                    }
-                    else if (_environment.WallDirectionDetect() == 1 && !_baseMovement.isFacingLeft)
-                    {
-                        _animator.SetBool("Wall_Slide", true);
-                    }
-                break;
-                case (PlayerMove.state.boosting):
-                    _animator.SetBool("Running", false);
-                    break;
-            }
-        }
-
+    public void FlipAnimation()
+    {
+        _animator.SetTrigger("Flip");
     }
+
+    public void WallClimbAnimation()
+    {
+        _animator.SetTrigger("Wall_Climb");
+    }
+
+    public void UpdateAnimationState(PlayerMove.state state, PlayerMove.state prevState)
+    {
+        if (state != PlayerMove.state.grounded)
+        {
+            grounded = false;
+        }
+
+        switch (state)
+        {
+            case (PlayerMove.state.grounded):
+                transform.localPosition = new Vector3(0, 0.402f, 0);
+                walled = false;
+                grounded = true;
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Jumping", false);
+                _animator.SetBool("Falling", false);
+                _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Diving", false);
+                _animator.SetBool("Bonk_Land", false);
+
+                break;
+            case (PlayerMove.state.jumping):
+                transform.localPosition = new Vector3(0, 0.402f, 0);
+                walled = false;
+                grounded = false;
+                _animator.SetBool("Jumping", true);
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Falling", false);
+                _animator.SetBool("Running", false);
+                _animator.SetBool("Wall_Slide", false);
+                break;
+            case (PlayerMove.state.midair):
+                transform.localPosition = new Vector3(0, 0.402f, 0);
+                walled = false;
+                grounded = false;
+                _animator.SetBool("Falling", true);
+                _animator.SetBool("Running", false);
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Jumping", false);
+                _animator.SetBool("Wall_Slide", false);
+                break;
+            case (PlayerMove.state.diving):
+                transform.localPosition = new Vector3(0, 0.402f, 0);
+                walled = false;
+                grounded = false;
+                _animator.SetBool("Diving", true);
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Running", false);
+                _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Falling", false);
+                break;
+            case (PlayerMove.state.divelanding):
+                walled = false;
+                grounded = false;
+                transform.localPosition = new Vector3(0, -0.47f, 0);
+                _animator.SetBool("Diving", false);
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Running", false);
+                _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Falling", false);
+                break;
+            case (PlayerMove.state.walled):
+                transform.localPosition = new Vector3(0, 0.402f, 0);
+
+                grounded = false;
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Falling", false);
+                _animator.SetBool("Running", false);
+                _animator.SetBool("Jumping", false);
+                if (_environment.WallDirectionDetect() == -1 && _baseMovement.isFacingLeft)
+                {
+                    _animator.SetBool("Wall_Slide", true);
+                }
+                else if (_environment.WallDirectionDetect() == 1 && !_baseMovement.isFacingLeft)
+                {
+                    _animator.SetBool("Wall_Slide", true);
+                }
+            break;
+            case (PlayerMove.state.boosting):
+                transform.localPosition = new Vector3(0, 0.402f, 0);
+
+                _animator.SetBool("Running", false);
+                break;
+
+            case (PlayerMove.state.bonked):
+                transform.localPosition = new Vector3(0, 0.402f, 0);
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Running", false);
+                _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Falling", false);
+                _animator.SetBool("Bonked", true);
+                _animator.SetBool("Jumping", false);
+
+                break;
+
+            case (PlayerMove.state.bonklanding):
+                _animator.SetBool("Bonked", false);
+                _animator.SetBool("Diving", false);
+                _animator.SetBool("Grounded", false);
+                _animator.SetBool("Running", false);
+                _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Falling", false);
+                _animator.SetBool("Jumping", false);
+                _animator.SetBool("Bonk_Land", true);
+
+                break;
+        }
+    }
+
+}

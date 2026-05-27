@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Conversation/New Conversation", order = 1)]

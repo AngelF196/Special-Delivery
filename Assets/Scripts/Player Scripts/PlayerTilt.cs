@@ -23,7 +23,7 @@ public class PlayerTilt : MonoBehaviour
 
     private void Update()
     {
-        if (movement.currentState == PlayerMove.state.diving)
+        if (movement.currentState == PlayerMove.state.diving || movement.currentState == PlayerMove.state.bonked)
         {
             DiveTilt();
             diveJustStarted = false;
