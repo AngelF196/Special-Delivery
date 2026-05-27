@@ -28,6 +28,14 @@ public class PlayerTilt : MonoBehaviour
             DiveTilt();
             diveJustStarted = false;
         }
+        else if (movement.currentState == PlayerMove.state.bonklanding)
+        {
+            if (movement.isFacingLeft)
+                transform.localRotation = Quaternion.Euler(0f, 0f, 45f);
+
+            else
+                transform.localRotation = Quaternion.Euler(0f, 0f, -45f);
+        }
         else if (transform.rotation.z != 0)
         {
             transform.rotation = Quaternion.identity;
@@ -56,7 +64,10 @@ public class PlayerTilt : MonoBehaviour
         }
         else
         {
+            if (movement.currentState == PlayerMove.state.diving)
             currentTilt = Mathf.LerpAngle(currentTilt, targetTilt, 12f * Time.deltaTime);
+            else
+                currentTilt = Mathf.LerpAngle(currentTilt, -targetTilt, 12f * Time.deltaTime);
         }
 
         transform.localRotation = Quaternion.Euler(0f, 0f, currentTilt);

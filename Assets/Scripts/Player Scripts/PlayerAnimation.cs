@@ -159,16 +159,21 @@ public class PlayerAnimation : MonoBehaviour
 
             case (PlayerMove.state.bonked):
                 transform.localPosition = new Vector3(0, 0.402f, 0);
+
+
                 _animator.SetBool("Grounded", false);
                 _animator.SetBool("Running", false);
                 _animator.SetBool("Wall_Slide", false);
                 _animator.SetBool("Falling", false);
                 _animator.SetBool("Bonked", true);
                 _animator.SetBool("Jumping", false);
+                _sr.flipX = !_sr.flipX;
 
                 break;
 
             case (PlayerMove.state.bonklanding):
+                transform.localPosition = new Vector3(0, -0.87f, 0);
+
                 _animator.SetBool("Bonked", false);
                 _animator.SetBool("Diving", false);
                 _animator.SetBool("Grounded", false);

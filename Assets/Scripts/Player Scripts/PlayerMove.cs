@@ -92,7 +92,8 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        if (playerState != state.walled)
+        if (playerState != state.walled && playerState != state.diving
+            && playerState != state.bonked && playerState != state.bonklanding)
         {
             DirectionFacing(false);
         }
