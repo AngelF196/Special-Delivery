@@ -928,6 +928,9 @@ MonoBehaviour:
   _dialogueController: {fileID: 2774387925716375267}
   _player: {fileID: 0}
   _musicManager: {fileID: 0}
+  sceneTransition:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5165942523347479457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,6 +1230,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2786397876595651682}
+  - {fileID: 5207721194103554723}
   - {fileID: 5478494360021520629}
   m_Father: {fileID: 3477335908078362309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1396,8 +1401,6 @@ RectTransform:
   m_Children:
   - {fileID: 180600208982497035}
   - {fileID: 5312187488340309148}
-  - {fileID: 5207721194103554723}
-  - {fileID: 2786397876595651682}
   m_Father: {fileID: 5766477555445363562}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0.05}
@@ -1871,11 +1874,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5478494360021520629}
+  m_Father: {fileID: 5766477555445363562}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 431, y: 327.71393}
+  m_AnchoredPosition: {x: 431, y: -50.28607}
   m_SizeDelta: {x: 160.8848, y: 439.4279}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9171418628520526900
@@ -1946,11 +1949,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5478494360021520629}
+  m_Father: {fileID: 5766477555445363562}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -431, y: 327.71393}
+  m_AnchoredPosition: {x: -431, y: -50.28607}
   m_SizeDelta: {x: 160.8848, y: 439.4279}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3125849543485062896

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Mail Boy
   m_EditorClassIdentifier: 
   characterName: Mail Boy
-  normalSprite: {fileID: 21300000, guid: c3177dd5a4c1e644d9384a73b89c257b, type: 3}
-  surprisedSprite: {fileID: 21300000, guid: 5a8841b721aca2545897c3f41f42c2f3, type: 3}
-  confusedSprite: {fileID: 21300000, guid: 6747392d6b4595b449e24e4533b3f39b, type: 3}
+  normalSprite: {fileID: 21300000, guid: de6063316e3c685449d24a724ab38214, type: 3}
+  surprisedSprite: {fileID: 21300000, guid: de6063316e3c685449d24a724ab38214, type: 3}
+  confusedSprite: {fileID: 21300000, guid: de6063316e3c685449d24a724ab38214, type: 3}
