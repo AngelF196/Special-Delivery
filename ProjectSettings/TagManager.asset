@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - EndNPC
   - StarterNPC
+  - Stamp
   layers:
   - Default
   - TransparentFX

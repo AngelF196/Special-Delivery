@@ -25,6 +25,7 @@ public class Collectible : MonoBehaviour
 
     void GetCollected()
     {
+        ObjectTypeCounter.InvokeObjectRemoved();
         playerAudio.clip = collectSound;
         playerAudio.Play();
         Destroy(this.gameObject);

@@ -30,6 +30,7 @@ public class PlayerAnimation : MonoBehaviour
         if (_baseMovement.isFacingLeft)
         {
             _sr.flipX = true;
+
         }
         else
         {
@@ -92,6 +93,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Wall_Slide", false);
                 _animator.SetBool("Diving", false);
                 _animator.SetBool("Bonk_Land", false);
+                _animator.SetBool("Away_From_Wall", false);
 
                 break;
             case (PlayerMove.state.jumping):
@@ -103,6 +105,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Falling", false);
                 _animator.SetBool("Running", false);
                 _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Away_From_Wall", false);
                 break;
             case (PlayerMove.state.midair):
                 transform.localPosition = new Vector3(0, 0.402f, 0);
@@ -113,6 +116,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Grounded", false);
                 _animator.SetBool("Jumping", false);
                 _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Away_From_Wall", false);
                 break;
             case (PlayerMove.state.diving):
                 transform.localPosition = new Vector3(0, 0.402f, 0);
@@ -123,6 +127,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Running", false);
                 _animator.SetBool("Wall_Slide", false);
                 _animator.SetBool("Falling", false);
+                _animator.SetBool("Away_From_Wall", false);
                 break;
             case (PlayerMove.state.divelanding):
                 walled = false;
@@ -133,6 +138,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Running", false);
                 _animator.SetBool("Wall_Slide", false);
                 _animator.SetBool("Falling", false);
+                _animator.SetBool("Away_From_Wall", false);
                 break;
             case (PlayerMove.state.walled):
                 transform.localPosition = new Vector3(0, 0.402f, 0);
@@ -150,11 +156,16 @@ public class PlayerAnimation : MonoBehaviour
                 {
                     _animator.SetBool("Wall_Slide", true);
                 }
-            break;
+                else
+                {
+                    _animator.SetBool("Away_From_Wall", true);
+                }
+                break;
             case (PlayerMove.state.boosting):
                 transform.localPosition = new Vector3(0, 0.402f, 0);
 
                 _animator.SetBool("Running", false);
+                _animator.SetBool("Away_From_Wall", false);
                 break;
 
             case (PlayerMove.state.bonked):
@@ -168,6 +179,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Bonked", true);
                 _animator.SetBool("Jumping", false);
                 _sr.flipX = !_sr.flipX;
+                _animator.SetBool("Away_From_Wall", false);
 
                 break;
 
@@ -182,6 +194,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Falling", false);
                 _animator.SetBool("Jumping", false);
                 _animator.SetBool("Bonk_Land", true);
+                _animator.SetBool("Away_From_Wall", false);
 
                 break;
         }
