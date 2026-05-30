@@ -33,4 +33,10 @@ public class Conversation : ScriptableObject
     [Tooltip("If checked, a quest reference will be activated at the end of this conversation.")]
     public bool activateQuest = false;
     public Quest questToActivate;
+
+    [Header("Followup Conversation")]
+    public bool addAnotherConversation;
+    [Tooltip("WARNING: Do not mess with this value, I will figure out a way to make this field non-interactive.")]
+    public bool alreadyPlayed;
+    public Conversation followupConversation;
 }

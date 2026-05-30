@@ -93,11 +93,14 @@ public class DialogueController : MonoBehaviour
             gameObject.SetActive(true);
         }
 
+        convo = CheckForFollowupConvos(convo);
         for (int i = 0; i < convo.dialogueLines.Length; i++)
         {
             // Adds a line of dialogue to the queue
             _conversationObjs.Enqueue(convo);
         }
+        convo.alreadyPlayed = true;
+        
         // Set default sprite on both speakers to normal sprite upon starting a conversation
         _leftCharacterPortrait.sprite = convo.leftSpeaker.normalSprite;
         _rightCharacterPortrait.sprite = convo.rightSpeaker.normalSprite;
@@ -115,6 +118,13 @@ public class DialogueController : MonoBehaviour
         _playerActionAsset.FindAction("Jump").Disable();
         _playerActionAsset.FindAction("Flip").Disable();
         _playerActionAsset.FindAction("Dive Action").Disable();
+    }
+
+    private Conversation CheckForFollowupConvos(Conversation convo)
+    {
+        if (convo.addAnotherConversation == true && convo.alreadyPlayed == true)
+            return convo.followupConversation;
+        return convo;
     }
 
     private void EndConversation()
