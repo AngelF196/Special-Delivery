@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
+  m_Name: Black Man
+  m_EditorClassIdentifier: 
+  leftSpeaker: {fileID: 11400000, guid: 74618e6ec63b918418b08195c72ce8e0, type: 2}
+  rightSpeaker: {fileID: 11400000, guid: 1020b560f53d0c14391b21ddb8f92c1c, type: 2}
+  dialogueLines:
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: OH MY GOD ITS BATMAN
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: Heh... he wishes he was as cool as me.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: I am not Batman. I'm-
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: Nah you're not fooling anyone. Look it even says your name is B
+      Man on the dialogue box! B for Bat.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: '(dude.) I AM NOT BATMAN, I AM PUNISHMENT. '
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: I AM THE TWILIGHT. I AM-
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: It's the middle of day.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: You know, man. This was really expensive to put together, and you're
+      really ruining it for me.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: The cape, the cowl, the detective gear.
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: Yeah, the Batman stuff.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: Just leave me alone man...
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: Can I get an autograph?
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: (I should've majored in dance...)
+  activateQuest: 0
+  questToActivate: {fileID: 0}
+  addAnotherConversation: 0
+  alreadyPlayed: 1
+  followupConversation: {fileID: 0}

@@ -24,8 +24,8 @@ MonoBehaviour:
   - speakerSideToHighlight: 0
     expression: 0
     dialogueText: Zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  activateQuest: 1
+  activateQuest: 0
   questToActivate: {fileID: 11400000, guid: d4fe35bcdf5028b41b700786824f259c, type: 2}
-  addAnotherConversation: 1
-  alreadyPlayed: 0
+  addAnotherConversation: 0
+  alreadyPlayed: 1
   followupConversation: {fileID: 11400000, guid: 673b41dd8cd84464390e7ba7542dc2cc, type: 2}

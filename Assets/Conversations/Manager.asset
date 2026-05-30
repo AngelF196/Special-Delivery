@@ -23,9 +23,27 @@ MonoBehaviour:
     dialogueText: ...delivering packages??
   - speakerSideToHighlight: 0
     expression: 0
-    dialogueText: Ah, forget it. You're lucky this is just a demo.
+    dialogueText: Yeah I know, I just like yelling.
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: Pfff, you're too old.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: You're too stupid.
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: HEY!
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: That's not very nice.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: Just go do your job. Collect the 15 chaos stamps or whatever.
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: Okey.
   activateQuest: 0
   questToActivate: {fileID: 0}
-  addAnotherConversation: 1
-  alreadyPlayed: 0
+  addAnotherConversation: 0
+  alreadyPlayed: 1
   followupConversation: {fileID: 11400000, guid: 790170f3c6654c043ba93d02a85f6bde, type: 2}

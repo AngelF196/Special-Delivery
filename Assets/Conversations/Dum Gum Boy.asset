@@ -10,33 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
-  m_Name: LandLord
+  m_Name: Dum Gum Boy
   m_EditorClassIdentifier: 
-  leftSpeaker: {fileID: 11400000, guid: 6c66cb74443ba4f48997c550697b1a3c, type: 2}
+  leftSpeaker: {fileID: 11400000, guid: 8e87d19188ef97f41bd9861c04c4e7c6, type: 2}
   rightSpeaker: {fileID: 11400000, guid: 1020b560f53d0c14391b21ddb8f92c1c, type: 2}
   dialogueLines:
-  - speakerSideToHighlight: 0
-    expression: 0
-    dialogueText: Lazy no good residents... always wanting affordable housing.
   - speakerSideToHighlight: 1
     expression: 0
-    dialogueText: Something wrong, sir?
+    dialogueText: Dang dude you're chewing up a storm
   - speakerSideToHighlight: 0
     expression: 0
-    dialogueText: Yes, there is. And I want you to do something about it.
-  - speakerSideToHighlight: 0
-    expression: 0
-    dialogueText: I need you to hand these rent increase notices to all my tenants.
-      Tell them they've had it too good for too long!
+    dialogueText: hashashshashcmpahsampcmahsasmp
   - speakerSideToHighlight: 1
     expression: 0
-    dialogueText: ...
-  - speakerSideToHighlight: 1
-    expression: 0
-    dialogueText: I'm not gonna do that
+    dialogueText: Yeah I guess that checks out. Need anything?
   - speakerSideToHighlight: 0
     expression: 0
-    dialogueText: god damn it...
+    dialogueText: hashashshashcmpahsampcmahsasmpI'dlikeaglassofwaterhashashshashcmpahsampcmahsasmp
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: Sorry buddy, water physics haven't been implemented yet.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: hashashshashcmpahsamI'mgonnadieherelikeadoghashashshashcmpahsampcmahsasmppcmahsasmp
   activateQuest: 0
   questToActivate: {fileID: 0}
   addAnotherConversation: 0

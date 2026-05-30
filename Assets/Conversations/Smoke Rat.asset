@@ -10,33 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcf5a6b18d80e164d9184d038e6f3df5, type: 3}
-  m_Name: LandLord
+  m_Name: Smoke Rat
   m_EditorClassIdentifier: 
-  leftSpeaker: {fileID: 11400000, guid: 6c66cb74443ba4f48997c550697b1a3c, type: 2}
+  leftSpeaker: {fileID: 11400000, guid: 65f131f6f69e65e458462e4c348b5eec, type: 2}
   rightSpeaker: {fileID: 11400000, guid: 1020b560f53d0c14391b21ddb8f92c1c, type: 2}
   dialogueLines:
   - speakerSideToHighlight: 0
     expression: 0
-    dialogueText: Lazy no good residents... always wanting affordable housing.
+    dialogueText: Yo.
   - speakerSideToHighlight: 1
     expression: 0
-    dialogueText: Something wrong, sir?
-  - speakerSideToHighlight: 0
-    expression: 0
-    dialogueText: Yes, there is. And I want you to do something about it.
-  - speakerSideToHighlight: 0
-    expression: 0
-    dialogueText: I need you to hand these rent increase notices to all my tenants.
-      Tell them they've had it too good for too long!
+    dialogueText: Hey.
   - speakerSideToHighlight: 1
     expression: 0
-    dialogueText: ...
-  - speakerSideToHighlight: 1
-    expression: 0
-    dialogueText: I'm not gonna do that
+    dialogueText: Anyone ever tell you that you look like Mickey Mou-
   - speakerSideToHighlight: 0
     expression: 0
-    dialogueText: god damn it...
+    dialogueText: Anyone ever point out that your sprite has color but your dialogue
+      pose is monochrome?
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: H-Hey, don't just point that out.
+  - speakerSideToHighlight: 0
+    expression: 0
+    dialogueText: Cry about it.
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: I...
+  - speakerSideToHighlight: 1
+    expression: 0
+    dialogueText: might.
   activateQuest: 0
   questToActivate: {fileID: 0}
   addAnotherConversation: 0
