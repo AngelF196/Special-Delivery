@@ -94,12 +94,16 @@ public class KeybindButton : MonoBehaviour
                     keyBindIndex = movementKeys.NextPartBinding("Right").bindingIndex + 1;  // Second right binding
                     break;
             }
-            _rebindingOperation = _moveAction.PerformInteractiveRebinding(keyBindIndex).OnComplete(operation => KeyRebindingComplete(actionName, keyBindIndex));
+            _rebindingOperation = _moveAction.PerformInteractiveRebinding(keyBindIndex)
+                .WithControlsExcluding("<Gamepad>/")
+                .OnComplete(operation => KeyRebindingComplete(actionName, keyBindIndex));
         }
         else
         {
             _singleButtonAction = playerInputActions.FindAction(actionName);
-            _rebindingOperation = _singleButtonAction.PerformInteractiveRebinding(1).OnComplete(operation => KeyRebindingComplete(actionName));
+            _rebindingOperation = _singleButtonAction.PerformInteractiveRebinding(1)
+                .WithControlsExcluding("<Gamepad>/")
+                .OnComplete(operation => KeyRebindingComplete(actionName));
         }
         
         _rebindingOperation.Start();
@@ -117,6 +121,7 @@ public class KeybindButton : MonoBehaviour
         else
             newBinding = _singleButtonAction.bindings[1].effectivePath;
         
+        Debug.Log(newBinding);
         // Formatting of the binding path to just show the key pressed
         short index = (short) newBinding.Length;
         while (newBinding[index-1] != '/')
@@ -131,16 +136,39 @@ public class KeybindButton : MonoBehaviour
         PlayerPrefs.SetString("rebinds", rebinds);
     }
 
-    public void SetNewControllerBind()
+    public void SetNewControllerBind(string actionName)
     {
         playerInputActions.FindActionMap("Player").Disable();
         _buttonSelected.interactable = false;
+
+        _singleButtonAction = playerInputActions.FindAction(actionName);
+        _rebindingOperation = _singleButtonAction.PerformInteractiveRebinding(0)
+            .WithControlsExcluding("<KeyBoard>/").WithControlsExcluding("<Mouse>/")
+            .OnComplete(operation => ControllerRebindingComplete());
+        _rebindingOperation.Start();
     }
 
     private void ControllerRebindingComplete()
     {
         _rebindingOperation.Dispose();
         _buttonSelected.interactable = true;
+        _eventSystem.SetSelectedGameObject(_buttonSelected.gameObject);
+
+        // Not worring about gamepad joysticks, so I'm just doing single button actions
+        string newBinding = _singleButtonAction.bindings[0].effectivePath;
+        Debug.Log(newBinding);
+        // Formatting of the binding path to just show the key pressed
+        short index = (short) newBinding.Length;
+        while (newBinding[index-1] != '/')
+            index--;
+        newBinding = newBinding[index..].ToUpper();
+        buttonText.text = newBinding;
+        
+        playerInputActions.FindActionMap("Player").Enable();
+
+        // Save keybind afterwards
+        string rebinds = playerInputActions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebinds);
     }
 
     // // Reload everything in this section later

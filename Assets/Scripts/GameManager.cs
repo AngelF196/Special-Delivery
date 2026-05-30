@@ -132,5 +132,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("This quest has ended. Stopping timer...");
         _questIsActive = false;
+        StartCoroutine("HideTimer");
+    }
+
+    IEnumerator HideTimer()
+    {
+        yield return new WaitForSecondsRealtime(2.5f);
+        _questTimer.enabled = false;
     }
 }
