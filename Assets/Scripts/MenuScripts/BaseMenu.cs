@@ -22,15 +22,29 @@ public class BaseMenu : MonoBehaviour
     [SerializeField] private GameObject _colorMenu;
     [SerializeField] private SpriteRenderer _playerPreview;
 
-    // Start is called before the first frame update
+    public static BaseMenu Instance { get; private set; }
+
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     void Start()
     {
         _player = FindFirstObjectByType<PlayerInfo>();
-        _player.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
 
-        if (_player != null) _sceneToLoad = _player.lastLevelScene;
+        if (_player != null)
+        {
+            _player.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            _sceneToLoad = _player.lastLevelScene;
+        }
     }
-
     public void LoadTop()
     {
         _topMenu.SetActive(true);
@@ -50,23 +64,23 @@ public class BaseMenu : MonoBehaviour
                 break;
             case colorSpot.star:
                 _starColor = color;
-                _playerPreview.sharedMaterial.SetColor("_Hat", _hatColor);
+                _playerPreview.sharedMaterial.SetColor("_Star", _starColor);
                 break;
             case colorSpot.shoe:
                 _shirtColor = color;
-                _playerPreview.sharedMaterial.SetColor("_Shoe", _hatColor);
+                _playerPreview.sharedMaterial.SetColor("_Shoe", _shirtColor);
                 break;
             case colorSpot.skin:
                 _skinColor = color;
-                _playerPreview.sharedMaterial.SetColor("_Skin", _hatColor);
+                _playerPreview.sharedMaterial.SetColor("_Skin", _skinColor);
                 break;
             case colorSpot.pants:
                 _pantsColor = color;
-                _playerPreview.sharedMaterial.SetColor("_Pants", _hatColor);
+                _playerPreview.sharedMaterial.SetColor("_Pants", _pantsColor);
                 break;
             case colorSpot.shirt:
                 _shirtColor = color;
-                _playerPreview.sharedMaterial.SetColor("_Shirt", _hatColor);
+                _playerPreview.sharedMaterial.SetColor("_Shirt", _shirtColor);
                 break;
         }
     }
