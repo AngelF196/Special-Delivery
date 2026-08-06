@@ -29581,6 +29581,10 @@ PrefabInstance:
       propertyPath: boxSize.x
       value: 0.583
       objectReference: {fileID: 0}
+    - target: {fileID: 2846266206293639556, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      propertyPath: breakForce
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 3575818379489108864, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
       propertyPath: m_LocalPosition.x
       value: 18.9
