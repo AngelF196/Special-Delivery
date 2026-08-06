@@ -116,6 +116,7 @@ public class PlayerAnimation : MonoBehaviour
                 _animator.SetBool("Grounded", false);
                 _animator.SetBool("Jumping", false);
                 _animator.SetBool("Wall_Slide", false);
+                _animator.SetBool("Diving", false);
                 _animator.SetBool("Away_From_Wall", false);
                 break;
             case (PlayerMove.state.diving):

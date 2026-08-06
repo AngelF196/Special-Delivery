@@ -42,6 +42,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float diveLandMaxTime;
     [SerializeField] private float groundDiveLength;
     [SerializeField] private float groundDiveHeight;
+    [SerializeField] private float breakForce;
     private float diveLandTimer;
 
     [Header("Wall Variables")]
@@ -177,7 +178,9 @@ public class PlayerMove : MonoBehaviour
                 if (_collision.WallDirectionDetect() == -1 && isFacingLeft
                     || _collision.WallDirectionDetect() == 1 && !isFacingLeft) 
                     UpdateState(state.bonked);
-                
+
+                if (_inputs.saysFlip && !hasFlipped) DiveBreak();
+
                 break;
             case state.divelanding:
                 HorizontalMovement(restriction.diveLanding);
@@ -463,6 +466,15 @@ public class PlayerMove : MonoBehaviour
         
         _inputs.Consume(PlayerInput.Action.flip);
         _inputs.Consume(PlayerInput.Action.dive);
+    }
+
+    private void DiveBreak()
+    {
+        UpdateState(state.midair, false);
+        _rb.velocity = new Vector2(_rb.velocity.x , jumpForce * breakForce);
+        _inputs.Consume(PlayerInput.Action.flip);
+        hasFlipped = true;
+
     }
 
     private void Bonk()
