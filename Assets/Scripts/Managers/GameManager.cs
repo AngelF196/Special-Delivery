@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private PlayerMove _pm;
     private Rigidbody2D _playerRb;
 
+    public static GameManager GMInstance {get; private set;}
+
     private bool _questIsActive = false;
     private TextMeshProUGUI _questTimer;
     private int _minutes = 0;
@@ -25,6 +27,17 @@ public class GameManager : MonoBehaviour
 
     // Event
     public UnityEvent<SceneTransition, Vector2> sceneTransition;
+
+    // Ensures that the game manager is a singleton
+    void Awake()
+    {
+        if (GMInstance != null && GMInstance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        GMInstance = this;
+    }
 
     void Start()
     {
