@@ -180,7 +180,7 @@ public class PlayerMove : MonoBehaviour
                     || _collision.WallDirectionDetect() == 1 && !isFacingLeft) 
                     UpdateState(state.bonked);
 
-                if (_inputs.saysFlip && !hasFlipped) DiveBreak();
+                if (_inputs.saysFlip) DiveBreak();
 
                 break;
             case state.divelanding:
@@ -476,7 +476,8 @@ public class PlayerMove : MonoBehaviour
     private void DiveBreak()
     {
         UpdateState(state.midair, false);
-        _rb.velocity = new Vector2(_rb.velocity.x , jumpForce * breakForce);
+
+        if (!hasFlipped) _rb.velocity = new Vector2(_rb.velocity.x , jumpForce * breakForce);
         _inputs.Consume(PlayerInput.Action.flip);
         hasFlipped = true;
 

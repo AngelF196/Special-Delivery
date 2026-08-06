@@ -34,13 +34,13 @@ public class PlayerInfo : MonoBehaviour
         _respawnPoint = transform.position;
         _camera = Camera.main.GetComponentInChildren<CinemachineVirtualCamera>();
 
-        if (_camera is not null) _camera.Follow = gameObject.transform;
+        if (_camera is not null) _camera.Follow = Instance.gameObject.transform;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _camera = Camera.main.GetComponentInChildren<CinemachineVirtualCamera>();
-        if (_camera is not null) _camera.Follow = gameObject.transform;
+        if (_camera is not null) _camera.Follow = Instance.gameObject.transform;
     }
 
     public void UpdateRespawn(Vector3 newPoint)
