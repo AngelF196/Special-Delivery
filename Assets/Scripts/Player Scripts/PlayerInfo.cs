@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,35 @@ public class PlayerInfo : MonoBehaviour
 
     [SerializeField] private string[] _nonLevels;
     public string lastLevelScene = "";
+
+    public static PlayerInfo Instance { get; private set; }
+    private CinemachineVirtualCamera _camera;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
     void Start()
     {
-        DontDestroyOnLoad(this);
         _respawnPoint = transform.position;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        _camera = Camera.main.GetComponentInChildren<CinemachineVirtualCamera>();
+
+        if (_camera is not null) _camera.Follow = gameObject.transform;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!_nonLevels.Contains(scene.name)) lastLevelScene = scene.name;
+        _camera = Camera.main.GetComponentInChildren<CinemachineVirtualCamera>();
+        if (_camera is not null) _camera.Follow = gameObject.transform;
     }
 
     public void UpdateRespawn(Vector3 newPoint)

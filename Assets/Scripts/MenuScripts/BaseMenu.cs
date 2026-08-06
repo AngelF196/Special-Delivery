@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class BaseMenu : MonoBehaviour
 {
     private PlayerInfo _player;
-    private string _sceneToLoad;
+    [SerializeField] private string _sceneToLoad;
 
     // Color stuff
     public enum colorSpot { hat, star, shoe, shirt, skin, pants }
@@ -48,11 +48,13 @@ public class BaseMenu : MonoBehaviour
     public void LoadTop()
     {
         _topMenu.SetActive(true);
+        _colorMenu.SetActive(false);
     }
 
     public void LoadColorMenu()
     {
         _colorMenu.SetActive(true);
+        _topMenu.SetActive(false);
     }
 
     public void ChangePreviewColor(colorSpot targetSpot, Color color)
