@@ -8,6 +8,8 @@ public class Locator : MonoBehaviour
     public PlayerMove Player {get; private set;}
     public GameManager GameManager {get; private set;}
     public SaveFileManager SaveFileManager {get; private set;}
+    public QuestManager QuestManager {get; private set;}
+    public DialogueController DialogueController {get; private set;}
 
     // Start is called before the first frame update
     void Awake()
@@ -21,10 +23,12 @@ public class Locator : MonoBehaviour
         Instance = this;
         
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+        DialogueController = GameObject.Find("DialogueController").GetComponent<DialogueController>();
 
         GameObject[] gameObjectManagers = GameObject.FindGameObjectsWithTag("Manager");
         GameManager = GetSpecifiedManagerGO("Game", gameObjectManagers).GetComponent<GameManager>();
         SaveFileManager = GetSpecifiedManagerGO("SaveFile", gameObjectManagers).GetComponent<SaveFileManager>();
+        QuestManager = GetSpecifiedManagerGO("Quest", gameObjectManagers).GetComponent<QuestManager>();
     }
 
     private GameObject GetSpecifiedManagerGO(string managerName, GameObject[] managers)

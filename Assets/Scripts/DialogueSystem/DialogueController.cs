@@ -54,7 +54,7 @@ public class DialogueController : MonoBehaviour
 
     private void Start()
     {
-        startQuest.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().QuestStarted);
+        startQuest.AddListener(Locator.Instance.QuestManager.QuestStarted);
     }
 
     public void DisplayNextLine(Conversation conversation)

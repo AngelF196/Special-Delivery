@@ -10,13 +10,13 @@ public class EndPoint : MonoBehaviour
 
     void Start()
     {
-        arrivedAtEnd.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().QuestEnded);
+        arrivedAtEnd.AddListener(Locator.Instance.QuestManager.QuestEnded);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         arrivedAtEnd.Invoke();
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     void OnDrawGizmos()

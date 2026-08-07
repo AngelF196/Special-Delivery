@@ -7,18 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private DialogueController _dialogueController;
-    [SerializeField] private GameObject _player;
-    [SerializeField] private BGM _musicManager;
-    private PlayerMove _pm;
-    private Rigidbody2D _playerRb;
-
     public static GameManager GMInstance {get; private set;}
-
-    private bool _questIsActive = false;
-    private TextMeshProUGUI _questTimer;
-    private int _minutes = 0;
-    private float _seconds = 0f;
+    
+    // [SerializeField] private DialogueController _dialogueController;
+    // [SerializeField] private GameObject _player;
+    // Fuck the above references, use the Locator instead
+    [SerializeField] private BGM _musicManager;
 
     public enum SceneTransition
     {
@@ -41,57 +35,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (_pm != null)
-        {
-            _pm = _player.GetComponent<PlayerMove>();
-            _playerRb = _player.GetComponent<Rigidbody2D>();
-        }
-        _questTimer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
-        _questTimer.enabled = false;
-
+        // I'll figure out something to fill in here, if at all possible
     }
 
     void Update()
     {
-        if (_pm != null) {
-            if (_dialogueController.conversationIsActive)
-            {
-                _pm.enabled = false;
-            }
-            else
-            {
-                _pm.enabled = true;
-            }
-        }
-        if (_questIsActive)
-        {
-            UpdateTimer();
-        }
-    }
-
-    private void UpdateTimer()
-    {
-        _seconds += Time.deltaTime;
-        _seconds = Mathf.Round(_seconds * 1000) / 1000.0f;
-        
-        string secondsText = _seconds.ToString();
-        if (_seconds < 10.0f)
-            secondsText = "0" + secondsText;
-        
-        // Milliseconds formatting
-        if ( Mathf.Round(_seconds*1000) % 100 == 0)
-            secondsText = secondsText + "00";
-        else if ( Mathf.Round(_seconds*1000) % 10 == 0)
-            secondsText = secondsText + "0";
-        
-        if (_seconds >= 60.0f)
-        {
-            _minutes++;
-            _seconds = 0f;
-        }
-        
-        string time = _minutes + ":" + secondsText;
-        _questTimer.text = time;
+        // Same with down here, I'll think of something. Though if I find them unnecessary, both these empty methods shall be executed
+        // (as in erased from this script)
     }
 
     public void LoadScene(string sceneName, SceneTransition transition = SceneTransition.none, Vector2 position = default)
@@ -104,12 +54,12 @@ public class GameManager : MonoBehaviour
 
     public void EnteredConversation()
     {
-        _pm.enabled = false;
+        // _pm.enabled = false;
     }
 
     public void ExitedConversation()
     {
-        _pm.enabled = true;
+        // _pm.enabled = true;
     }
 
     // Event method added to the gamePausedEvent event
@@ -124,33 +74,5 @@ public class GameManager : MonoBehaviour
     {
         _musicManager.GameTransition();
         Debug.Log("game resumed");
-    }
-
-    // Event method for the DialogueController's activateQuest event
-    public void QuestStarted(Quest questToActivate)
-    {
-        Debug.Log("A quest named \"" + questToActivate.questName + "\" has started! Starting timer...");
-        _minutes = 0;
-        _seconds = 0f;
-        _questTimer.enabled = true;
-        _questIsActive = true;
-        
-        GameObject endpoint = new GameObject("EndPoint", typeof(BoxCollider2D), typeof(EndPoint));
-        endpoint.GetComponent<BoxCollider2D>().isTrigger = true;
-        endpoint.transform.position = questToActivate.endpointCoordinates;
-    }
-
-    // Event method for the EndPoint's arrivedAtEnd event.
-    public void QuestEnded()
-    {
-        Debug.Log("This quest has ended. Stopping timer...");
-        _questIsActive = false;
-        StartCoroutine("HideTimer");
-    }
-
-    IEnumerator HideTimer()
-    {
-        yield return new WaitForSecondsRealtime(2.5f);
-        _questTimer.enabled = false;
     }
 }
