@@ -50,6 +50,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (_isOnMainPauseMenu)
         {
+            // Pop up pause menu
             gamePaused = !gamePaused;
             _playerScript.enabled = !_playerScript.enabled;
             _isOnMainPauseMenu = true;

@@ -8643,6 +8643,50 @@ Transform:
   - {fileID: 488924026}
   m_Father: {fileID: 1769780773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &505261138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 505261140}
+  - component: {fileID: 505261139}
+  m_Layer: 0
+  m_Name: SaveFileManager
+  m_TagString: Manager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &505261139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505261138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e915e6902c1163346a6e28bd9e6e3a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &505261140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505261138}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.12, y: -0.1, z: -7.9671893}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509794041
 GameObject:
   m_ObjectHideFlags: 0
@@ -30071,6 +30115,10 @@ PrefabInstance:
       propertyPath: _playerScript
       value: 
       objectReference: {fileID: 5232612894423687033}
+    - target: {fileID: 4675876255082891564, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
+      propertyPath: playerInputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: a13e9993466fdbf469999dafe5415a88, type: 3}
     - target: {fileID: 4693150316611887929, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.000061035156
@@ -30183,6 +30231,10 @@ PrefabInstance:
       propertyPath: _musicManager
       value: 
       objectReference: {fileID: 2017276444}
+    - target: {fileID: 8505072674871323432, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
+      propertyPath: _playerInputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: a13e9993466fdbf469999dafe5415a88, type: 3}
     - target: {fileID: 8969086695725268206, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -30349,3 +30401,4 @@ SceneRoots:
   - {fileID: 1325732748}
   - {fileID: 173244518}
   - {fileID: 1516246893}
+  - {fileID: 505261140}

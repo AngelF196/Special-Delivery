@@ -14,66 +14,43 @@ public class KeybindButton : MonoBehaviour
     private InputActionRebindingExtensions.RebindingOperation _rebindingOperation;
     private InputAction _moveAction;
     private InputAction _singleButtonAction;
-    private Button _buttonSelected;
-    private TextMeshProUGUI buttonText;
-    [SerializeField] private GameObject _keybindMenu;
+    private Button _buttonComponent;
+    private TextMeshProUGUI _buttonText;
     private EventSystem _eventSystem;
 
-    // Old stuff
-
-    // Button lists for rebinding
-    private List<Button> _keyboardButtons = new List<Button>();
-    private List<Button> _controllerButtons = new List<Button>();
+    // Old stuff (none right now)
 
     void Awake()
     {
         _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         _moveAction = playerInputActions.FindAction("Move");
 
-        string rebinds = PlayerPrefs.GetString("rebinds");
-        // Debug.Log(rebinds);
-        if (!string.IsNullOrEmpty(rebinds))
-        {
-            playerInputActions.LoadBindingOverridesFromJson(rebinds);
-        }
+        // string rebinds = PlayerPrefs.GetString("rebinds");
+        // // Debug.Log(rebinds);
+        // if (!string.IsNullOrEmpty(rebinds))
+        // {
+        //     playerInputActions.LoadBindingOverridesFromJson(rebinds);
+        // }
     }
     
     void Start()
     {
-        // Get a list of all buttons availble for rebinding
-        Button[] buttons = _keybindMenu.GetComponentsInChildren<Button>();
-        foreach (Button button in buttons)
-        {
-            if (button.gameObject.name.Contains("Key") && !button.gameObject.name.Contains("Default"))
-                _keyboardButtons.Add(button);
-            else if (button.gameObject.name.Contains("Cont") && !button.gameObject.name.Contains("Default"))
-                _controllerButtons.Add(button);
-        }
+        _buttonComponent = GetComponent<Button>();
+        _buttonText = GetComponentInChildren<TextMeshProUGUI>();
         // LoadUserSetKeybinds();
     }
 
     
     // Searches for a given button name within the list of buttons, 
-    public void EditButtonByName(string searchButtonName)
+    public void EditButtonText()
     {
-        Button[] buttons = _keybindMenu.GetComponentsInChildren<Button>();
-        foreach (Button button in buttons)
-        {
-            if (button.gameObject.name == searchButtonName)
-            {
-                _buttonSelected = button;
-                playerInputActions.FindActionMap("Player").Disable();
-                break;
-            }
-        }
-        buttonText = _buttonSelected.GetComponentInChildren<TextMeshProUGUI>();
-        buttonText.text = "Set New Input";
+        _buttonText.text = "Set New Input";
     }
 
     public void SetNewKeybind(string actionName)
     {        
-        playerInputActions.FindActionMap("Player").Disable();
-        _buttonSelected.interactable = false;
+        // playerInputActions.FindActionMap("Player").Disable();
+        _buttonComponent.interactable = false;
         
         if ( actionName.Contains("Left") || actionName.Contains("Right") )
         {
@@ -112,8 +89,8 @@ public class KeybindButton : MonoBehaviour
     private void KeyRebindingComplete(string actionName, int compKeybindIndex = -1)
     {
         _rebindingOperation.Dispose();
-        _buttonSelected.interactable = true;
-        _eventSystem.SetSelectedGameObject(_buttonSelected.gameObject);
+        _buttonComponent.interactable = true;
+        _eventSystem.SetSelectedGameObject(this.gameObject);
 
         string newBinding;
         if ( actionName.Contains("Left") || actionName.Contains("Right") )
@@ -127,9 +104,9 @@ public class KeybindButton : MonoBehaviour
         while (newBinding[index-1] != '/')
             index--;
         newBinding = newBinding[index..].ToUpper();
-        buttonText.text = newBinding;
+        _buttonText.text = newBinding;
         
-        playerInputActions.FindActionMap("Player").Enable();
+        // playerInputActions.FindActionMap("Player").Enable();
 
         // Save keybind afterwards
         string rebinds = playerInputActions.SaveBindingOverridesAsJson();
@@ -138,8 +115,8 @@ public class KeybindButton : MonoBehaviour
 
     public void SetNewControllerBind(string actionName)
     {
-        playerInputActions.FindActionMap("Player").Disable();
-        _buttonSelected.interactable = false;
+        // playerInputActions.FindActionMap("Player").Disable();
+        _buttonComponent.interactable = false;
 
         _singleButtonAction = playerInputActions.FindAction(actionName);
         _rebindingOperation = _singleButtonAction.PerformInteractiveRebinding(0)
@@ -151,10 +128,10 @@ public class KeybindButton : MonoBehaviour
     private void ControllerRebindingComplete()
     {
         _rebindingOperation.Dispose();
-        _buttonSelected.interactable = true;
-        _eventSystem.SetSelectedGameObject(_buttonSelected.gameObject);
+        _buttonComponent.interactable = true;
+        _eventSystem.SetSelectedGameObject(gameObject);
 
-        // Not worring about gamepad joysticks, so I'm just doing single button actions
+        // Not worrying about gamepad joysticks, so I'm just doing single button actions
         string newBinding = _singleButtonAction.bindings[0].effectivePath;
         Debug.Log(newBinding);
         // Formatting of the binding path to just show the key pressed
@@ -162,9 +139,9 @@ public class KeybindButton : MonoBehaviour
         while (newBinding[index-1] != '/')
             index--;
         newBinding = newBinding[index..].ToUpper();
-        buttonText.text = newBinding;
+        _buttonText.text = newBinding;
         
-        playerInputActions.FindActionMap("Player").Enable();
+        // playerInputActions.FindActionMap("Player").Enable();
 
         // Save keybind afterwards
         string rebinds = playerInputActions.SaveBindingOverridesAsJson();
