@@ -35,6 +35,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float flipJumpForce;
     [SerializeField] private float diveBoost;
     [SerializeField] private bool hasFlipped; //hide
+    [SerializeField] private bool hasDived;
     [SerializeField] private float diveSpringHeight;
     [SerializeField] private float diveSpringLength;
     [SerializeField] private float divespeedmod;
@@ -42,6 +43,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float diveLandMaxTime;
     [SerializeField] private float groundDiveLength;
     [SerializeField] private float groundDiveHeight;
+    [SerializeField] private float breakForce;
     private float diveLandTimer;
 
     [Header("Wall Variables")]
@@ -144,7 +146,7 @@ public class PlayerMove : MonoBehaviour
                 }
                 if (_inputs.saysFlip && !hasFlipped) AirFlip();
                 
-                if (_inputs.saysDive) UpdateState(state.diving);
+                if (_inputs.saysDive && !hasDived) UpdateState(state.diving);
                 
                 if (_rb.velocity.y <= 0f) UpdateState(state.midair);
                 
@@ -162,7 +164,7 @@ public class PlayerMove : MonoBehaviour
                 
                 if (_inputs.saysFlip && !hasFlipped) AirFlip();
                 
-                if (_inputs.saysDive) UpdateState(state.diving);
+                if (_inputs.saysDive && !hasDived) UpdateState(state.diving);
                 
                 if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3)
                 {
@@ -177,7 +179,9 @@ public class PlayerMove : MonoBehaviour
                 if (_collision.WallDirectionDetect() == -1 && isFacingLeft
                     || _collision.WallDirectionDetect() == 1 && !isFacingLeft) 
                     UpdateState(state.bonked);
-                
+
+                if (_inputs.saysFlip) DiveBreak();
+
                 break;
             case state.divelanding:
                 HorizontalMovement(restriction.diveLanding);
@@ -256,11 +260,13 @@ public class PlayerMove : MonoBehaviour
             case state.grounded:
                 hasFlipped = false;
                 hasWallDashed = false;
+                hasDived = false;
                 break;
 
             case state.divelanding:
                 hasFlipped = false;
                 hasWallDashed = false;
+                hasDived = false;
                 diveLandTimer = diveLandMaxTime;
                 storedSpeed = _rb.velocity.x;
                 //_rb.velocity = new Vector2(0f, _rb.velocity.y);
@@ -295,6 +301,7 @@ public class PlayerMove : MonoBehaviour
             case state.bonklanding:
                 hasFlipped = false;
                 hasWallDashed = false;
+                hasDived = false;
                 break;
         }
         if (prevState == state.walled)
@@ -450,6 +457,7 @@ public class PlayerMove : MonoBehaviour
             else _rb.velocity = new Vector2(_rb.velocity.x + groundDiveLength, groundDiveHeight);
         }
         _inputs.Consume(PlayerInput.Action.dive);
+        hasDived = true;
     }
 
     private void DiveSpringBoost()
@@ -463,6 +471,16 @@ public class PlayerMove : MonoBehaviour
         
         _inputs.Consume(PlayerInput.Action.flip);
         _inputs.Consume(PlayerInput.Action.dive);
+    }
+
+    private void DiveBreak()
+    {
+        UpdateState(state.midair, false);
+
+        if (!hasFlipped) _rb.velocity = new Vector2(_rb.velocity.x , jumpForce * breakForce);
+        _inputs.Consume(PlayerInput.Action.flip);
+        hasFlipped = true;
+
     }
 
     private void Bonk()

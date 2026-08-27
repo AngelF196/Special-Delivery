@@ -14,16 +14,17 @@ public class LoadZone : MonoBehaviour
 
     private bool _waitingForInput = false;
     private PlayerInput input;
-
+    private PlayerInfo _playerInfo;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             input = collision.gameObject.GetComponent<PlayerInput>();
+            _playerInfo = collision.gameObject.GetComponent<PlayerInfo>();
             if (_automatic)
             {
-                SceneManager.LoadScene($"{_sceneNameToLoad}");
+                LoadScene();
             }
             else
             {
@@ -38,6 +39,7 @@ public class LoadZone : MonoBehaviour
         {
             input = null;
             _waitingForInput = false;
+            _playerInfo = null;
         }
     }
 
@@ -45,9 +47,13 @@ public class LoadZone : MonoBehaviour
     {
         if (_waitingForInput && input.RawDirections == _direction)
         {
-            SceneManager.LoadScene($"{_sceneNameToLoad}");
+            LoadScene();
         }
     }
 
-
+    void LoadScene()
+    {
+        _playerInfo.lastLevelScene = SceneManager.GetActiveScene().name.ToString();
+        SceneManager.LoadScene($"{_sceneNameToLoad}");
+    }
 }
