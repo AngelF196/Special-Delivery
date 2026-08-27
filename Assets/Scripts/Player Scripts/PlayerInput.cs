@@ -15,6 +15,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private bool flipActRec; //hide
     [SerializeField] private bool diveActRec; //hide
     [SerializeField] private bool jumpHeld;
+    [SerializeField] private InputActionAsset _playerInputActions;
 
     [Space]
 
@@ -46,6 +47,17 @@ public class PlayerInput : MonoBehaviour
 
     //Player Look Access
     public Vector2 look => playerLookDirections;
+
+    // Loads player's rebinds
+    void Start()
+    {
+        string rebinds = PlayerPrefs.GetString("rebinds");
+        // Debug.Log(rebinds);
+        if (!string.IsNullOrEmpty(rebinds))
+        {
+            _playerInputActions.LoadBindingOverridesFromJson(rebinds);
+        }
+    }
 
     void Update()
     {

@@ -90,7 +90,7 @@ public class KeybindButton : MonoBehaviour
     {
         _rebindingOperation.Dispose();
         _buttonComponent.interactable = true;
-        _eventSystem.SetSelectedGameObject(this.gameObject);
+        _eventSystem.SetSelectedGameObject(gameObject);
 
         string newBinding;
         if ( actionName.Contains("Left") || actionName.Contains("Right") )
