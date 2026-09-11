@@ -126,7 +126,6 @@ public class PlayerMove : MonoBehaviour
 
             if (coyoteTimer <= 0)
             {
-                Debug.Log("coyote time ran out");
                 inCoyoteTime = false;
             }
         }
@@ -307,7 +306,6 @@ public class PlayerMove : MonoBehaviour
                 _collision.DetectWalls = true;
                 if (prevState == state.grounded)
                 {
-                    Debug.Log("activate coyote time");
                     coyoteTimer = coyoteTime;
                     inCoyoteTime = true;  
                 }
