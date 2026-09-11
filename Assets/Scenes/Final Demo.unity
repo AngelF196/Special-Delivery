@@ -2008,7 +2008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c254983da034034bb80223ed78b403c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnInterval: 1
+  _spawnInterval: 0.25
   _afterImagePrefab: {fileID: 1553782783824186774, guid: 8203b85b33b49824f8fa93b1ea27f2f2, type: 3}
 --- !u!1 &105666157
 GameObject:
@@ -25880,7 +25880,7 @@ PrefabInstance:
       objectReference: {fileID: 980980436}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.875385
+      value: 18.885231
       objectReference: {fileID: 0}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30275,7 +30275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8969086695725268206, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.6043053
+      value: -1.6043034
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
