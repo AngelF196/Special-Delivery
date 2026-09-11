@@ -30,6 +30,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float maxFallSpeed;
     [SerializeField] private float jumpcut;
     [SerializeField] private float airspeedmod;
+    [SerializeField] private float coyoteTime = 0.117f;
+    private float coyoteTimer = 0;
+    private bool inCoyoteTime;
 
     [Header("Flip/Dive Variables")]
     [SerializeField] private float flipJumpForce;
@@ -115,7 +118,17 @@ public class PlayerMove : MonoBehaviour
                 UpdateState(state.grounded);
                 diveLandTimer = diveLandMaxTime;
             }
+        }
 
+        if (inCoyoteTime)
+        {
+            coyoteTimer -= Time.fixedDeltaTime;
+
+            if (coyoteTimer <= 0)
+            {
+                Debug.Log("coyote time ran out");
+                inCoyoteTime = false;
+            }
         }
     }
 
@@ -292,6 +305,12 @@ public class PlayerMove : MonoBehaviour
 
             case state.midair:
                 _collision.DetectWalls = true;
+                if (prevState == state.grounded)
+                {
+                    Debug.Log("activate coyote time");
+                    coyoteTimer = coyoteTime;
+                    inCoyoteTime = true;  
+                }
                 break;
 
             case state.bonked:

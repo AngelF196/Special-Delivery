@@ -16,24 +16,22 @@ public class PlayerSnap : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.layer != LayerMask.NameToLayer("Floor Collision")) return;
-        if (collision.contactCount > 0)
+        if (collision.contactCount !> 0) return;
+        
+        Vector2 collisionPoint = collision.contacts[0].point;
+
+        //Platform snapping
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Floor Collision"))
         {
-            Vector2 collisionPoint = collision.contacts[0].point;
-
             if (collisionPoint.y > transform.position.y) return;
-            
-            Debug.Log("Valid Floor Collision Detected");
 
+            //Negative Values WILL break this
             float pointDiff = transform.position.y - collisionPoint.y;
             if (pointDiff < 0.688 && _playerMove.currentState == PlayerMove.state.midair)
             {
                 transform.position = new Vector2(transform.position.x, collisionPoint.y + _boostamnt);
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
             }
-
         }
     }
-
-
 }
