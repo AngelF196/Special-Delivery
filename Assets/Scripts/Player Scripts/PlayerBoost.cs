@@ -26,15 +26,16 @@ public class PlayerBoost : MonoBehaviour
     private List<int> wallReturns = new List<int> {-1, 1, 2};
 
     //References
-    PlayerMove _baseMovement;
-    Rigidbody2D _rb;
-    PlayerEnvironment _environment;
-
+    private PlayerMove _baseMovement;
+    private Rigidbody2D _rb;
+    private PlayerEnvironment _environment;
+    private PlayerAfterImages _afterImages;
     private void Start()
     {
         _baseMovement = GetComponent<PlayerMove>();
         _rb = GetComponent<Rigidbody2D>();
         _environment = GetComponent<PlayerEnvironment>();
+        _afterImages = GetComponentInChildren<PlayerAfterImages>();
 
         currentStage = 0;
         stageTimer = 0f;
@@ -55,6 +56,7 @@ public class PlayerBoost : MonoBehaviour
     {
         if (currentStage >= maxBoostStage)
         {
+            stageTimer = stageDuration[currentStage - 1];
             return;
         }
         else
@@ -64,6 +66,7 @@ public class PlayerBoost : MonoBehaviour
                 boosting = true;
             }
             currentStage++;
+            if (currentStage == maxBoostStage) _afterImages.StartAfterImages();
             Debug.Log($"Stage Incremented To: {currentStage}");
             stageTimer = stageDuration[currentStage - 1];
         }
@@ -74,6 +77,7 @@ public class PlayerBoost : MonoBehaviour
         Debug.Log($"Stage Reset To: {currentStage}");
         boosting = false;
         stageTimer = 0f;
+        _afterImages.StopAfterImages();
         ResetWallTimer();
     }
 
@@ -115,6 +119,7 @@ public class PlayerBoost : MonoBehaviour
         if (wallGraceTimer <= 0 && currentStage != 0 && speed < stageMinSpeed[currentStage - 1])
         {
             currentStage--;
+            if (currentStage < maxBoostStage) _afterImages.StopAfterImages();
             Debug.Log($"Stage Decremented To: {currentStage}");
 
             // StopBoost();

@@ -25600,7 +25600,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a642704a361d47648b7df5a5943eb919, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25622,7 +25622,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: de6063316e3c685449d24a724ab38214, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -25959,7 +25959,7 @@ PrefabInstance:
       objectReference: {fileID: 980980436}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.885208
+      value: 18.885086
       objectReference: {fileID: 0}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30351,7 +30351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8969086695725268206, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.6043053
+      value: -1.6043072
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

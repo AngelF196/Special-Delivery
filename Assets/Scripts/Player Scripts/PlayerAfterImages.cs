@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAfterImages : MonoBehaviour
 {
     private SpriteRenderer _playerRenderer;
-    private float _spawnInterval = 1f;
+    [SerializeField] private float _spawnInterval = 0.25f;
     [SerializeField] private AfterImage _afterImagePrefab;
     private Coroutine _afterImageCoroutine;
 
@@ -17,25 +17,31 @@ public class PlayerAfterImages : MonoBehaviour
     // Update is called once per frame
     IEnumerator AfterImages()
     {
-        AfterImage lastImage = Instantiate(_afterImagePrefab, transform.position, Quaternion.identity);
-        SpriteRenderer lastImageRenderer = lastImage.GetComponent<SpriteRenderer>();
-        lastImage.transform.rotation = transform.rotation;
-        lastImageRenderer.sprite = _playerRenderer.sprite;
-        lastImageRenderer.flipX = _playerRenderer.flipX;
-        lastImageRenderer.material = _playerRenderer.material;
-        lastImageRenderer.sortingOrder = _playerRenderer.sortingOrder;
-        lastImageRenderer.color = _playerRenderer.color;
+        while (true)
+        {
+            AfterImage lastImage = Instantiate(_afterImagePrefab, transform.position, Quaternion.identity);
+            SpriteRenderer lastImageRenderer = lastImage.GetComponent<SpriteRenderer>();
+            lastImage.transform.rotation = transform.rotation;
+            lastImageRenderer.sprite = _playerRenderer.sprite;
+            lastImageRenderer.flipX = _playerRenderer.flipX;
+            lastImageRenderer.material = _playerRenderer.material;
+            lastImageRenderer.sortingOrder = _playerRenderer.sortingOrder;
+            lastImageRenderer.color = _playerRenderer.color;
 
-        yield return new WaitForSeconds(_spawnInterval);
+            yield return new WaitForSeconds(_spawnInterval);
+        }
     }
     public void StartAfterImages()
     {
-        if (_afterImageCoroutine != null) 
+        if (_afterImageCoroutine == null)
             _afterImageCoroutine = StartCoroutine(AfterImages());
     }
     public void StopAfterImages()
     {
-        StopCoroutine(_afterImageCoroutine);
-        _afterImageCoroutine = null;
+        if (_afterImageCoroutine != null)
+        {
+            StopCoroutine(_afterImageCoroutine);
+            _afterImageCoroutine = null;
+        }
     }
 }
