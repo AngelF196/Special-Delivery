@@ -13,15 +13,13 @@ public abstract class BaseNPC : MonoBehaviour, IInteractable
     private PlayerMove _playerMovementState;
     private PlayerInput _playerInput;
     private DialogueController _dc;
-    // Flag for checking if the player went out of range while in the middle of conversation
-    private bool _goneOutOfRange = true;
 
     private void Start()
     {
-        _playerTransform = GameObject.Find("player").transform;
-        _playerMovementState = GameObject.Find("player").GetComponent<PlayerMove>();
-        _playerInput = GameObject.Find("player").GetComponent<PlayerInput>();
-        _dc = GameObject.Find("DialogueSystem").transform.GetChild(0).GetComponent<DialogueController>();
+        _playerTransform = Locator.Instance.Player.gameObject.transform;
+        _playerMovementState = Locator.Instance.Player;
+        _playerInput = Locator.Instance.Player.gameObject.GetComponent<PlayerInput>();
+        _dc = Locator.Instance.DialogueController;
     }
 
     // Update is called once per frame
@@ -52,7 +50,7 @@ public abstract class BaseNPC : MonoBehaviour, IInteractable
 
     public void respondToInteract()
     {
-        if (_playerMovementState.currentState == PlayerMove.state.grounded)
+        if (_playerMovementState.currentState == PlayerMove.state.grounded && !PauseMenu.gamePaused)
         {
             Interact();
             _playerMovementState.SetRigidBodyVelocity(Vector2.zero);

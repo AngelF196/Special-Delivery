@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Linq;
 using UnityEngine.UI;
-using System;
-using Unity.VisualScripting;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
@@ -23,9 +20,6 @@ public class DialogueController : MonoBehaviour
     private string _yellingDelimiter = "^^";
     [SerializeField, Tooltip("The amount of time the typing is paused after arriving at the delimiter. This pause takes effect each time the controller arrives at a dialogue delimiter.")]
     private float _delimiterPauseTime = 0.5f;
-
-    [Header("Input System Asset")]
-    [SerializeField] private InputActionAsset _playerActionAsset;
 
     [Header("Debug Stuff")]
     [SerializeField] private Color _talkingColor = Color.white;
@@ -112,12 +106,6 @@ public class DialogueController : MonoBehaviour
             _questObj = convo.questToActivate;
         // else
         //     throw new NullReferenceException("A quest will be activated after this conversation, but there is no quest object assigned to the conversation with this character.");
-
-        _playerActionAsset.FindAction("Move").Disable();
-        _playerActionAsset.FindAction("Look").Disable();
-        _playerActionAsset.FindAction("Jump").Disable();
-        _playerActionAsset.FindAction("Flip").Disable();
-        _playerActionAsset.FindAction("Dive Action").Disable();
     }
 
     private Conversation CheckForFollowupConvos(Conversation convo)
@@ -139,12 +127,6 @@ public class DialogueController : MonoBehaviour
         StartQuest();
         _isInConvo = false;
         _index = 0;
-
-        _playerActionAsset.FindAction("Move").Enable();
-        _playerActionAsset.FindAction("Look").Enable();
-        _playerActionAsset.FindAction("Jump").Enable();
-        _playerActionAsset.FindAction("Flip").Enable();
-        _playerActionAsset.FindAction("Dive Action").Enable();
     }
 
     private void StartQuest()
@@ -215,7 +197,6 @@ public class DialogueController : MonoBehaviour
 
                 break;
         }
-
 
         _characterName.text = _name;
         typeDialogueCoroutine = StartCoroutine(TypeOutLine(_line));

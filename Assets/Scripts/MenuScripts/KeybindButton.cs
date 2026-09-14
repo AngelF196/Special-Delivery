@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,38 +17,25 @@ public class KeybindButton : MonoBehaviour
     private TextMeshProUGUI _buttonText;
     private EventSystem _eventSystem;
 
-    // Old stuff (none right now)
-
     void Awake()
     {
         _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         _moveAction = playerInputActions.FindAction("Move");
-
-        // string rebinds = PlayerPrefs.GetString("rebinds");
-        // // Debug.Log(rebinds);
-        // if (!string.IsNullOrEmpty(rebinds))
-        // {
-        //     playerInputActions.LoadBindingOverridesFromJson(rebinds);
-        // }
     }
     
     void Start()
     {
         _buttonComponent = GetComponent<Button>();
         _buttonText = GetComponentInChildren<TextMeshProUGUI>();
-        // LoadUserSetKeybinds();
     }
 
-    
-    // Searches for a given button name within the list of buttons, 
     public void EditButtonText()
     {
         _buttonText.text = "Set New Input";
     }
 
     public void SetNewKeybind(string actionName)
-    {        
-        // playerInputActions.FindActionMap("Player").Disable();
+    {
         _buttonComponent.interactable = false;
         
         if ( actionName.Contains("Left") || actionName.Contains("Right") )
@@ -94,19 +80,11 @@ public class KeybindButton : MonoBehaviour
 
         string newBinding;
         if ( actionName.Contains("Left") || actionName.Contains("Right") )
-            newBinding = _moveAction.bindings[compKeybindIndex].effectivePath;
+            newBinding = _moveAction.GetBindingDisplayString(compKeybindIndex);
         else
-            newBinding = _singleButtonAction.bindings[1].effectivePath;
+            newBinding = _singleButtonAction.GetBindingDisplayString(1);
         
-        Debug.Log(newBinding);
-        // Formatting of the binding path to just show the key pressed
-        short index = (short) newBinding.Length;
-        while (newBinding[index-1] != '/')
-            index--;
-        newBinding = newBinding[index..].ToUpper();
         _buttonText.text = newBinding;
-        
-        // playerInputActions.FindActionMap("Player").Enable();
 
         // Save keybind afterwards
         string rebinds = playerInputActions.SaveBindingOverridesAsJson();
@@ -115,7 +93,6 @@ public class KeybindButton : MonoBehaviour
 
     public void SetNewControllerBind(string actionName)
     {
-        // playerInputActions.FindActionMap("Player").Disable();
         _buttonComponent.interactable = false;
 
         _singleButtonAction = playerInputActions.FindAction(actionName);
@@ -132,55 +109,10 @@ public class KeybindButton : MonoBehaviour
         _eventSystem.SetSelectedGameObject(gameObject);
 
         // Not worrying about gamepad joysticks, so I'm just doing single button actions
-        string newBinding = _singleButtonAction.bindings[0].effectivePath;
-        Debug.Log(newBinding);
-        // Formatting of the binding path to just show the key pressed
-        short index = (short) newBinding.Length;
-        while (newBinding[index-1] != '/')
-            index--;
-        newBinding = newBinding[index..].ToUpper();
-        _buttonText.text = newBinding;
-        
-        // playerInputActions.FindActionMap("Player").Enable();
+        _buttonText.text = _singleButtonAction.GetBindingDisplayString(0);
 
         // Save keybind afterwards
         string rebinds = playerInputActions.SaveBindingOverridesAsJson();
         PlayerPrefs.SetString("rebinds", rebinds);
     }
-
-    // // Reload everything in this section later
-    // public void ResetKeyboardKeybindsToDefault()
-    // {
-    //     Dictionary<string, KeyCode> defaultMapping = new Dictionary<string, KeyCode>(CustomInputManager.keyMapping);
-    //     KeyCode[] defaultKeys = CustomInputManager.GetDefaultKeys();
-    //     int i = 0;
-
-    //     foreach(string keyName in CustomInputManager.keyMapping.Keys)
-    //     {
-    //         buttonText = _keyboardButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-    //         defaultMapping[keyName] = defaultKeys[i];
-    //         buttonText.text = defaultKeys[i].ToString();
-    //         PlayerPrefs.SetInt(keyName, (int) defaultKeys[i]);
-    //         PlayerPrefs.Save();
-    //         i++;
-    //     }
-    //     CustomInputManager.keyMapping = defaultMapping;
-    // }
-
-    // When the game loads, load up all of the user set keybinds
-    // public void LoadUserSetKeybinds()
-    // {
-    //     Button[] buttons = _keybindMenu.GetComponentsInChildren<Button>();
-    //     Dictionary<string, KeyCode> userMapping = new Dictionary<string, KeyCode>(CustomInputManager.keyMapping);
-    //     int i = 0;
-
-    //     foreach(string keyName in CustomInputManager.keyMapping.Keys)
-    //     {
-    //         buttonText = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
-    //         userMapping[keyName] = (KeyCode) PlayerPrefs.GetInt(keyName);
-    //         buttonText.text = ((KeyCode) PlayerPrefs.GetInt(keyName)).ToString();
-    //         i++;
-    //     }
-    //     CustomInputManager.keyMapping = userMapping;
-    // }
 }

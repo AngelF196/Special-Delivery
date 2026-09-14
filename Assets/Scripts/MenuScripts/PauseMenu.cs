@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -39,11 +40,17 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        _playerInput = GameObject.Find("player").GetComponent<PlayerInput>();
+        _playerInput = Locator.Instance.Player.gameObject.GetComponent<PlayerInput>();
         _playerInput.playerPause.AddListener(respondToPause);
-        _playerScript = GameObject.Find("player").GetComponent<PlayerMove>();
+        _playerScript = Locator.Instance.Player;
         gamePausedEvent.AddListener(Locator.Instance.GameManager.GamePaused);
         gameResumedEvent.AddListener(Locator.Instance.GameManager.GameResumed);
+    }
+
+    void OnDestroy()
+    {
+        gamePausedEvent.RemoveAllListeners();
+        gameResumedEvent.RemoveAllListeners();
     }
 
     private void respondToPause()
@@ -61,7 +68,7 @@ public class PauseMenu : MonoBehaviour
             if (gamePaused)
             {
                 gamePausedEvent.Invoke();
-                Time.timeScale = 0.0f;
+                Time.timeScale = 0.0f;   // Inputs get buffered when time scale is 0
             }
             else
             {

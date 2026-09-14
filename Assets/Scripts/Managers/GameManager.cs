@@ -57,23 +57,35 @@ public class GameManager : MonoBehaviour
     public void EnteredConversation()
     {
         // _pm.enabled = false;
+        _playerInputActions.FindAction("Move").Disable();
+        _playerInputActions.FindAction("Look").Disable();
+        _playerInputActions.FindAction("Jump").Disable();
+        _playerInputActions.FindAction("Flip").Disable();
+        _playerInputActions.FindAction("Dive Action").Disable();
     }
 
     public void ExitedConversation()
     {
         // _pm.enabled = true;
+        
+        _playerInputActions.FindAction("Move").Enable();
+        _playerInputActions.FindAction("Look").Enable();
+        _playerInputActions.FindAction("Jump").Enable();
+        _playerInputActions.FindAction("Flip").Enable();
+        _playerInputActions.FindAction("Dive Action").Enable();
     }
 
     // Event method added to the gamePausedEvent event
     public void GamePaused()
     {
         _musicManager.PauseTransition();
-        _playerInputActions.FindAction("Move").Disable();
-        _playerInputActions.FindAction("Look").Disable();
-        _playerInputActions.FindAction("Jump").Disable();
-        _playerInputActions.FindAction("Flip").Disable();
-        _playerInputActions.FindAction("Dive Action").Disable();
-        _playerInputActions.FindAction("Interact").Disable();
+        // _playerInputActions.FindAction("Move").Disable();
+        // _playerInputActions.FindAction("Look").Disable();
+        // _playerInputActions.FindAction("Jump").Disable();
+        // _playerInputActions.FindAction("Flip").Disable();
+        // _playerInputActions.FindAction("Dive Action").Disable();
+        // _playerInputActions.FindAction("Interact").Disable();
+        _playerInputActions.FindActionMap("Player").Disable();
         Debug.Log("game paused");
     }
 
@@ -81,12 +93,14 @@ public class GameManager : MonoBehaviour
     public void GameResumed()
     {
         _musicManager.GameTransition();
-        _playerInputActions.FindAction("Move").Enable();
-        _playerInputActions.FindAction("Look").Enable();
-        _playerInputActions.FindAction("Jump").Enable();
-        _playerInputActions.FindAction("Flip").Enable();
-        _playerInputActions.FindAction("Dive Action").Enable();
-        _playerInputActions.FindAction("Interact").Enable();
+        // _playerInputActions.FindAction("Move").Enable();
+        // _playerInputActions.FindAction("Look").Enable();
+        // _playerInputActions.FindAction("Jump").Enable();
+        // _playerInputActions.FindAction("Flip").Enable();
+        // _playerInputActions.FindAction("Dive Action").Enable();
+        // _playerInputActions.FindAction("Interact").Enable();
+        
+        _playerInputActions.FindActionMap("Player").Enable();
         Debug.Log("game resumed");
     }
 }
