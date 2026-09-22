@@ -23,7 +23,7 @@ public class SaveFileManager : MonoBehaviour
 
     public void SaveButtonPressed()
     {
-        FileSaveSystem.SaveFileData(Locator.Instance.Player);
+        FileSaveSystem.SaveFileData(Locator.Instance.PlayerMove);
     }
 
     public void LoadButtonPressed()

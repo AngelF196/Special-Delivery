@@ -5,7 +5,8 @@ using UnityEngine;
 public class Locator : MonoBehaviour
 {
     public static Locator Instance {get; private set;}
-    public PlayerMove Player {get; private set;}
+    public PlayerMove PlayerMove {get; private set;}
+    public PlayerInput PlayerInput {get; private set;}
     public GameManager GameManager {get; private set;}
     public SaveFileManager SaveFileManager {get; private set;}
     public QuestManager QuestManager {get; private set;}
@@ -23,7 +24,8 @@ public class Locator : MonoBehaviour
 
         Instance = this;
         
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+        PlayerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+        PlayerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
         DialogueController = GameObject.Find("UI and Game Managing")
                                 .transform.Find("DialogueSystem")
                                 .transform.Find("DialogueController").GetComponent<DialogueController>();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -16,7 +15,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject _quitButton;
     
     [Header("Scripts to Deactivate When Pausing")]
-    [SerializeField] private PlayerMove _playerScript;
+    [SerializeField] private PlayerInput _playerInputScript;
 
     [Header("Other")]
     [SerializeField] private EventSystem _eventSystem;
@@ -24,7 +23,6 @@ public class PauseMenu : MonoBehaviour
 
 
     public static bool gamePaused = false;  // Static variable to use here and in other classes
-    private bool _pressedPause;  // For use with CustomInputManager
     private bool _isOnMainPauseMenu = true;
 
     // Events
@@ -33,16 +31,16 @@ public class PauseMenu : MonoBehaviour
 
     void Awake()
     {
-        _playerScript.enabled = true;
+        _playerInputScript.enabled = true;
         Time.timeScale = 1.0f;
         gamePaused = false;
     }
 
     void Start()
     {
-        _playerInput = Locator.Instance.Player.gameObject.GetComponent<PlayerInput>();
+        _playerInput = Locator.Instance.PlayerInput;
         _playerInput.playerPause.AddListener(respondToPause);
-        _playerScript = Locator.Instance.Player;
+        _playerInputScript = Locator.Instance.PlayerInput;
         gamePausedEvent.AddListener(Locator.Instance.GameManager.GamePaused);
         gameResumedEvent.AddListener(Locator.Instance.GameManager.GameResumed);
     }
@@ -59,7 +57,7 @@ public class PauseMenu : MonoBehaviour
         {
             // Pop up pause menu
             gamePaused = !gamePaused;
-            _playerScript.enabled = !_playerScript.enabled;
+            _playerInputScript.enabled = !_playerInputScript.enabled;
             _isOnMainPauseMenu = true;
             _pauseMenu.SetActive(gamePaused);
             _mainPauseMenu.SetActive(gamePaused);
@@ -68,11 +66,9 @@ public class PauseMenu : MonoBehaviour
             if (gamePaused)
             {
                 gamePausedEvent.Invoke();
-                Time.timeScale = 0.0f;   // Inputs get buffered when time scale is 0
             }
             else
             {
-                Time.timeScale = 1.0f;
                 gameResumedEvent.Invoke();
             }
         }
@@ -86,9 +82,8 @@ public class PauseMenu : MonoBehaviour
     public void ResumeButton()
     {
         gamePaused = false;
-        _playerScript.enabled = true;
+        _playerInputScript.enabled = true;
         _pauseMenu.SetActive(false);
-        Time.timeScale = 1.0f;
         gameResumedEvent.Invoke();
     }
 

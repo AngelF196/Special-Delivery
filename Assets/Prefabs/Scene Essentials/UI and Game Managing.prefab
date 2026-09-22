@@ -291,7 +291,7 @@ MonoBehaviour:
   _optionsMenu: {fileID: 2893104912878680762}
   _optionsButton: {fileID: 4821371033632719516}
   _quitButton: {fileID: 4511024543044732401}
-  _playerScript: {fileID: 0}
+  _playerInputScript: {fileID: 5704231464364568388, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
   _eventSystem: {fileID: 213306430296033081}
   gamePausedEvent:
     m_PersistentCalls:
@@ -971,6 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _musicManager: {fileID: 0}
+  _playerInputActions: {fileID: 0}
   sceneTransition:
     m_PersistentCalls:
       m_Calls: []
@@ -1340,7 +1341,6 @@ MonoBehaviour:
   _charactersPerSecond: 40
   _yellingDelimiter: ^^
   _delimiterPauseTime: 0.5
-  _playerActionAsset: {fileID: 0}
   _talkingColor: {r: 1, g: 0, b: 0, a: 1}
   _listeningColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.7647059}
   startQuest:

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     // Fuck the above references, use the Locator instead
     [SerializeField] private BGM _musicManager;
     [SerializeField] private InputActionAsset _playerInputActions;
+    private InputActionMap _playerMap;
+    private InputActionMap _uiMap;
 
     public enum SceneTransition
     {
@@ -33,6 +35,12 @@ public class GameManager : MonoBehaviour
             return;
         }
         GMInstance = this;
+
+        if (_playerInputActions != null)
+        {
+            _playerMap = _playerInputActions.FindActionMap("Player");
+            _uiMap = _playerInputActions.FindActionMap("UI");
+        }
     }
 
     void Start()
@@ -79,13 +87,15 @@ public class GameManager : MonoBehaviour
     public void GamePaused()
     {
         _musicManager.PauseTransition();
-        // _playerInputActions.FindAction("Move").Disable();
-        // _playerInputActions.FindAction("Look").Disable();
-        // _playerInputActions.FindAction("Jump").Disable();
-        // _playerInputActions.FindAction("Flip").Disable();
-        // _playerInputActions.FindAction("Dive Action").Disable();
-        // _playerInputActions.FindAction("Interact").Disable();
-        _playerInputActions.FindActionMap("Player").Disable();
+        _playerInputActions.FindAction("Move").Disable();
+        _playerInputActions.FindAction("Look").Disable();
+        _playerInputActions.FindAction("Jump").Disable();
+        _playerInputActions.FindAction("Flip").Disable();
+        _playerInputActions.FindAction("Dive Action").Disable();
+        _playerInputActions.FindAction("Interact").Disable();
+
+        Time.timeScale = 0.0f;   // Inputs get buffered if you're not starting from title screen
+
         Debug.Log("game paused");
     }
 
@@ -93,14 +103,15 @@ public class GameManager : MonoBehaviour
     public void GameResumed()
     {
         _musicManager.GameTransition();
-        // _playerInputActions.FindAction("Move").Enable();
-        // _playerInputActions.FindAction("Look").Enable();
-        // _playerInputActions.FindAction("Jump").Enable();
-        // _playerInputActions.FindAction("Flip").Enable();
-        // _playerInputActions.FindAction("Dive Action").Enable();
-        // _playerInputActions.FindAction("Interact").Enable();
+        _playerInputActions.FindAction("Move").Enable();
+        _playerInputActions.FindAction("Look").Enable();
+        _playerInputActions.FindAction("Jump").Enable();
+        _playerInputActions.FindAction("Flip").Enable();
+        _playerInputActions.FindAction("Dive Action").Enable();
+        _playerInputActions.FindAction("Interact").Enable();
         
-        _playerInputActions.FindActionMap("Player").Enable();
+        Time.timeScale = 1.0f;
+        
         Debug.Log("game resumed");
     }
 }

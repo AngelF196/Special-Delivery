@@ -16,9 +16,9 @@ public abstract class BaseNPC : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        _playerTransform = Locator.Instance.Player.gameObject.transform;
-        _playerMovementState = Locator.Instance.Player;
-        _playerInput = Locator.Instance.Player.gameObject.GetComponent<PlayerInput>();
+        _playerTransform = Locator.Instance.PlayerMove.gameObject.transform;
+        _playerMovementState = Locator.Instance.PlayerMove;
+        _playerInput = Locator.Instance.PlayerMove.gameObject.GetComponent<PlayerInput>();
         _dc = Locator.Instance.DialogueController;
     }
 

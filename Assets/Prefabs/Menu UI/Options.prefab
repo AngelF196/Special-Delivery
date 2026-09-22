@@ -8735,7 +8735,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1128133715464419119, guid: 2c13de9b46b526a429a53c348086da34, type: 3}
       propertyPath: m_text
-      value: LEFTSHIFT
+      value: SHIFT
       objectReference: {fileID: 0}
     - target: {fileID: 1128133715464419119, guid: 2c13de9b46b526a429a53c348086da34, type: 3}
       propertyPath: m_fontSize
