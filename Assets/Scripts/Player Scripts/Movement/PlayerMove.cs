@@ -30,6 +30,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float maxFallSpeed;
     [SerializeField] private float jumpcut;
     [SerializeField] private float airspeedmod;
+    [SerializeField] private float coyoteTime = 0.117f;
+    private float coyoteTimer = 0;
+    private bool inCoyoteTime;
 
     [Header("Flip/Dive Variables")]
     [SerializeField] private float flipJumpForce;
@@ -115,7 +118,16 @@ public class PlayerMove : MonoBehaviour
                 UpdateState(state.grounded);
                 diveLandTimer = diveLandMaxTime;
             }
+        }
 
+        if (inCoyoteTime)
+        {
+            coyoteTimer -= Time.fixedDeltaTime;
+
+            if (coyoteTimer <= 0)
+            {
+                inCoyoteTime = false;
+            }
         }
     }
 
@@ -150,7 +162,7 @@ public class PlayerMove : MonoBehaviour
                 
                 if (_rb.velocity.y <= 0f) UpdateState(state.midair);
                 
-                if (_collision.FloorDetect() && _rb.velocity.y <= 0f) UpdateState(state.grounded);
+                if (_collision.FloorDetect() && (float)Mathf.Round(localVelocity.y) <= 0f) UpdateState(state.grounded);
                 
                 if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3) UpdateState(state.walled);
                
@@ -174,7 +186,7 @@ public class PlayerMove : MonoBehaviour
             case state.diving:
                 HorizontalMovement(restriction.heavy);
 
-                if (_collision.FloorDetect() && _rb.velocity.y <= 0) UpdateState(state.divelanding);
+                if (_collision.FloorDetect() && (float)Mathf.Round(localVelocity.y) <= 0) UpdateState(state.divelanding);
                 
                 if (_collision.WallDirectionDetect() == -1 && isFacingLeft
                     || _collision.WallDirectionDetect() == 1 && !isFacingLeft) 
@@ -282,6 +294,7 @@ public class PlayerMove : MonoBehaviour
 
             case state.walled:
                 hasFlipped = false;
+                hasDived = false;
                 if (prevState != state.walled)
                     _rb.velocity = new Vector2(0, _rb.velocity.y);
                 if (prevState == state.diving)
@@ -292,6 +305,11 @@ public class PlayerMove : MonoBehaviour
 
             case state.midair:
                 _collision.DetectWalls = true;
+                if (prevState == state.grounded)
+                {
+                    coyoteTimer = coyoteTime;
+                    inCoyoteTime = true;  
+                }
                 break;
 
             case state.bonked:
@@ -496,6 +514,6 @@ public class PlayerMove : MonoBehaviour
     }
     public void SetPlatformVelocity(Vector2 velocity)
     {
-        platformVelocity = velocity;
+        platformVelocity = new Vector2 ((float)Math.Round(velocity.x, 2), (float)Math.Round(velocity.y, 2));
     }
 }

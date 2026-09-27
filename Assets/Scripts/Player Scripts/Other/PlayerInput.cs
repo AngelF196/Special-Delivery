@@ -119,7 +119,7 @@ public class PlayerInput : MonoBehaviour
     }
     public void OnDiveAction(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.performed)
         {
             diveActRec = true;
         }
@@ -150,10 +150,7 @@ public class PlayerInput : MonoBehaviour
     }
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            playerPause.Invoke();
-        }
+        if (context.started) playerPause.Invoke();
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -167,5 +164,16 @@ public class PlayerInput : MonoBehaviour
         {
             playerLookDirections = Vector2.zero;
         }
+    }
+
+    public void TimerReset()
+    {
+        Debug.Log("timers reset");
+        jumpRec = false;
+        flipActRec = false;
+        diveActRec = false;
+        jumpTimer = 0;
+        diveTimer = 0;
+        flipTimer = 0;
     }
 }

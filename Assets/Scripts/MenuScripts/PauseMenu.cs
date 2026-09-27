@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -40,15 +41,10 @@ public class PauseMenu : MonoBehaviour
     {
         _playerInput = Locator.Instance.PlayerInput;
         _playerInput.playerPause.AddListener(respondToPause);
-        _playerInputScript = Locator.Instance.PlayerInput;
-        gamePausedEvent.AddListener(Locator.Instance.GameManager.GamePaused);
-        gameResumedEvent.AddListener(Locator.Instance.GameManager.GameResumed);
-    }
-
-    void OnDestroy()
-    {
-        gamePausedEvent.RemoveAllListeners();
-        gameResumedEvent.RemoveAllListeners();
+        gameResumedEvent.AddListener(_playerInput.TimerReset);
+        _playerScript = GameObject.Find("player").GetComponent<PlayerMove>();
+        gamePausedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GamePaused);
+        gameResumedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GameResumed);
     }
 
     private void respondToPause()
@@ -66,10 +62,14 @@ public class PauseMenu : MonoBehaviour
             if (gamePaused)
             {
                 gamePausedEvent.Invoke();
+                Time.timeScale = 0.0f;
+                _playerInput.enabled = false;
             }
             else
             {
                 gameResumedEvent.Invoke();
+                _playerInput.enabled = true;
+
             }
         }
         else
@@ -85,6 +85,8 @@ public class PauseMenu : MonoBehaviour
         _playerInputScript.enabled = true;
         _pauseMenu.SetActive(false);
         gameResumedEvent.Invoke();
+        _playerInput.enabled = true;
+
     }
 
     public void OptionsButton()
