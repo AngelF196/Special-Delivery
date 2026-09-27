@@ -5942,7 +5942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _velocity: 2.55
-  _direction: {x: 1, y: 0}
+  _direction: {x: 1, y: 1}
   _platformVelocity: {x: 0, y: 0}
 --- !u!50 &8465925664744196467
 Rigidbody2D:

@@ -162,7 +162,7 @@ public class PlayerMove : MonoBehaviour
                 
                 if (_rb.velocity.y <= 0f) UpdateState(state.midair);
                 
-                if (_collision.FloorDetect() && _rb.velocity.y <= 0f) UpdateState(state.grounded);
+                if (_collision.FloorDetect() && (float)Mathf.Round(localVelocity.y) <= 0f) UpdateState(state.grounded);
                 
                 if (_collision.WallDirectionDetect() != 0 && _collision.WallDirectionDetect() != 3) UpdateState(state.walled);
                
@@ -186,7 +186,7 @@ public class PlayerMove : MonoBehaviour
             case state.diving:
                 HorizontalMovement(restriction.heavy);
 
-                if (_collision.FloorDetect() && _rb.velocity.y <= 0) UpdateState(state.divelanding);
+                if (_collision.FloorDetect() && (float)Mathf.Round(localVelocity.y) <= 0) UpdateState(state.divelanding);
                 
                 if (_collision.WallDirectionDetect() == -1 && isFacingLeft
                     || _collision.WallDirectionDetect() == 1 && !isFacingLeft) 
@@ -294,6 +294,7 @@ public class PlayerMove : MonoBehaviour
 
             case state.walled:
                 hasFlipped = false;
+                hasDived = false;
                 if (prevState != state.walled)
                     _rb.velocity = new Vector2(0, _rb.velocity.y);
                 if (prevState == state.diving)
