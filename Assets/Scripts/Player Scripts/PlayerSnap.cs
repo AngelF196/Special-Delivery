@@ -7,6 +7,7 @@ public class PlayerSnap : MonoBehaviour
     private Rigidbody2D _rb;
     private PlayerMove _playerMove;
     [SerializeField] private float _boostamnt;
+    [SerializeField] private float _snapLimit = 0.688f;
 
     void Start()
     {
@@ -16,7 +17,8 @@ public class PlayerSnap : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.contactCount !> 0) return;
+
+        if (collision.contactCount <= 0) return;
         
         Vector2 collisionPoint = collision.contacts[0].point;
 
@@ -27,7 +29,7 @@ public class PlayerSnap : MonoBehaviour
 
             //Negative Values WILL break this
             float pointDiff = transform.position.y - collisionPoint.y;
-            if (pointDiff < 0.688 && _playerMove.currentState == PlayerMove.state.midair)
+            if (pointDiff < _snapLimit && _playerMove.currentState == PlayerMove.state.midair)
             {
                 transform.position = new Vector2(transform.position.x, collisionPoint.y + _boostamnt);
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);
