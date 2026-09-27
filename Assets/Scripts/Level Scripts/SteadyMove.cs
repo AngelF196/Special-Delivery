@@ -12,7 +12,7 @@ public class SteadyMove : MonoBehaviour
     private Vector2 _prevPosition = Vector2.zero;
     private Vector2 _currentPosition = Vector2.zero;
     private Vector2 _deltaPosition = Vector2.zero;
-    private Vector2 _platformVelocity = Vector2.zero;
+    [SerializeField] private Vector2 _platformVelocity = Vector2.zero;
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -38,13 +38,24 @@ public class SteadyMove : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            _player = collision.gameObject.GetComponent<PlayerMove>();
+            // Player is on top of the platform
+            if (collision.contacts[0].normal.y <= -0.7f)
+            {
+                _player = collision.gameObject.GetComponent<PlayerMove>();
+
+                // Transfer velocity only if the player knows they're grounded
+                if (_player.currentState == PlayerMove.state.grounded)
+                {
+                    _player.SetRigidBodyVelocity(_player.GetComponent<Rigidbody2D>().velocity + _platformVelocity);
+                    Debug.Log("transferred velocity");
+                }
+            }
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && _player is not null)
         {
             _player.SetPlatformVelocity(Vector2.zero);
             _player = null;

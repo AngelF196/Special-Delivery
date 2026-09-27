@@ -513,6 +513,6 @@ public class PlayerMove : MonoBehaviour
     }
     public void SetPlatformVelocity(Vector2 velocity)
     {
-        platformVelocity = velocity;
+        platformVelocity = new Vector2 ((float)Math.Round(velocity.x, 2), (float)Math.Round(velocity.y, 2));
     }
 }

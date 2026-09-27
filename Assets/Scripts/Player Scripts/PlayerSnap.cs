@@ -29,7 +29,7 @@ public class PlayerSnap : MonoBehaviour
 
             //Negative Values WILL break this
             float pointDiff = transform.position.y - collisionPoint.y;
-            if (pointDiff < _snapLimit && _playerMove.currentState == PlayerMove.state.midair)
+            if (pointDiff < _snapLimit && _playerMove.currentState == PlayerMove.state.midair && _rb.velocity.y <= 0)
             {
                 transform.position = new Vector2(transform.position.x, collisionPoint.y + _boostamnt);
                 _rb.velocity = new Vector2(_rb.velocity.x, 0);

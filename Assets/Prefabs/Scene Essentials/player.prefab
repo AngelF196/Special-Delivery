@@ -4950,6 +4950,7 @@ GameObject:
   - component: {fileID: 2681023508569278300}
   - component: {fileID: 3715972574756602946}
   - component: {fileID: 7226912007018768884}
+  - component: {fileID: 1080202741138776760}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -5050,6 +5051,7 @@ MonoBehaviour:
   maxFallSpeed: 50
   jumpcut: 0.7
   airspeedmod: 0.35
+  coyoteTime: 0.117
   flipJumpForce: 4.01
   diveBoost: 5
   hasFlipped: 0
@@ -5432,6 +5434,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d978ff7cac86454a8c48199239b5ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1080202741138776760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393149421654728864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ef7b23749e7ed4abcbb993d11df378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boostamnt: 0.86
+  _snapLimit: 0.688
 --- !u!1 &7039977279223435061
 GameObject:
   m_ObjectHideFlags: 0
@@ -5445,6 +5461,7 @@ GameObject:
   - component: {fileID: 642804386313025066}
   - component: {fileID: 2826147875366272178}
   - component: {fileID: 7108005685738549065}
+  - component: {fileID: 7068479723634926282}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -5566,3 +5583,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiltUpAmount: 25
   tiltDownAmount: -65
+--- !u!114 &7068479723634926282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7039977279223435061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c254983da034034bb80223ed78b403c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnInterval: 0.25
+  _afterImagePrefab: {fileID: 1553782783824186774, guid: 8203b85b33b49824f8fa93b1ea27f2f2, type: 3}
