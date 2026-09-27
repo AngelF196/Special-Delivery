@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -41,6 +42,7 @@ public class PauseMenu : MonoBehaviour
     {
         _playerInput = GameObject.Find("player").GetComponent<PlayerInput>();
         _playerInput.playerPause.AddListener(respondToPause);
+        gameResumedEvent.AddListener(_playerInput.TimerReset);
         _playerScript = GameObject.Find("player").GetComponent<PlayerMove>();
         gamePausedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GamePaused);
         gameResumedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GameResumed);
@@ -61,11 +63,14 @@ public class PauseMenu : MonoBehaviour
             {
                 gamePausedEvent.Invoke();
                 Time.timeScale = 0.0f;
+                _playerInput.enabled = false;
             }
             else
             {
                 Time.timeScale = 1.0f;
                 gameResumedEvent.Invoke();
+                _playerInput.enabled = true;
+
             }
         }
         else
@@ -82,6 +87,8 @@ public class PauseMenu : MonoBehaviour
         _pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
         gameResumedEvent.Invoke();
+        _playerInput.enabled = true;
+
     }
 
     public void OptionsButton()
