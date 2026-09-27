@@ -30275,7 +30275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8969086695725268206, guid: 843edeaf7dcbf6b4abd9230786d76934, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.6043034
+      value: -1.6042995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30426,6 +30426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boostamnt: 0.86
+  _snapLimit: 0.688
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
