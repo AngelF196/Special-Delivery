@@ -74,8 +74,9 @@ public class PlayerMove : MonoBehaviour
     private bool stateTransitionStarted = false;
 
     //Shit for other scripts
-    public state currentState => playerState;
     public bool holdingTowardsWall = false;
+    public state currentState => playerState;
+
     public float baseMaxSpeed => maxSpeed;
 
     public bool isFacingLeft => facingLeft;
@@ -108,6 +109,11 @@ public class PlayerMove : MonoBehaviour
     {
         localVelocity = _rb.velocity - platformVelocity;
         Action();
+
+        if (platformVelocity.y != 0 && currentState == state.grounded)
+        {
+            _rb.velocity = new Vector2 (_rb.velocity.x, platformVelocity.y);
+        }
 
         if (playerState == state.divelanding)
         {
@@ -142,9 +148,7 @@ public class PlayerMove : MonoBehaviour
                 
                 if (_collision.FloorDetect() == false) //Covers if going straight from ground to airborne
                 {
-                    if (_rb.velocity.y > 0) UpdateState(state.jumping, false);
-                    
-                    else UpdateState(state.midair);
+                    UpdateState(state.midair);
                 }
                 if (_inputs.saysDive) UpdateState(state.diving);
                 
@@ -350,7 +354,7 @@ public class PlayerMove : MonoBehaviour
     private void HorizontalMovement(restriction restriction)
     {
         float targetSpeed = _inputs.RawDirections.x * _boost.CurrentMaxSpeed(); //reflects left/right input
-        float currentSpeed = _rb.velocity.x - platformVelocity.x;
+        float currentSpeed = localVelocity.x;
         acceleration = (Mathf.Abs(targetSpeed) > 0.01f) ? accelRate : decelRate;
         float newSpeed = 0;
         switch (restriction)

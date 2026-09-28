@@ -24,7 +24,7 @@ public class SteadyMove : MonoBehaviour
         _rb.MovePosition(_rb.position + _direction * _velocity * Time.fixedDeltaTime);
 
         _prevPosition = _currentPosition;
-        _currentPosition = transform.position;
+        _currentPosition = _rb.position;
 
         _deltaPosition = _currentPosition - _prevPosition;
         _platformVelocity = _deltaPosition/Time.fixedDeltaTime;
@@ -47,7 +47,6 @@ public class SteadyMove : MonoBehaviour
                 if (_player.currentState == PlayerMove.state.grounded)
                 {
                     _player.SetRigidBodyVelocity(_player.GetComponent<Rigidbody2D>().velocity + _platformVelocity);
-                    Debug.Log("transferred velocity");
                 }
             }
         }

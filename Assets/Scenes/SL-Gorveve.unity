@@ -1600,6 +1600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Death Plane
       objectReference: {fileID: 0}
+    - target: {fileID: 163375059532477584, guid: fd80d5c491a47e64ba63b02cb66e2071, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7807957542141858392, guid: fd80d5c491a47e64ba63b02cb66e2071, type: 3}
       propertyPath: m_LocalScale.x
       value: 159.88
@@ -2197,6 +2201,10 @@ PrefabInstance:
       propertyPath: printStates
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3417494716250233573, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3575818379489108864, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.3299999
@@ -2240,6 +2248,10 @@ PrefabInstance:
     - target: {fileID: 6393149421654728864, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226912007018768884, guid: 505ef2b1fb1a86b4c9f0a0c1e41dee55, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5794,7 +5806,6 @@ GameObject:
   - component: {fileID: 8465925664744196465}
   - component: {fileID: 8465925664744196467}
   - component: {fileID: 8465925664744196466}
-  - component: {fileID: 8465925664744196468}
   m_Layer: 3
   m_Name: Half Plat 1
   m_TagString: Untagged
@@ -5942,7 +5953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _velocity: 2.55
-  _direction: {x: 1, y: 1}
+  _direction: {x: 0, y: -1}
   _platformVelocity: {x: 0, y: 0}
 --- !u!50 &8465925664744196467
 Rigidbody2D:
@@ -5967,22 +5978,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8465925664744196468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068670423688342190}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d978ff7cac86454a8c48199239b5ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
