@@ -4,12 +4,12 @@ using MessagePack;
 
 public static class FileSaveSystem  // This class can't be a component of a GameObject
 {
-    public static void SaveFileData(PlayerMove player)
+    public static void SaveFileData(PlayerMove player, LevelManager levelManager)
     {
         string savePath = Application.persistentDataPath + "/file1.sdf";  // Apparently, the extension can be whatever I want since I'm using binary formatting, so I'll use .sdf (Special Delivery File)
         FileStream stream = new FileStream(savePath, FileMode.Create);
         
-        FileSaveData data = new FileSaveData(player);
+        FileSaveData data = new FileSaveData(player, levelManager);
         MessagePackSerializer.Serialize(stream, data);  // Converts the saved file data into bytes to write into the file
         stream.Close();
     }

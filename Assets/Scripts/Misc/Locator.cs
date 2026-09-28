@@ -10,6 +10,7 @@ public class Locator : MonoBehaviour
     public GameManager GameManager {get; private set;}
     public SaveFileManager SaveFileManager {get; private set;}
     public QuestManager QuestManager {get; private set;}
+    public LevelManager LevelManager {get; private set;}
     public DialogueController DialogueController {get; private set;}
     public PauseMenu PauseMenu {get; private set;}
 
@@ -36,6 +37,7 @@ public class Locator : MonoBehaviour
         GameManager = GetSpecifiedManagerGO("Game", gameObjectManagers).GetComponent<GameManager>();
         SaveFileManager = GetSpecifiedManagerGO("SaveFile", gameObjectManagers).GetComponent<SaveFileManager>();
         QuestManager = GetSpecifiedManagerGO("Quest", gameObjectManagers).GetComponent<QuestManager>();
+        LevelManager = GetSpecifiedManagerGO("Level", gameObjectManagers).GetComponent<LevelManager>();
     }
 
     private GameObject GetSpecifiedManagerGO(string managerName, GameObject[] managers)

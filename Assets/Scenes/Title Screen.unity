@@ -607,14 +607,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1379964831}
         m_TargetAssemblyTypeName: MainMenuOptions, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: GoToSelectedFile
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: ElephantMemory
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &187350380
@@ -3081,13 +3081,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'This one
-
-    actually
-
-    does
-
-    nothing'
+  m_text: "This one\nremembers\n what you've\ndone"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

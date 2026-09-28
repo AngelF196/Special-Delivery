@@ -42,8 +42,8 @@ public class PauseMenu : MonoBehaviour
         _playerInput = Locator.Instance.PlayerInput;
         _playerInput.playerPause.AddListener(respondToPause);
         gameResumedEvent.AddListener(_playerInput.TimerReset);
-        gamePausedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GamePaused);
-        gameResumedEvent.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().GameResumed);
+        gamePausedEvent.AddListener(Locator.Instance.GameManager.GamePaused);
+        gameResumedEvent.AddListener(Locator.Instance.GameManager.GameResumed);
     }
 
     private void respondToPause()

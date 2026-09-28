@@ -23,13 +23,13 @@ public class SaveFileManager : MonoBehaviour
 
     public void SaveButtonPressed()
     {
-        FileSaveSystem.SaveFileData(Locator.Instance.PlayerMove);
+        FileSaveSystem.SaveFileData(Locator.Instance.PlayerMove, Locator.Instance.LevelManager);
     }
 
     public void LoadButtonPressed()
     {
         FileSaveData fileData = FileSaveSystem.LoadFileData();
         // Call load data functions upon each applicable object (Player, managers, etc.)
-        
+        Locator.Instance.LevelManager.LoadCollectibles(fileData);
     }
 }
