@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,7 +34,16 @@ public class MainMenuOptions : MonoBehaviour
 
     public void GoToSelectedFile(string scene_name)
     {
-        _gameManager.LoadScene(scene_name);
+        if (scene_name != "ElephantMemory")
+            _gameManager.LoadScene(scene_name);
+        else
+        {
+            string savePath = "C:/SaveFileTests/file1.sdf";
+            if (File.Exists(savePath) )
+                _gameManager.LoadScene(scene_name);
+            else
+                Debug.LogError("A save file doesn't exist at the following path: " + savePath);
+        }
     }
 
     public void QuitGame()

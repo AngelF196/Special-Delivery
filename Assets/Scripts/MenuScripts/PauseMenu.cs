@@ -95,6 +95,11 @@ public class PauseMenu : MonoBehaviour
         _isOnMainPauseMenu = false;
     }
     
+    public void SaveGameButton()
+    {
+        Locator.Instance.SaveFileManager.SaveButtonPressed();
+    }
+
     public void BackButton()
     {
         _mainPauseMenu.SetActive(true);

@@ -8,13 +8,7 @@ using UnityEngine.Animations;
 public class FileSaveData  // Doesn't inherit from MonoBehaviour b/c it's not a game object to instantiate AND MessagePack will complain that MonoBehaviour isn't a MessagePackObject (which is true :( )
 {
     [Key(0)] public Vector3 playerPosition;
-    [Key(1)] public List<SerializableCollectible> savedCollectibles = new List<SerializableCollectible>();
-
-    // Little workaround I came up with to not throw an error
-    public FileSaveData()
-    {
-        Debug.LogError("Cannot create a PlayerData object out of the default constructor.");
-    }
+    [Key(1)] public List<SerializableCollectible> collectiblesToCollect = new List<SerializableCollectible>();
 
     public FileSaveData(PlayerMove player, LevelManager levelManager)
     {
@@ -23,7 +17,16 @@ public class FileSaveData  // Doesn't inherit from MonoBehaviour b/c it's not a 
         foreach (Collectible savedStamp in leftoverStamps)
         {
             SerializableCollectible serializedCollectible = new SerializableCollectible(savedStamp);
-            savedCollectibles.Add(serializedCollectible);
+            collectiblesToCollect.Add(serializedCollectible);
         }
+    }
+    
+    // When creating a PlayerData object from deserializing a file, the constructor with the SerializationConstructor field will be called 
+    [SerializationConstructor]
+    public FileSaveData(Vector3 savedPos, List<SerializableCollectible> savedStamps)
+    {
+        Debug.Log("MessagePack deserialization constructor called");
+        playerPosition = savedPos;
+        collectiblesToCollect = savedStamps;
     }
 }

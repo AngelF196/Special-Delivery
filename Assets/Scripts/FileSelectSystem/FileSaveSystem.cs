@@ -6,7 +6,8 @@ public static class FileSaveSystem  // This class can't be a component of a Game
 {
     public static void SaveFileData(PlayerMove player, LevelManager levelManager)
     {
-        string savePath = Application.persistentDataPath + "/file1.sdf";  // Apparently, the extension can be whatever I want since I'm using binary formatting, so I'll use .sdf (Special Delivery File)
+        // string savePath = Application.persistentDataPath + "/file1.sdf";  // Apparently, the extension can be whatever I want since I'm using binary formatting, so I'll use .sdf (Special Delivery File)
+        string savePath = "C:/SaveFileTests/file1.sdf";
         FileStream stream = new FileStream(savePath, FileMode.Create);
         
         FileSaveData data = new FileSaveData(player, levelManager);
@@ -16,7 +17,8 @@ public static class FileSaveSystem  // This class can't be a component of a Game
 
     public static FileSaveData LoadFileData()
     {
-        string savePath = Application.persistentDataPath + "/file1.sdf";
+        // string savePath = Application.persistentDataPath + "/file1.sdf";
+        string savePath = "C:/SaveFileTests/file1.sdf";
 
         if (File.Exists(savePath))
         {

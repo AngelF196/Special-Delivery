@@ -580,6 +580,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e01fd57d5f136b4db5565b6f78ece71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stampPrefab: {fileID: 3767781617791879342, guid: 5929ce05554da68428d63c8fbee84504, type: 3}
+  stamps: []
 --- !u!1 &2976167497741752962
 GameObject:
   m_ObjectHideFlags: 0

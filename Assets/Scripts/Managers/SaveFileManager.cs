@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveFileManager : MonoBehaviour
 {
@@ -19,11 +20,13 @@ public class SaveFileManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);  // This must persist throughout the entire game
+        SceneManager.sceneLoaded += OnLevelLoaded;
     }
 
     public void SaveButtonPressed()
     {
         FileSaveSystem.SaveFileData(Locator.Instance.PlayerMove, Locator.Instance.LevelManager);
+        print("File successfully saved");
     }
 
     public void LoadButtonPressed()
@@ -31,5 +34,14 @@ public class SaveFileManager : MonoBehaviour
         FileSaveData fileData = FileSaveSystem.LoadFileData();
         // Call load data functions upon each applicable object (Player, managers, etc.)
         Locator.Instance.LevelManager.LoadCollectibles(fileData);
+    }
+
+    private void OnLevelLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name == "ElephantMemory")
+        {
+            print("Savable scene loaded");
+            LoadButtonPressed();
+        }
     }
 }

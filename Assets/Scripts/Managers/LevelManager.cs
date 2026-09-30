@@ -41,12 +41,13 @@ public class LevelManager : MonoBehaviour
         neglectedCollectibles.Clear();
 
         // Load saved list of collectibles
-        foreach (SerializableCollectible serializedStamp in fileData.savedCollectibles)
+        foreach (SerializableCollectible serializedStamp in fileData.collectiblesToCollect)
         {
             // Set up stamp game object
             GameObject savedStamp = Instantiate(_stampPrefab);
             Collectible stampComponent = savedStamp.GetComponent<Collectible>();
-            savedStamp.transform.parent = GameObject.Find("Collectibles").transform;  // Add child gems under the parent "Gems" game object
+            savedStamp.transform.parent = GameObject.Find("Collectibles").transform;
+            savedStamp.transform.localScale = new Vector3(0.033174f, 0.033174f, 1);
 
             // Load in stamp object data
             savedStamp.transform.position = serializedStamp.collectiblePosition;
