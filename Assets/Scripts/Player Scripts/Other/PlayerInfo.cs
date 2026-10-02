@@ -8,7 +8,10 @@ using UnityEngine.SceneManagement;
 public class PlayerInfo : MonoBehaviour
 {
     private Vector3 _respawnPoint = Vector3.zero;
+    private Vector3 _hookPoint = Vector3.zero;
+    
     public Vector3 respawnPoint => _respawnPoint;
+    public Vector3 hookPoint => _hookPoint;
 
     [SerializeField] private string[] _nonLevels;
     public string lastLevelScene = "";
@@ -46,5 +49,10 @@ public class PlayerInfo : MonoBehaviour
     public void UpdateRespawn(Vector3 newPoint)
     {
         _respawnPoint = newPoint;
+    }
+
+    public void UpdateHook(Vector3 newPoint)
+    {
+        _hookPoint = newPoint;
     }
 }

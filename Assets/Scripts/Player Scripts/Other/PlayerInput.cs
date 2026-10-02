@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private bool jumpRec; //hide
     [SerializeField] private bool flipActRec; //hide
     [SerializeField] private bool diveActRec; //hide
+    [SerializeField] private bool testActRec; //hide
     [SerializeField] private bool jumpHeld;
 
     [Space]
@@ -23,6 +24,7 @@ public class PlayerInput : MonoBehaviour
     private float jumpTimer;
     private float diveTimer;
     private float flipTimer;
+    private float testTimer;
 
     [Space]
 
@@ -34,6 +36,8 @@ public class PlayerInput : MonoBehaviour
     public bool saysJump => jumpTimer > 0f;
     public bool saysDive => diveTimer > 0f;
     public bool saysFlip => flipTimer > 0f;
+    public bool saysTest => testTimer > 0f;
+
     public bool jumpCutRec => !jumpHeld;
     public Vector2 RawDirections => rawPlayerDirections;
     public Vector2 SmoothedDirections => playerDirections;
@@ -41,7 +45,8 @@ public class PlayerInput : MonoBehaviour
     {
         jump,
         dive,
-        flip
+        flip,
+        test
     }
 
     //Player Look Access
@@ -64,10 +69,17 @@ public class PlayerInput : MonoBehaviour
             flipActRec = false;
             flipTimer = inputBuffer;
         }
+        if (testActRec)
+        {
+            testActRec = false;
+            testTimer = inputBuffer;
+        }
 
         if (jumpTimer > 0f) jumpTimer -= Time.deltaTime;
         if (diveTimer > 0f) diveTimer -= Time.deltaTime;
         if (flipTimer > 0f) flipTimer -= Time.deltaTime;
+        if (testTimer > 0f) testTimer -= Time.deltaTime;
+
     }
 
     public void Consume(Action action)
@@ -76,13 +88,16 @@ public class PlayerInput : MonoBehaviour
         {
             case Action.jump:
                 jumpTimer = 0f;
-            break;
+                break;
             case Action.dive:
                 diveTimer = 0f;
-            break;
+                break;
             case Action.flip:
                 flipTimer = 0f;
-            break;
+                break;
+            case Action.test:
+                testTimer = 0f;
+                break;
         }
     }
 
@@ -134,6 +149,8 @@ public class PlayerInput : MonoBehaviour
         if (context.started)
         {
             playerInteract.Invoke();
+            // Comment to remove, do not delete
+            testActRec = true;
         }
     }
     public void OnPause(InputAction.CallbackContext context)

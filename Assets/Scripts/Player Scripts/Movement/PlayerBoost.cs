@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerBoost : MonoBehaviour
 {
+    [SerializeField] private bool printUpdates = false;
+
     [Header("Boost Settings")]
     [SerializeField] private int maxBoostStage = 4;
     [SerializeField] private float[] stageMaxSpeed;
@@ -67,14 +69,14 @@ public class PlayerBoost : MonoBehaviour
             }
             currentStage++;
             if (currentStage == maxBoostStage) _afterImages.StartAfterImages();
-            Debug.Log($"Stage Incremented To: {currentStage}");
+            if (printUpdates) Debug.Log($"Stage Incremented To: {currentStage}");
             stageTimer = stageDuration[currentStage - 1];
         }
     }
     private void StopBoosting()
     {
         currentStage = 0;
-        Debug.Log($"Stage Reset To: {currentStage}");
+        if (printUpdates) Debug.Log($"Stage Reset To: {currentStage}");
         boosting = false;
         stageTimer = 0f;
         _afterImages.StopAfterImages();
@@ -102,7 +104,7 @@ public class PlayerBoost : MonoBehaviour
 
         if (stageTimer < 0f) 
         {
-            Debug.Log("Timer ran out!");
+            if (printUpdates) Debug.Log("Timer ran out!");
             StopBoosting();
         }
     }
@@ -120,7 +122,7 @@ public class PlayerBoost : MonoBehaviour
         {
             currentStage--;
             if (currentStage < maxBoostStage) _afterImages.StopAfterImages();
-            Debug.Log($"Stage Decremented To: {currentStage}");
+            if (printUpdates) Debug.Log($"Stage Decremented To: {currentStage}");
 
             // StopBoost();
 
@@ -144,7 +146,7 @@ public class PlayerBoost : MonoBehaviour
 
     public void StartWallGracePeriod()
     {
-        Debug.Log("started wall grace period");
+        if (printUpdates) Debug.Log("started wall grace period");
         wallGraceTimer = wallGraceMaxTime;
     }
 }
