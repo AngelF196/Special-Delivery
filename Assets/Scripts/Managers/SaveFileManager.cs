@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -34,6 +36,7 @@ public class SaveFileManager : MonoBehaviour
         FileSaveData fileData = FileSaveSystem.LoadFileData();
         // Call load data functions upon each applicable object (Player, managers, etc.)
         Locator.Instance.LevelManager.LoadCollectibles(fileData);
+        Locator.Instance.LevelManager.LoadConversationData(fileData);
     }
 
     private void OnLevelLoaded(Scene scene, LoadSceneMode loadSceneMode)

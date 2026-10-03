@@ -6,18 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject _stampPrefab;
     public List<Collectible> stamps;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public DeliveryAgent[] npcs;
 
     public void PlayerCollectedStamp(Collectible stamp)
     {
@@ -52,6 +41,16 @@ public class LevelManager : MonoBehaviour
             // Load in stamp object data
             savedStamp.transform.position = serializedStamp.collectiblePosition;
             stamps.Add(stampComponent);
+        }
+    }
+
+    public void LoadConversationData(FileSaveData fileData)
+    {
+        int i = 0;
+        foreach (var pair in fileData.interactedConvos)
+        {
+            npcs[i].currentConversation.alreadyPlayed = pair.Value[0].convoPlayedFlag;
+            i++;
         }
     }
 }

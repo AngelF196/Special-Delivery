@@ -108,10 +108,11 @@ public class DialogueController : MonoBehaviour
         //     throw new NullReferenceException("A quest will be activated after this conversation, but there is no quest object assigned to the conversation with this character.");
     }
 
+    // Now a recursive function that can probably support any number of follow-up conversations
     private Conversation CheckForFollowupConvos(Conversation convo)
     {
         if (convo.addAnotherConversation == true && convo.alreadyPlayed == true)
-            return convo.followupConversation;
+            return CheckForFollowupConvos(convo.followupConversation);
         return convo;
     }
 
