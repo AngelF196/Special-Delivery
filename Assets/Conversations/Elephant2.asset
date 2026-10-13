@@ -33,7 +33,7 @@ MonoBehaviour:
   - speakerSideToHighlight: 1
     expression: 0
     dialogueText: But I thought you'd remember this...
-  alreadyPlayed: 0
+  alreadyPlayed: 1
   activateQuest: 0
   questToActivate: {fileID: 0}
   addAnotherConversation: 1

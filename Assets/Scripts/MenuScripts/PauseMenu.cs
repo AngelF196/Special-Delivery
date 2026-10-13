@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -61,7 +60,6 @@ public class PauseMenu : MonoBehaviour
             if (gamePaused)
             {
                 gamePausedEvent.Invoke();
-                Time.timeScale = 0.0f;
                 _playerInput.enabled = false;
             }
             else

@@ -87,14 +87,10 @@ public class GameManager : MonoBehaviour
     public void GamePaused()
     {
         _musicManager.PauseTransition();
-        _playerInputActions.FindAction("Move").Disable();
-        _playerInputActions.FindAction("Look").Disable();
-        _playerInputActions.FindAction("Jump").Disable();
-        _playerInputActions.FindAction("Flip").Disable();
-        _playerInputActions.FindAction("Dive Action").Disable();
-        _playerInputActions.FindAction("Interact").Disable();
+        _playerMap.Disable();
+        _uiMap.Enable();
 
-        Time.timeScale = 0.0f;   // Inputs get buffered if you're not starting from title screen
+        Time.timeScale = 0.0f;
 
         Debug.Log("game paused");
     }
@@ -103,12 +99,8 @@ public class GameManager : MonoBehaviour
     public void GameResumed()
     {
         _musicManager.GameTransition();
-        _playerInputActions.FindAction("Move").Enable();
-        _playerInputActions.FindAction("Look").Enable();
-        _playerInputActions.FindAction("Jump").Enable();
-        _playerInputActions.FindAction("Flip").Enable();
-        _playerInputActions.FindAction("Dive Action").Enable();
-        _playerInputActions.FindAction("Interact").Enable();
+        _playerMap.Enable();
+        _uiMap.Disable();
         
         Time.timeScale = 1.0f;
         
