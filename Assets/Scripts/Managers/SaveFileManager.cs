@@ -41,6 +41,7 @@ public class SaveFileManager : MonoBehaviour
 
     private void OnLevelLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        Debug.Log(scene.name + loadSceneMode.ToString());
         if (scene.name == "ElephantMemory")
         {
             print("Savable scene loaded");

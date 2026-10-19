@@ -57,7 +57,7 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         string rebinds = PlayerPrefs.GetString("rebinds");
-        // Debug.Log(rebinds);
+        Debug.Log(rebinds);
         if (!string.IsNullOrEmpty(rebinds))
         {
             _playerInputActions.LoadBindingOverridesFromJson(rebinds);

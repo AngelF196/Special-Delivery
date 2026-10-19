@@ -25512,7 +25512,7 @@ PrefabInstance:
       objectReference: {fileID: 980980436}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.885107
+      value: 18.885298
       objectReference: {fileID: 0}
     - target: {fileID: 2617136640707468766, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25553,7 +25553,7 @@ PrefabInstance:
     - target: {fileID: 4335127576399580739, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_BoundingShape2D
       value: 
-      objectReference: {fileID: 1241869492}
+      objectReference: {fileID: 0}
     - target: {fileID: 4853166492467275844, guid: 6976640fa49843043a6bf3479d1d87af, type: 3}
       propertyPath: m_Name
       value: Main Camera (1)

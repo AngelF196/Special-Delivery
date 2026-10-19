@@ -55,4 +55,9 @@ public class PlayerInfo : MonoBehaviour
     {
         _hookPoint = newPoint;
     }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 }

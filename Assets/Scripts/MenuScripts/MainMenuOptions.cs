@@ -38,7 +38,7 @@ public class MainMenuOptions : MonoBehaviour
             _gameManager.LoadScene(scene_name);
         else
         {
-            string savePath = "C:/SaveFileTests/file1.sdf";
+            string savePath = Application.persistentDataPath + "/file1.sdf";
             if (File.Exists(savePath) )
                 _gameManager.LoadScene(scene_name);
             else
