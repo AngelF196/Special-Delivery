@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Home Base.unity
     guid: a5ffaa182f0e8e741a9b497d1b0ffb18
+  - enabled: 1
+    path: Assets/Scenes/ElephantMemory.unity
+    guid: fa21fb98c4fdf5a4bb5026a0ae1f7ce9
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 08ccb037bf3a9074ebea81f480603ec2, type: 2}

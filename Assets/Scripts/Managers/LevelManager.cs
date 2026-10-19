@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LevelManager : MonoBehaviour
+{
+    [SerializeField] private GameObject _stampPrefab;
+    public List<Collectible> stamps;
+    public DeliveryAgent[] npcs;
+
+    public void PlayerCollectedStamp(Collectible stamp)
+    {
+        stamps.Remove(stamp);
+        Destroy(stamp.gameObject);
+    }
+
+    public void LoadCollectibles(FileSaveData fileData)
+    {
+        // Clear the current list of collectibles
+        List<Collectible> neglectedCollectibles = new List<Collectible>();
+        foreach(Collectible negStamp in stamps)
+        {
+            neglectedCollectibles.Add(negStamp);
+        }
+        foreach(Collectible stamp in neglectedCollectibles)
+        {
+            stamps.Remove(stamp);
+            Destroy(stamp.gameObject);
+        }
+        neglectedCollectibles.Clear();
+
+        // Load saved list of collectibles
+        foreach (SerializableCollectible serializedStamp in fileData.collectiblesToCollect)
+        {
+            // Set up stamp game object
+            GameObject savedStamp = Instantiate(_stampPrefab);
+            Collectible stampComponent = savedStamp.GetComponent<Collectible>();
+            savedStamp.transform.parent = GameObject.Find("Collectibles").transform;
+            savedStamp.transform.localScale = new Vector3(0.033174f, 0.033174f, 1);
+
+            // Load in stamp object data
+            savedStamp.transform.position = serializedStamp.collectiblePosition;
+            stamps.Add(stampComponent);
+        }
+    }
+
+    public void LoadConversationData(FileSaveData fileData)
+    {
+        int i = 0;
+        foreach (var pair in fileData.interactedConvos)
+        {
+            npcs[i].currentConversation.alreadyPlayed = pair.Value[0].convoPlayedFlag;
+            i++;
+        }
+    }
+}

@@ -7,6 +7,7 @@ public class DeliveryAgent : BaseNPC, ITalkable
     [SerializeField] private Conversation _conversation;
     [SerializeField] private DialogueController _dialogueController;
 
+    public Conversation currentConversation => _conversation;
     public override void Interact()
     {
         Talk(_conversation);

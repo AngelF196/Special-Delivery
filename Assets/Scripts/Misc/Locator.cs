@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Locator : MonoBehaviour
+{
+    public static Locator Instance {get; private set;}
+    public PlayerMove PlayerMove {get; private set;}
+    public PlayerInput PlayerInput {get; private set;}
+    public GameManager GameManager {get; private set;}
+    public SaveFileManager SaveFileManager {get; private set;}
+    public QuestManager QuestManager {get; private set;}
+    public LevelManager LevelManager {get; private set;}
+    public DialogueController DialogueController {get; private set;}
+    public PauseMenu PauseMenu {get; private set;}
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        
+        PlayerMove = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMove>();
+        PlayerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+        DialogueController = GameObject.Find("UI and Game Managing")
+                                .transform.Find("DialogueSystem")
+                                .transform.Find("DialogueController").GetComponent<DialogueController>();
+        PauseMenu = GameObject.Find("UI and Game Managing")
+                                .transform.Find("DialogueSystem").GetComponent<PauseMenu>();
+
+        GameObject[] gameObjectManagers = GameObject.FindGameObjectsWithTag("Manager");
+        GameManager = GetSpecifiedManagerGO("Game", gameObjectManagers).GetComponent<GameManager>();
+        SaveFileManager = GetSpecifiedManagerGO("SaveFile", gameObjectManagers).GetComponent<SaveFileManager>();
+        QuestManager = GetSpecifiedManagerGO("Quest", gameObjectManagers).GetComponent<QuestManager>();
+        LevelManager = GetSpecifiedManagerGO("Level", gameObjectManagers).GetComponent<LevelManager>();
+    }
+
+    private GameObject GetSpecifiedManagerGO(string managerName, GameObject[] managers)
+    {
+        foreach (GameObject manager in managers)
+        {
+            if (manager.name.Contains(managerName)) return manager;
+        }
+        return null;
+    }
+}

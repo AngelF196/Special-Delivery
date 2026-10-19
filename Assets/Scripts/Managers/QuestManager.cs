@@ -2,54 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class QuestManager : MonoBehaviour
 {
-    [SerializeField] private DialogueController _dialogueController;
-    [SerializeField] private GameObject _player;
-    [SerializeField] private BGM _musicManager;
-    private PlayerMove _pm;
-    private Rigidbody2D _playerRb;
+    public static QuestManager Instance {get; private set;} // Only one QuestManager should be active at a time
 
     private bool _questIsActive = false;
     private TextMeshProUGUI _questTimer;
     private int _minutes = 0;
     private float _seconds = 0f;
 
-    public enum SceneTransition
+    void Awake()
     {
-        none, slide, circle  // I dunno, these are random names I just came up with
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
     }
 
-    // Event
-    public UnityEvent<SceneTransition, Vector2> sceneTransition;
-
+    // Start is called before the first frame update
     void Start()
     {
-        if (_pm != null)
-        {
-            _pm = _player.GetComponent<PlayerMove>();
-            _playerRb = _player.GetComponent<Rigidbody2D>();
-        }
         _questTimer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         _questTimer.enabled = false;
-
     }
 
+    // Update is called once per frame
     void Update()
     {
-        if (_pm != null) {
-            if (_dialogueController.conversationIsActive)
-            {
-                _pm.enabled = false;
-            }
-            else
-            {
-                _pm.enabled = true;
-            }
-        }
         if (_questIsActive)
         {
             UpdateTimer();
@@ -79,38 +61,6 @@ public class GameManager : MonoBehaviour
         
         string time = _minutes + ":" + secondsText;
         _questTimer.text = time;
-    }
-
-    public void LoadScene(string sceneName, SceneTransition transition = SceneTransition.none, Vector2 position = default)
-    {
-        if (transition != SceneTransition.none) {
-            sceneTransition.Invoke(transition, position);
-        }
-        SceneManager.LoadScene(sceneName);
-    }
-
-    public void EnteredConversation()
-    {
-        _pm.enabled = false;
-    }
-
-    public void ExitedConversation()
-    {
-        _pm.enabled = true;
-    }
-
-    // Event method added to the gamePausedEvent event
-    public void GamePaused()
-    {
-        _musicManager.PauseTransition();
-        Debug.Log("game paused");
-    }
-
-    // Event method added to the gameResumedEvent event
-    public void GameResumed()
-    {
-        _musicManager.GameTransition();
-        Debug.Log("game resumed");
     }
 
     // Event method for the DialogueController's activateQuest event

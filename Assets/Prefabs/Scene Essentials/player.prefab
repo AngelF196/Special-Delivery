@@ -5138,7 +5138,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6393149421654728864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2549e6ee3b6b50a4b89f1f6dba04d4ef, type: 3}
   m_Name: 
@@ -5147,6 +5147,7 @@ MonoBehaviour:
   flipActRec: 0
   diveActRec: 0
   jumpHeld: 0
+  _playerInputActions: {fileID: 0}
   inputBuffer: 0.27
   playerInteract:
     m_PersistentCalls:
