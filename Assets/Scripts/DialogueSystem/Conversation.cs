@@ -51,10 +51,10 @@ public class Conversation : ScriptableObject
     }
 }
 
-[MessagePackObject]
+[MessagePackObject(keyAsPropertyName: true)]
 public class SerializableConversation
 {
-    [Key(0)] public bool convoPlayedFlag;
+    public bool convoPlayedFlag;
 
     public SerializableConversation(Conversation convo)
     {
@@ -62,8 +62,8 @@ public class SerializableConversation
     }
 
     [SerializationConstructor]
-    public SerializableConversation(bool savedFlag)
+    public SerializableConversation(bool convoPlayedFlag)
     {
-        convoPlayedFlag = savedFlag;
+        this.convoPlayedFlag = convoPlayedFlag;
     }
 }

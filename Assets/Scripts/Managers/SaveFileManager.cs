@@ -25,6 +25,7 @@ public class SaveFileManager : MonoBehaviour
         SceneManager.sceneLoaded += OnLevelLoaded;
     }
 
+    // Might not be needed anymore
     public void SaveButtonPressed()
     {
         FileSaveSystem.SaveFileData(Locator.Instance.PlayerMove, Locator.Instance.LevelManager);
@@ -34,9 +35,12 @@ public class SaveFileManager : MonoBehaviour
     public void LoadButtonPressed()
     {
         FileSaveData fileData = FileSaveSystem.LoadFileData();
-        // Call load data functions upon each applicable object (Player, managers, etc.)
-        Locator.Instance.LevelManager.LoadCollectibles(fileData);
-        Locator.Instance.LevelManager.LoadConversationData(fileData);
+        // Call load data functions upon each applicable object (Player, managers, etc.), if file data exists
+        if (fileData != null)
+        {
+            Locator.Instance.LevelManager.LoadCollectibles(fileData);
+            Locator.Instance.LevelManager.LoadConversationData(fileData);
+        }
     }
 
     private void OnLevelLoaded(Scene scene, LoadSceneMode loadSceneMode)

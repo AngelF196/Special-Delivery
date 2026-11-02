@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using MessagePack;
 using UnityEngine;
-using UnityEngine.Animations;
 
-[MessagePackObject]
+[MessagePackObject(keyAsPropertyName: true)]
 public class FileSaveData  // Doesn't inherit from MonoBehaviour b/c it's not a game object to instantiate AND MessagePack will complain that MonoBehaviour isn't a MessagePackObject (which is true :( )
 {
-    [Key(0)] public Vector3 playerPosition;
-    [Key(1)] public List<SerializableCollectible> collectiblesToCollect = new List<SerializableCollectible>();
-    [Key(2)] public Dictionary<int, SerializableConversation[]> interactedConvos = new Dictionary<int, SerializableConversation[]>();
+    public Vector3 playerPosition;
+    public List<SerializableCollectible> collectiblesToCollect = new List<SerializableCollectible>();
+    public Dictionary<int, SerializableConversation[]> interactedConvos = new Dictionary<int, SerializableConversation[]>();
 
     // Saving file data
     public FileSaveData(PlayerMove player, LevelManager levelManager)
@@ -30,23 +29,21 @@ public class FileSaveData  // Doesn't inherit from MonoBehaviour b/c it's not a 
             List<SerializableConversation> flags = new List<SerializableConversation>();
             foreach (Conversation convo in pair.Value)
             {
-                Debug.Log(convo);
                 SerializableConversation flag = new SerializableConversation(convo);
                 flags.Add(flag);
             }
             interactedConvos[npcID] = flags.ToArray();
-            Debug.Log("-----------------------------");
         }
     }
     
     // When creating a PlayerData object from deserializing a file, the constructor with the SerializationConstructor field will be called 
     [SerializationConstructor]
-    public FileSaveData(Vector3 savedPos, List<SerializableCollectible> savedStamps, Dictionary<int, SerializableConversation[]> savedInteractions)
+    public FileSaveData(Vector3 playerPosition, List<SerializableCollectible> collectiblesToCollect, Dictionary<int, SerializableConversation[]> interactedConvos)
     {
         Debug.Log("MessagePack deserialization constructor called");
-        playerPosition = savedPos;
-        collectiblesToCollect = savedStamps;
-        interactedConvos = savedInteractions;
+        this.playerPosition = playerPosition;
+        this.collectiblesToCollect = collectiblesToCollect;
+        this.interactedConvos = interactedConvos;
     }
 
     // -------------------------------------------------

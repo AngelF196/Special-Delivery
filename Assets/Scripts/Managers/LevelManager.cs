@@ -49,8 +49,21 @@ public class LevelManager : MonoBehaviour
         int i = 0;
         foreach (var pair in fileData.interactedConvos)
         {
-            npcs[i].currentConversation.alreadyPlayed = pair.Value[0].convoPlayedFlag;
+            for (int j = 0; j < pair.Value.Length; j++)
+            {
+                Conversation loadedConversation = GetConversation(npcs[i].currentConversation, j);
+                loadedConversation.alreadyPlayed = pair.Value[j].convoPlayedFlag;
+            }
             i++;
         }
+    }
+
+    // Recursive helper function
+    private Conversation GetConversation(Conversation convo, int convoNum)
+    {
+        if (convoNum == 0)
+            return convo;
+        
+        return GetConversation(convo.followupConversation, --convoNum);
     }
 }
